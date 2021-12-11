@@ -1,0 +1,21 @@
+<% if profile.myCourses.blank? %>
+  <div class="flex h-48">
+    <div class="text-4xl m-auto font-bold">No Courses Created By User</div>
+  </div>
+
+<% else %>
+  <div class="text-3xl font-semibold mb-4">Courses created</div>
+
+  <div class="flex flex-col text-lg">
+    <% profile.myCourses.each do |course| %>
+      <div class="flex flex-col md:flex-row mt-4">
+        <div class="font-semibold md:w-1/5 mr-4"><%= course.name %></div>
+        <div class="flex flex-row md:w-1/5">
+          <div class="font-semibold mr-4">Students:</div>
+          <div><%= course.students.count %></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% end %>

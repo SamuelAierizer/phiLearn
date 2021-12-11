@@ -1,0 +1,53 @@
+<div class="h-screen hidden lg:block shadow-lg relative w-80" data-look-target="nav">
+  <div class="bg-gray-900 h-full dark:bg-black">
+    <div class="flex items-center justify-center pt-6">
+      <%= link_to "phiLearn", root_path, class:"text-2xl font-bold font-serif text-gray-500 dark:text-white dark:hover:text-blue-700" %>
+    </div>
+    <nav class="mt-12">
+      <%= link_to schools_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+        <i class="fas fa-tachometer-alt text-left"></i>
+        <div class="mx-4 text-md">Dashboard</div>
+      <% end %>
+      
+      <a class="w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" 
+              href=<%= admin_stats_url %>
+              data-turbo-frame="admin_content" 
+              data-controller="turbo-frame-history"
+              data-action="click->turbo-frame-history#mutate"
+              data-turbo-frame-history-url-param=<%= admin_stats_url %>>
+        <i class="fas fa-chart-line text-left"></i>
+        <div class="mx-4 text-md">Statistics</div>
+      </a>
+
+      <div data-controller='toggle' class="items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100">
+        <button data-action='click->toggle#toggle touch->toggle#toggle' class="flex flex-row w-full">
+          <i class="fas fa-cogs text-left"></i>
+          <div class="mx-4 text-md  flex-grow text-left"> Settings </div>
+          <i class="fas fa-angle-down float-right"></i>
+        </button>
+        <div data-toggle-target='toggleable' class="flex flex-col ml-6 md:ml-14 my-3 hidden ">
+          <a class="mt-2 flex flex-row hover:text-blue-200" 
+                  href=<%= admin_forum_url %> 
+                  data-turbo-frame="admin_content" 
+                  data-controller="turbo-frame-history"
+                  data-action="click->turbo-frame-history#mutate"
+                  data-turbo-frame-history-url-param=<%= admin_forum_url %>>
+            <i class="fas fa-bullhorn text-left"></i>
+            <div class="mx-4 text-md">Forum</div>
+          </a>
+        </div>
+      </div>
+
+      <a class="w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" 
+              href=<%= admin_trash_url %>
+              data-turbo-frame="admin_content" 
+              data-controller="turbo-frame-history"
+              data-action="click->turbo-frame-history#mutate"
+              data-turbo-frame-history-url-param=<%= admin_trash_url %>>
+        <i class="fas fa-trash text-left"></i>
+        <div class="mx-4 text-md">Dump</div>
+      </a>
+
+    </nav>
+  </div>
+</div>

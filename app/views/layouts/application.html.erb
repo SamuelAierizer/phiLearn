@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PhiLearnLMS</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="https://www.ruby-lang.org/images/header-ruby-logo.png">
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+    <%= yield(:head) %>
+  </head>
+
+  <body data-controller="look" data-look-target="page">
+    <%= render 'shared/toasts' %>
+
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<%= form_tag courses_mass_delete_path, method: 'delete', data: { turbo_confirm: 'Are you sure?' } do %>
+
+<div class="w-full overflow-hidden rounded-lg shadow-xs my-8">
+  <div class="flex flex-row justify-between">
+    <h2 class="text-3xl my-2 ml-4 dark:text-white">Courses<h2>
+      <div class="mx-8">
+        <%= link_to "Add Course", new_course_path, class:"btn-sm btn-lime mx-4" %>
+        <%= submit_tag "Delete selected", :class => 'btn-sm btn-gray' %>
+      </div>
+  </div>
+  <div class="w-full overflow-x-auto">
+    <table class="w-full whitespace-no-wrap" data-controller="checkbox-select-all">
+      <thead>
+        <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+          <th class="px-4 py-3">Name</th>
+          <th class="px-4 py-3">Teacher</th>
+          <th class="px-4 py-3">Enrolled</th>
+          <th class="px-4 py-3">Gradebook</th>
+          <th class="px-4 py-3">Statistics</th>
+          <th class="px-4 py-3"></th>
+          <th class="px-4 py-3" data-sort-ignore="true"><input id="checkbox-select-all" type="checkbox" data-checkbox-select-all-target="checkboxAll"></th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
+        <% @coursesForTable.each do |course| %>
+          <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
+            <td class="px-4 py-3 font-semibold">
+              <%= link_to course.name, course_path(course.id) %>
+            </td>
+            <td class="px-4 py-3"><%= course.owner.username unless course.owner.blank? %></td>
+            <td class="px-4 py-3"><%= course.users.count %></td>
+            <td class="px-4 py-3"><%= link_to "Open", course_grades_path(course), class:"underline" %></td>
+            <td class="px-4 py-3"><%= link_to "Open", course_statistics_path(course), class:"underline" %></td>
+            <td class="px-4 py-3"><%= link_to 'Delete', course_url(id: course.id), data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }, class:"btn-sm btn-red" %></td>
+            <td class="px-4 py-3"><%= check_box_tag 'course_ids[]', course.id, false, data: { checkbox_select_all_target: 'checkbox' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="my-8">
+    <%= paginate @coursesForTable %>
+  </div>
+
+</div>
+<% end %>

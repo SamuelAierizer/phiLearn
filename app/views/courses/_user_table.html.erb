@@ -1,0 +1,73 @@
+<%= form_with(url: course_populate_path(@course.id), data: {populate_target: "form", turbo_method: 'post'}) do |form| %>
+<div class="w-full overflow-hidden rounded-lg shadow-xs my-8" data-controller="modal" data-modal-allow-background-close="false">
+  <div class="flex flex-row justify-between">
+    <h2 class="text-3xl my-2 ml-4 dark:text-white">Users<h2>
+    <div class="mx-8">
+      <a href="#" data-action="click->modal#open" class="btn-sm btn-lime">
+        <span>Add Students</span>
+      </a>
+      <%= submit_tag "Remove selected", :class => 'btn-sm btn-gray ml-2' %>
+    </div>
+  </div>
+  <div class="w-full overflow-x-auto" id='students'>
+    <table class="w-full whitespace-no-wrap" data-controller="checkbox-select-all">
+      <thead>
+        <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+          <th class="px-4 py-3">Name</th>
+          <th class="px-4 py-3">username</th>
+          <th class="px-4 py-3">Status</th>
+          <th class="px-4 py-3">email</th>
+          <th class="px-4 py-3" data-sort-ignore="true"><input id="checkbox-select-all" type="checkbox" data-checkbox-select-all-target="checkboxAll"></th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
+        <% @students.each do |student| %>
+
+          <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black" 
+                data-controller="user" 
+                data-user-update-url="<%= course_toggle_path %>" 
+                data-user-variable=<%= student.id %>>
+            <td class="px-4 py-3"><%= link_to student.first_name + ' ' + student.last_name, profile_path(student.id), class:"font-semibold" %></td>
+            <td class="px-4 py-3"><%= student.username %></td>
+            <td class="px-4 py-3"><%= student.role %></td>
+            <td class="px-4 py-3"><%= student.email %></td>
+            <td class="px-4 py-3">
+              <%= check_box_tag 'remove_ids[]', student.id, false, data: { checkbox_select_all_target: 'checkbox' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="my-8">
+    <%= paginate @students %>
+  </div>
+  
+  <!-- Modal Container -->
+  <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+    <!-- Modal Inner Container -->
+    <div class="max-h-screen w-full max-w-6xl relative">
+      <!-- Modal Card -->
+      <div class="m-1 bg-white dark:bg-gray-900 rounded shadow">
+        <div class="p-8" data-controller="populate">
+          <div class="mb-4">
+            <%= turbo_frame_tag 'new_users', src: course_new_users_path(@course) do %>
+              <h2 class="text-4xl font-semibold"><i class="fas fa-spinner fa-spin"></i></h2>
+            <% end %>
+          </div>
+
+          <%= form.hidden_field :user_ids, data: { populate_target: "field" } %>
+
+          <div class="flex flex-row justify-between items-center flex-wrap mt-6">
+            <div class="w-1/5"><button class="btn-submit" data-action="populate#commit">Submit</button></div>
+            <button class="btn btn-gray" data-action="click->modal#close">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<% end %>

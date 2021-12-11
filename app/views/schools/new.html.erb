@@ -1,0 +1,45 @@
+<div class="body-bg min-h-screen pt-12 md:pt-20 pb-6 px-2 md:px-0 bg-cover bg-center" style="background-image: url('https://cdn.filestackcontent.com/sMZSixmkSJMZiBreCZng');">
+  <main class="bg-white max-w-xl mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+    <section class="text-center">
+      <%= link_to root_path do %>
+        <%= image_tag "https://cdn.filestackcontent.com/V5yincH8RHqUrGyiehYP", size:"200x50", class:"mx-auto" %>
+      <% end %>
+      <h1 class="font-bold text-3xl pt-4">Enroll New School</h1>
+    </section>
+
+    <section class="mt-10">
+      <div class="flex flex-col">
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <%= nested_form_for([resource_name, resource.with_school], url: schools_path) do |f| %>
+          <div class="field form-group">
+            <%= f.fields_for :school do |s| %>
+              <%= s.text_field :name, autocomplete: "school name", class:"form-field w-full", placeholder:"School Name" %>
+              
+              <%= s.text_field :subdomain, autocomplete: "subdomain", class:"form-field w-full", placeholder:"School Subdomain" %>
+            <% end %>
+          </div>
+
+          <%= f.text_field :first_name, autocomplete: "first name", class:"form-field w-full", placeholder:"Your First Name" %>
+
+          <%= f.text_field :last_name, autocomplete: "last name", class:"form-field w-full", placeholder:"Your Last Name" %>
+
+          <%= f.text_field :username, class:"form-field w-full", placeholder:"Your Username" %>
+
+          <%= f.email_field :email, class:"form-field w-full", placeholder:"Your Email" %>
+
+          <%= f.password_field :password, class:"form-field w-full", placeholder:"Password" %>
+
+          <%= f.password_field :password_confirmation, class:"form-field w-full", placeholder:"Password confirmation" %>
+          
+          <%= f.submit "Sign up", class:"btn-submit mt-4" %>
+
+          <div class="class mt-8 mb-4">
+            Already have an account ?
+            <%= link_to "Log in", new_session_path(resource_name), class:"font-bold" %>
+          </div>
+          <% end %>
+      </div>
+    </section>
+  </main>
+</div>

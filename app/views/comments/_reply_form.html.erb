@@ -1,0 +1,18 @@
+<div class="ml-8">
+  <div class="bg-white dark:bg-gray-800 w-full rounded p-3 my-4 shadow sm:inline-block">
+    <div class="dark:text-white">
+      <%= form_with(model: [@target, @comment]) do |f| %>
+        <%= f.hidden_field :parent_id %>
+        <div class="my-2">
+          <%= f.label 'Reply' %>
+          <%= f.text_area :body, class: 'flex-1 my-2 appearance-none border border-gray-300 w-full py-3 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent' %>
+          <%= f.text_field :target_type, id: :comment_target_type, value: @target_type, type: :hidden %>
+          <%= f.number_field :target_id, id: :comment_target_id, value: @target_id, type: :hidden %>
+          <%= f.number_field :user_id, id: :comment_user_id, value: current_user.id, type: :hidden %>
+        </div>
+        <%= f.submit 'Submit', class: 'btn btn-blue' %>
+        <%= link_to 'Cancel', :back, class: 'btn btn-gray' %>
+      <% end %>
+    </div>
+  </div>
+</div>

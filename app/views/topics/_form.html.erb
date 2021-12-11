@@ -1,0 +1,32 @@
+<section class="bg-gradient bg-white dark:bg-gray-700 shadow py-8 my-2">
+  <div class="max-w-5xl mx-auto px-5 box-content">
+    
+  <%= form_with(model: topic, id: dom_id(topic)) do |form| %>
+
+    <% if topic.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(topic.errors.count, "error") %> prohibited this topic from being saved:</h2>
+
+        <ul>
+          <% topic.errors.each do |error| %>
+            <li><%= topic.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Topic Name" %>
+
+    <%= form.text_area :description, size:"5x5", autocomplete: "description", class:"form-field w-full", placeholder:"Description" %>
+
+
+    <%= form.hidden_field :forum_id, value: @forum_id %>
+                
+    <div class="flex flex-row justify-between items-center flex-wrap mt-6">
+      <div class="mr-4"><%= form.submit class:'btn btn-blue' %></div>
+       <%= link_to "Cancel", topic, class:'btn btn-gray' %>
+    </div>
+  <% end %>
+
+  </div>
+</section>

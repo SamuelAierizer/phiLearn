@@ -1,0 +1,37 @@
+<% content_for :head do %>
+  <%= filestack_js_include_tag %>
+  <%= filestack_js_init_tag %>
+<% end %>
+
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/sidenav' %>
+
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
+        <!-- Page Head -->
+        <div class="my-4 flex flex-col md:flex-row dark:text-white">
+          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Add New Asset</h1>
+            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+          </div>
+        </div>
+
+        <!-- Page Conent -->
+        <div class="w-full overflow-hidden shadow-xs my-8">
+          
+          <div class="my-4">
+            <%= render 'form', resource: @resource %>          
+          </div>
+
+        </div>      
+      </div>
+    </div>
+  </div>
+</main>

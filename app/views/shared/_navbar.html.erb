@@ -1,0 +1,33 @@
+<header class="w-full h-16 z-30 flex items-center justify-between bg-white dark:bg-gray-800 dark:text-white" data-turbo-permanent>
+  <div class="relative z-20 flex flex-row justify-end h-full px-3 w-full">
+    <!-- button for sidenav with 'sidenav-btn class' -->
+    <button class="mt-3 ml-6 lg:hidden" data-action="click->look#show">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <div class="relative p-2 flex items-center w-full space-x-4 justify-end">
+      <button class="mx-4" data-action="click->look#dark">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </button>
+      <div class="relative mr-2 md:mr-8 " data-controller="dropdown">
+        <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="inline-block select-none">
+          <span class="appearance-none flex items-center text-gray-700 dark:text-white">
+            <i class="fas fa-user fa-fw"></i>
+            <p class="mx-2 font-semibold"><%= current_user.username %><p>
+            <i class="fas fa-angle-down"></i>
+          </span>
+        </div>
+        <div data-dropdown-target="menu" class="absolute right-0 mt-2 hidden w-48">
+          <div class="bg-white shadow rounded border overflow-hidden">
+            <%= link_to "Profile", profile_path(current_user.id), data: {action: "click->dropdown#toggle"}, class: 'no-underline block px-8 pt-3 text-gray-900 bg-white whitespace-nowrap' %>
+            <%= link_to "User Settings", edit_user_registration_path, data: {action: "click->dropdown#toggle"}, class: 'no-underline block px-8 py-3 text-gray-900 bg-white whitespace-nowrap' %>
+            <%= link_to "Logout" , destroy_user_session_path, data: {action: "click->dropdown#toggle"}, "data-turbo-method": "delete", class: 'no-underline block px-8 py-3 border-t text-gray-900 bg-white whitespace-nowrap' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

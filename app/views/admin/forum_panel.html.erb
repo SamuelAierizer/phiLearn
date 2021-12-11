@@ -1,0 +1,74 @@
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/admin_sidenav' %>
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Admin Dashboard</h1>
+            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+          </div>
+          <div class="mx-4">
+          </div>
+        </div>
+
+        <!-- Page Conent -->
+        <div class="mt-8 mb-16 dark:text-white">
+          <%= turbo_frame_tag "admin_content" do %>
+          <div class="mb-16 mt-8">
+            <h2 class="font-semibold text-3xl border-b mb-4 dark:text-white">Forums</h2>
+            <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
+              <p class="mb-12 text-center text-xl">Allow forums for schools or classes by toggle-ing the switch. </br>
+              <strong class="text-yellow-600">Warning:</strong> Untoggle-ing may result in the deletion of previous forums!</p>
+
+              <div class="flex flex-col md:flex-row justify-between">
+                <div class="flex flex-row mb-8 w-2/3 md:w-2/5 xl:w-1/4 justify-between" data-controller="bird" data-bird-update-url=<%= forum_school_toggle_path(id: @school.id) %>>
+                  <h3 class="text-xl">School forums</h3>
+                  <div class="relative inline-block w-10 mx-2 align-middle justify-center select-none transition duration-200 ease-in">
+                    <%= link_to forum_school_path(id: @school.id), "data-turbo-frame": "school_forum", "data-action": "click->bird#fly" do %>
+                    <input type="checkbox" data-bird-target="switch"
+                      class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2
+                      border-gray-300 dark:border-gray-800 appearance-none cursor-pointer"
+                      <% if @school.school_forum %> checked <% end %>/>
+                    <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-900 cursor-pointer"></label>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class="flex flex-row w-2/3 md:w-2/5 xl:w-1/4 justify-between" data-controller="bird" data-bird-update-url=<%= forum_courses_toggle_path(id: @school.id) %>>
+                  <h3 class="text-xl">Class forums</h3>
+                  <div class="relative inline-block w-10 mx-2 align-middle justify-center select-none transition duration-200 ease-in">
+                    <input type="checkbox" data-action="click->bird#fly" data-bird-target="switch"
+                      class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2
+                      border-gray-300 dark:border-gray-800 appearance-none cursor-pointer"
+                      <% if @school.course_forum %> checked <% end %>/>
+                    <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-900 cursor-pointer"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <%= turbo_frame_tag "school_forum", src:forum_school_path(id: @school.id) do %>
+              <div class="mt-8 flex">
+                <div class="text-4xl mx-auto">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <% end %>
+          
+        </div>
+          
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,28 @@
+<%= form_with(model: post, id: dom_id(post), remote: true) do |form| %>
+ <div class="bg-white dark:bg-gray-800 w-full p-3 mb-2 shadow sm:inline-block">
+  
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="w-full">
+    <%= form.text_area :content, size:"3x3", autocomplete: "content", class:"form-field w-11/12", placeholder:"Write your reply" %>
+  </div>
+
+  <%= form.hidden_field :topic_id, value: @topic_id %>
+
+  <div class="flex flex-row">
+    <%= form.submit 'Post', class:'btn-sm btn-blue mx-4' %>
+    <%= link_to "Cancel", post, class:'btn-sm btn-red' %>
+  </div>
+
+  </div>
+<% end %>

@@ -1,0 +1,23 @@
+<% @solution.answers.each do |answer| %>
+  <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative my-4 dark:text-white">
+    <div class="">
+      <div class="flex flex-row">
+        <div class="flex-col flex-grow">
+          <h3 class="text-xl"><%= answer.question.question_asked %></h3>
+          <h4 class="text-gray-600 dark:text-gray-300"><%= "#{answer.mark_achieved} / #{answer.question.mark_available}" %> points</h4>
+        </div>
+        <div>
+          <%= link_to "Grade", edit_answer_path(answer), class:"btn-sm btn-yellow" unless current_user.student? %>
+        </div>        
+      </div>
+      <div class="mt-4 ml-4">
+        <% answer.question.question_options.each do |option| %>
+          <%= option.value %> </br>
+        <% end %>
+      </div>
+      <p class="mt-2">
+        Your answer: <%= answer.answer_given %>
+      </p>
+    </div>
+  </div>
+<% end %>

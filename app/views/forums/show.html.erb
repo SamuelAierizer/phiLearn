@@ -1,0 +1,59 @@
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative" >
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/sidenav' %>
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6" data-controller="modal" data-modal-allow-background-close="false">
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-row dark:text-white">
+          <%= link_to @forum.forumable do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <div class="flex flex-row ">
+              <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= forumName @forum %></h1>
+            </div>
+            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+          </div>
+          <div class="mx-4">    
+            <% unless current_user.student? %>
+              <a href="#" data-action="click->modal#open" class="btn-sm btn-lime">
+                <span>Add Topic</span>
+              </a>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Page Conent -->
+        <div class="mt-16" data-controller="reply" data-reply-privilage-value=<%= current_user.role %> data-reply-uid-value=<%= current_user.id %> >
+                            
+          <%= turbo_stream_from "topics" %>
+
+          <%= turbo_frame_tag "topics" do %>
+            <h3 class="text-2xl font-medium mb-2 dark:text-white">Bookmarks</h3>
+            <%= render @bookmarked %>
+
+            <h3 class="text-2xl font-medium mt-8 mb-2 dark:text-white">Topics</h3>
+            <%= render @topics %>
+          <% end %>
+        </div>
+
+        <!-- Modal Container -->
+        <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+          <!-- Modal Inner Container -->
+          <div class="max-h-screen w-full max-w-4xl relative">
+            <!-- Modal Card -->
+            <div class="m-1 bg-white dark:bg-gray-900 rounded shadow">
+              <div class="p-12">
+                <%= render 'topics/form2', topic: Topic.new, forum_id: @forum.id %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>

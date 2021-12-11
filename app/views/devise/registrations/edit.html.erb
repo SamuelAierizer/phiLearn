@@ -1,0 +1,64 @@
+<% content_for :head do %>
+  <%= filestack_js_include_tag %>
+  <%= filestack_js_init_tag %>
+<% end %>
+
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/sidenav' %>
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Edit your account</h1>
+            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+          </div>
+        </div>
+
+        <div class="my-8">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo_method: 'put' }) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+
+            <%= f.text_field :first_name, autocomplete: "first name", class:"form-field w-full", placeholder:"First Name" %>
+
+            <%= f.text_field :last_name, autocomplete: "last name", class:"form-field w-full", placeholder:"Last Name" %>
+
+            <%= f.text_field :username, autocomplete: "username", class:"form-field w-full", placeholder:"Username" %>
+
+            <%= f.email_field :email, autocomplete: "email", class:"form-field w-full", placeholder:"Email" %>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+
+            <%= f.password_field :password, autocomplete: "new-password", class:"form-field w-full", placeholder:"Password (leave blank if you don't want to change it)" %>
+
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-field w-full", placeholder:"Password confirmation" %>
+
+            <%= f.password_field :current_password, autocomplete: "current-password", class:"form-field w-full", placeholder:"Current password (we need your current password to confirm your changes)" %>
+
+            <%= f.submit "Update", class:"btn-submit mt-4" %>
+          <% end %>
+        </div>  
+
+        <div class="my-16 mx-16 p-12 bg-white dark:bg-gray-800 shadow">  
+          <div class="flex flex-row justify-around">
+            <div>
+              <h2 class="text-4xl font-semibold text-gray-800 dark:text-white">Cancle account</h2>
+              <div class="mb-4 text-gray-500 dark:text-gray-200 font-lg font-medium">Unhappy with phiLearn?</div>
+            </div>
+            <%= button_to "Cancel my account", registration_path(resource_name), data: { turbo_confirm: "Are you sure?", turbo_method: 'delete' }, class:"btn btn-red" %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,26 @@
+<div class="signup-form">
+  <%= form_with(model: lecture) do |form| %>
+    <% if lecture.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(lecture.errors.count, "error") %> prohibited this lecture from being saved:</h2>
+
+        <ul>
+          <% lecture.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Name of the lecture" %>
+
+    <%= form.text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full", placeholder:"Description" %>
+
+    <div class="">
+      <div class="form-field w-full bg-white"> <%= @course.name %> </div>
+      <%= form.number_field :course_id, id: :lecture_course_id, value: @course.id, type: :hidden %>
+    </div>
+
+    <%= form.submit 'Submit', class:"btn-submit mt-4" %>
+  <% end %>
+</div>

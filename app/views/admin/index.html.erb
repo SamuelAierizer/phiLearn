@@ -1,0 +1,35 @@
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/admin_sidenav' %>
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Admin Dashboard</h1>
+            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+          </div>
+          <div class="mx-4">
+          </div>
+        </div>
+
+        <!-- Page Conent -->
+        <div class="mt-8 mb-16 dark:text-white" >
+          <%= turbo_frame_tag "admin_content", src:admin_stats_url do %>
+            <div class="mt-16 flex content-center text-center">
+              <div class="text-4xl mx-auto"><i class="fas fa-spinner fa-spin"></i></div>
+            </div>
+          <% end %>
+
+        </div>
+          
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,44 @@
+<%= form_with model: solution do |form|%>
+  <%= form.number_field :grade, id: :solution_grade, value: 0.0, type: :hidden %>
+  <%= form.number_field :user_id, id: :solution_user_id, value: current_user.id, type: :hidden %>
+  <%= form.number_field :assignment_id, id: :solution_assignment_id, value: @assignment.id, type: :hidden %>
+  <% @questions.each do |question| %>
+    <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-4 dark:text-white">
+      <div class="">
+        <h3 class="text-xl"><%= question.question_asked %></h3>
+        <h4 class="text-gray-600 dark:text-gray-300"><%= question.mark_available %> points</h4>
+        <div class="mt-4">
+          <%= form.fields_for :answers do |ans| %>
+            <%= ans.number_field :mark_achieved, id: :answer_mark_achieved, value: 0, type: :hidden %>
+            <%= ans.number_field :solution_id, id: :answer_solution_id, value: solution.id, type: :hidden %>
+            <%= ans.number_field :question_id, id: :answer_question_id, value: question.id, type: :hidden %>
+            <%= ans.number_field :answers_type, id: :answer_answers_type, value: question.question_type, type: :hidden %>
+
+            <% if question.radial? %>
+              <%= ans.collection_radio_buttons(:answer_given, question.question_options, :value, :id) do |o| %>
+                <div class="ml-8">
+                  <%= o.radio_button class:"h-4 w-4" %>
+                  <%= o.value %>
+                </div>
+              <% end %>
+            <% elsif question.checkbox? %>
+              <%= ans.collection_check_boxes(:answer_given, question.question_options, :value, :id, { mulitple: true } ) do |o| %>
+                <div class="ml-8">
+                  <%= o.check_box class:"bg-white bg-check h-4 w-4 border border-gray-300 rounded-md checked:bg-blue-500 checked:border-transparent focus:outline-none" %>
+                  <%= o.value %>
+                </div>
+              <% end %>
+            <% else %>
+              <%= ans.text_field :answer_given, class:"form-field w-full text-black", placeholder:"Your answer" %>
+            <% end %>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+              
+  <% end %>
+
+  <%= form.submit "Submit Quiz", class:"btn btn-blue mt-4" %>
+
+<% end %>

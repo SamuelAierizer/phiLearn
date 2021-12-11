@@ -1,0 +1,124 @@
+<% content_for :head do %>
+  <%= filestack_js_include_tag %>
+  <%= filestack_js_init_tag %>
+<% end %>
+
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/sidenav' %>
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-row dark:text-white">
+          <%= link_to @assignment.course do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <div class="flex flex-row">
+              <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= @assignment.name %></h1>
+              <%= link_to '(edit)', edit_assignment_path(@assignment), class:"ml-2 my-auto underline" unless current_user.student? %> 
+            </div>
+            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+          </div>
+          <div class="mx-4">
+            <% unless current_user.student? %>
+              <% if @assignment.quizz? %>
+                <%= link_to "Add Question", new_question_path(assignment_id: @assignment.id), class:'btn-sm btn-yellow mx-3' %>
+              <% end %>
+              <%= link_to 'Add Asset', new_resource_path(material_type: @assignment.class.name, material_id: @assignment.id), class:"btn-sm btn-lime" %>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Page Conent -->
+        <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
+          <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Description</h2>
+          <div class="my-4 text-justify"><%= simple_format @assignment.description %></div>
+
+          <% unless @assets.blank? %>
+            <h3 class="text-xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Assets</h3>
+            <div class="flex flex-col">
+              <% @assets.each do |asset| %>
+                <%= link_to asset.name, asset.path, class:"font-semibold" %></br>
+              <% end %>
+            </div>
+          <% end %>
+
+          <div class="mt-5">
+              <p class="mb-2"><b>Deadline:</b> <%= @assignment.deadline.to_formatted_s(:long) %></p>
+              <% if @warn %>
+                <div class="px-4 py-3 leading-normal text-blue-700 bg-blue-100 dark:text-blue-900 dark:bg-blue-400 rounded-lg" role="alert">
+                  <b>Time left:</b> <%= @left %>
+                </div>
+              <% else %>
+                <div class="px-4 py-3 leading-normal text-red-700 bg-red-100 dark:text-red-900 dark:bg-red-400  rounded-lg" role="alert">
+                  <b>Time left:</b> <%= @left + ' overdue' %>
+                </div>
+              <% end %>
+            </div>
+        </div>
+
+        <div class="my-5 dark:text-white">
+          <% if current_user.student? %>
+            <% if @exists %>
+              <p>
+                <strong>Grade for assignment:</strong>
+                <%= @solution.grade.truncate(2) unless @solution.grade.blank? %>
+              </p>
+
+              <p>
+                <strong>Your solution:</strong>
+                <%= link_to "View", solution_path(@solution.id), class:"font-semibold" %>
+              </p>
+            <% else %>
+              <div class="">
+                <% if @assignment.handIn? %>
+                  <%= render 'solutions/handIn_form', solution: @newSolution %>
+                <% else %>
+                  <%= link_to "Solve Quizz", new_solution_path(id: @assignment.id), class:"btn btn-blue" %>
+                <% end %>
+              </div>
+            <% end %>
+          <% elsif @assignment.quizz? %>
+            <h2 class="text-2xl font-bold mt-16">Questions</h2>
+
+            <% @questions.each do |question| %>
+            <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 dark:text-white relative my-4">
+              <div class="">
+                <h3 class="text-xl"><%= link_to question.question_asked, edit_question_path(question, assignment_id: @assignment.id), class:"" %></h3>
+                <h4 class="text-gray-600 dark:text-gray-300"><%= question.mark_available %> points</h4>
+                <p class="mt-4 ml-4">
+                  <% question.question_options.each do |option| %>
+                    <%= option.value %> </br>
+                  <% end %>
+                </p>
+              </div>
+            </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="mt-16 ml-8 dark:text-white">
+          <h2 class="text-2xl font-bold">Comments</h2>
+          <%= form_with(model: [@assignment, @assignment.comments.build]) do |f| %>
+            <div class="my-2">
+              <%= f.label 'New comment' %>
+              <%= f.text_area :body, class: 'flex-1 my-2 appearance-none border border-gray-300 w-full py-3 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent' %>
+              <%= f.text_field :target_type, id: :comment_target_type, value: @assignment.class.name, type: :hidden %>
+              <%= f.number_field :target_id, id: :comment_target_id, value: @assignment.id, type: :hidden %>
+              <%= f.number_field :user_id, id: :comment_user_id, value: current_user.id, type: :hidden %>
+            </div>
+            <%= f.submit 'Submit', class: 'btn btn-blue' %>
+          <% end %>
+          <div class="mt-5 mb-16">
+            <%= render @assignment.comments %>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</main>

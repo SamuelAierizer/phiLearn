@@ -1,0 +1,32 @@
+<%= turbo_frame_tag "post_form" do %>
+  <%= form_with(model: post, id: dom_id(post), remote: true) do |form| %>
+    
+    <% if post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+        <ul>
+          <% post.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="w-full">
+      <%= form.text_area :content, size:"5x5", autocomplete: "content", class:"form-field w-11/12", placeholder:"Write your reply" %>
+    </div>
+    
+    <%= form.hidden_field :topic_id, value: topic_id %>
+
+    <%= form.hidden_field :parent_id, value: 0, "data-reply-target": "parentField" %>
+
+    <div class="flex flex-row">
+      <%= form.submit 'Post', class:'btn-sm btn-blue mx-4' %>
+      <button data-action='click->toggle#hide touch->toggle#hide' class="btn-sm btn-red">
+        Cancle
+      </button>
+    </div>
+
+  <% end %>
+<% end %>

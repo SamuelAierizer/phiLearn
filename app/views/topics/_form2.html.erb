@@ -1,0 +1,13 @@
+<%= form_with(model: topic, url: topics_path, "data-turbo-method": "post", id: dom_id(topic)) do |form| %>
+  <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Topic Name" %>
+
+  <%= form.text_area :description, size:"5x5", autocomplete: "description", class:"form-field w-full", placeholder:"Description" %>
+
+
+  <%= form.hidden_field :forum_id, value: forum_id %>
+              
+  <div class="flex flex-row justify-between items-center flex-wrap mt-6">
+    <div class="mr-4"><%= form.submit class:'btn btn-blue' %></div>
+    <button class="btn btn-gray" data-action="click->modal#close">Close</button>
+  </div>
+<% end %>

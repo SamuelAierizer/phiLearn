@@ -1,0 +1,13 @@
+<div class="nested-form-wrapper" data-new-record="<%= form.object.new_record? %>">
+  <div class="flex">
+    <%= form.hidden_field :_destroy %>
+    <div class="relative inline-block w-10 py-3 mx-2 align-middle justify-center select-none transition duration-200 ease-in">
+
+      <%= form.check_box :correct, {:class => 'toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 border-gray-300 dark:border-gray-600 appearance-none cursor-pointer',
+      "data-question-target" => "option", "data-action" => "click->question#selectRadioOption"} %>
+      <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-600 cursor-pointer"></label>
+    </div>
+    <%= form.text_field :value, placeholder: 'Value', class:"form-field flex-grow" %>
+    <button class="form-field px-3 hover:bg-black hover:text-white dark:text-white dark:bg-gray-600 dark:hover:bg-black font-semibold" type="button" data-action="nested-form#remove">X</button>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<%= turbo_frame_tag 'new_users' do %>
+
+  <%= form_with(url: course_new_users_path(@course.id), method: :get, data: {controller: 'user', user_target: "form"}) do |form| %>
+  <div class="flex flex-row mb-6">
+    <%= label_tag :searched, 'Search for:', class:'my-auto mr-4 dark:text-white' %>
+    <%= form.text_field :searched, data: { action: "input->user#search" }, class:"p-2 focus:border-blue-700 rounded border-2 outline-none", value:params[:searched] %>
+  </div>
+  <% end %>
+          
+  <div class="w-full overflow-x-auto" data-controller="checkbox">
+    <table class="w-full whitespace-no-wrap">
+      <thead>
+        <tr
+          class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+          <th class="px-4 py-3">username</th>
+          <th class="px-4 py-3">email</th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
+        <% @users.each do |user| %>
+          <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
+            <td class="px-4 py-3">
+              <%= user.username %>
+            </td>
+            <td class="px-4 py-3">
+              <%= user.email %>
+            </td>
+            <td class="px-4 py-3">
+              <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                <input type="checkbox" data-action="populate#update_ids" id="<%= user.id %>" data-checkbox-target="checkbox"
+                  class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2
+                  border-gray-300 dark:border-gray-800 appearance-none cursor-pointer"
+                  />
+                  <label for="toggle"
+                    class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></label>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="my-8">
+    <%= paginate @users %>
+  </div>
+
+<% end %>

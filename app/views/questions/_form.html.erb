@@ -1,0 +1,55 @@
+<%= form_with model: question, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |form| %>
+  <% if question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+        <% question.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8" data-controller="question">
+    <div class="mt-4 flex flex-col"> 
+      <%= form.text_field :question_asked, autocomplete: "question", class:"form-field w-full", placeholder:"Question" %>
+
+      <div class="flex flex-row gap-4">
+        <%= select_tag(:question_type, options_for_select([['Multiple choice with 1 answer', 'radial'], ['Multiple choice with multiple answers', 'checkbox'], ['Open answer', 'open']], @question.question_type), {:class => 'form-field w-1/2', "data-question-target" => "select", "data-action" => "change->question#changed"}) %>
+
+        <%= form.number_field :mark_available, step: 0.01, autocomplete: "10", class:"form-field w-1/2", placeholder:"Mark available" %>
+      </div>
+
+      <div data-question-target="single">
+        <%= form.text_field :answer, class:"form-field w-full", placeholder:"Answer" %>
+      </div>
+
+      <%= form.number_field :assignment_id, id: :question_assignment_id, value: @assignment.id, type: :hidden %>
+
+    <div data-question-target="multi">
+      <div class="flex flex-row justify-between my-4">
+        <div class="text-xl font-semibold dark:text-gray-200">Options: </div>
+        <div class=""><button class="btn-sm bg-gray-200 hover:bg-gray-300" data-action="nested-form#add"> Add Option</button></div>
+      </div>
+
+      <template data-nested-form-target="template">
+        <%= form.fields_for :question_options, QuestionOption.new, child_index: 'NEW_RECORD' do |option| %>
+          <%= render 'question_options', form: option %>
+        <% end %>
+      </template>
+
+      <%= form.fields_for :question_options do |option| %>
+        <%= render 'question_options', form: option %>
+      <% end %>
+
+      <div data-nested-form-target="target"></div>
+    </div>
+
+    </div>
+  </div>
+
+    <%= form.submit 'Submit', class:"btn-submit mt-8" %>
+
+<% end %>
+

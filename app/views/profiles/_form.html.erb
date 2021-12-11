@@ -1,0 +1,52 @@
+<%= form_with url:profile_path(profile), data: { turbo_method: 'put' } do |form| %>
+
+  <% unless profile.profile_picture.blank? %>
+    <%= filestack_image profile.profile_picture, class:'h-64 w-64 mb-8' %>
+  <% end %>
+
+  <div class="dark:text-white mb-4">
+    <%= form.filestack_field :profile_picture, 'Upload picture', class:"btn-sm btn-blue" %>
+    <%= form.label :profile_picture %>
+  </div>
+
+  <div class="grid grid-cols-6 gap-4">
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :first_name, "First Name", class:'font-semibold' %>
+      <%= form.text_field :first_name, value: profile.first_name, class:"form-field w-full" %>
+    </div>
+
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :last_name, "Last Name", class:'font-semibold' %>
+      <%= form.text_field :last_name, value: profile.last_name, class:"form-field w-full" %>
+    </div>
+
+    <div class="col-span-6 sm:col-span-4">
+      <%= form.label :email, "Email", class:'font-semibold' %>
+      <div class="form-field w-full bg-gray-200"><%= profile.email %></div>
+    </div>
+
+    <div class="col-span-6 sm:col-span-1">
+      <%= form.label :status, "Current status", class:'font-semibold' %>
+      <%= select_tag(:status, options_for_select([['Inactive', 'inactive'], ['Active', 'active']], profile.info.status), {:class => 'form-field w-full'}) %>
+    </div>
+
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :address, "Current address", class:'font-semibold' %>
+      <%= form.text_field :address, value: profile.info.address, class:"form-field w-full" %>
+    </div>
+
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :phone, "Phone no", class:'font-semibold' %>
+      <%= form.text_field :phone, value: profile.info.phone, class:"form-field w-full" %>
+    </div>
+  </div>
+
+  <div class="border-t mt-4 mb-8"></div>
+
+  <%= form.label :about, "About me", class:'font-semibold text-xl' %>
+  <%= form.text_area :about, value: profile.info.about, size:"10x10", autocomplete: "description", class:"form-field w-full" %>
+  
+
+  <%= form.submit 'Submit', class:"btn-submit my-4" %>
+
+<% end %>

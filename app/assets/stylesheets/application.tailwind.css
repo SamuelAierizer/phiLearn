@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a:hover {
+  color:#1D4ED8;
+}
+
+h1, h2, h3, h4 {
+  @apply font-serif;
+}
+
+/* CHECKBOX TOGGLE SWITCH */
+/* @apply rules for documentation, these do not work as inline style */
+.toggle-checkbox:checked {
+  @apply: right-0 border-green-400;
+  right: 0;
+  border-color: #68d391;
+}
+.toggle-checkbox:checked + .toggle-label {
+  @apply: bg-green-400;
+  background-color: #68d391;
+}
+
+
+.form-field {
+  @apply mb-6 p-3 focus:border-blue-700 rounded border-2 outline-none;
+}
+
+.btn-submit {
+  @apply py-3 px-4 bg-gradient-to-r from-green-400 to-blue-600 hover:from-green-500 hover:to-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg
+}
+
+.btn {
+  @apply px-4 py-2 text-base font-medium leading-6 shadow-md focus:outline-none inline-flex items-center justify-center rounded-md;
+}
+
+.btn-sm {
+  @apply px-2 py-1 text-base font-medium leading-6 shadow-md focus:outline-none inline-flex items-center justify-center rounded-sm;
+}
+
+.btn-blue {
+  @apply bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white hover:text-white;
+}
+
+.btn-green {
+  @apply bg-green-500 hover:bg-green-600 focus:ring-0 text-black hover:text-black;
+}
+
+.btn-lime {
+  @apply bg-lime-500 hover:bg-lime-400 focus:ring-0 text-black hover:text-black;
+}
+
+.btn-yellow {
+  @apply bg-yellow-400 hover:bg-yellow-300 focus:ring-0 text-black hover:text-black;
+}
+
+.btn-indigo {
+  @apply bg-indigo-400 hover:bg-indigo-500 focus:ring-0 text-white hover:text-white;
+}
+
+.btn-red {
+  @apply bg-red-600 hover:bg-red-700 focus:ring-0 text-white hover:text-white;
+}
+
+.btn-gray {
+  @apply bg-gray-500 hover:bg-gray-600 focus:ring-0 text-white hover:text-white;
+}
+
+.btn-black {
+  @apply bg-black hover:bg-gray-900 focus:ring-0 text-white hover:text-white;
+}

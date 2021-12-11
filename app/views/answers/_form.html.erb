@@ -1,0 +1,21 @@
+<%= form_with(model: answer) do |form| %>
+  <% if answer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
+
+      <ul>
+        <% answer.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.text_field :answer_given, placeholder:"Answer given", class:"form-field w-full"%>
+
+  <%= select_tag(:answers_type, options_for_select([['Multiple choice with 1 answer', 'radial'], ['Multiple choice with multiple answers', 'checkbox'], ['Open answer', 'open']], answer.answers_type), {:class => 'form-field w-full'}) %>
+
+  <%= form.text_field :mark_achieved, placeholder:"Mark achieved", class:"form-field w-full" %>
+
+  <%= form.submit "Submit", class:"btn-submit" %>
+<% end %>

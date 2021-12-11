@@ -1,0 +1,26 @@
+<%= turbo_frame_tag "trash_assignments" do %>
+  <div class="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
+    <div class="px-4 py-5 sm:px-6 border-b w-full">
+      <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+        Deleted Assignments
+      </h3>
+    </div>
+    <ul class="flex flex-col w-full">
+      <% @assignments.each do |assignment| %>
+        <li class="flex flex-row">
+          <div class="select-none cursor-pointer flex flex-1 items-center p-4 justify-between">
+            <div class="justify-center items-center mr-4">
+              <%= assignment.name %>
+            </div>
+            <div class="text-gray-600 dark:text-gray-200 text-xs">
+              <%= assignment.deleted_at.strftime("%d/%m/%Y - %k:%M") %>
+            </div>
+            <%= link_to admin_trash_restore_path(klass: assignment.class.name, id: assignment.id), class:'btn-sm btn-indigo' do %>
+              Recover
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

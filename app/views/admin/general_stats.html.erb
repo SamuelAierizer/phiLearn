@@ -1,0 +1,58 @@
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/admin_sidenav' %>
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Admin Dashboard</h1>
+            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+          </div>
+          <div class="mx-4">
+          </div>
+        </div>
+
+        <!-- Page Conent -->
+        <div class="mt-8 mb-16 dark:text-white">
+          <%= turbo_frame_tag "admin_content" do %>
+            <div class="mb-16 mt-8">
+              <h2 class="font-semibold text-3xl border-b dark:text-white">Statistics</h2>
+
+              <div class="flex flex-col">
+                <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-4 dark:text-white">
+                  <h2 class="text-2xl w-max text-gray-800 dark:text-gray-200 font-semibold border-b border-gray-300 mb-4">Users</h2>
+                  <%= area_chart User.where(school_id: @school.id).group(:created_at).count, loading: "Loading..." %>
+                </div> 
+
+                <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
+                  <h2 class="text-2xl w-max text-gray-800 dark:text-gray-200 font-semibold border-b border-gray-300 my-4">Grades</h2>
+                  <%= column_chart  [["1", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade <= 1' ).count],
+                                    ["1-2", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 1 and grade <= 2').count],
+                                    ["2-3", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 2 and grade <= 3').count],
+                                    ["3-4", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 3 and grade <= 4').count],
+                                    ["4-5", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 4 and grade <= 5').count],
+                                    ["5-6", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 5 and grade <= 6').count],
+                                    ["6-7", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 6 and grade <= 7').count],
+                                    ["7-8", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 7 and grade <= 8').count],
+                                    ["8-9", Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 8 and grade <= 9').count],
+                                    ["10",Solution.where(user_id: User.where(school_id: @school.id).pluck(:id)).where('grade > 9').count]],
+                                    loading: "Loading..." %>
+                </div>
+              </div>
+      
+            </div>
+          <% end %>
+
+        </div>
+          
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,10 @@
+production:
+  adapter: redis
+  url: redis://redistogo:3fbd6606369f1a9be8e2da1c22ff81c4@pike.redistogo.com:10305/
+
+development:
+  adapter: redis
+  url: redis://localhost:6379/1
+
+test:
+  adapter: test

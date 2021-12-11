@@ -1,0 +1,24 @@
+{
+  "name": "app",
+  "private": "true",
+  "dependencies": {
+    "@hotwired/stimulus": "^3.0.1",
+    "@hotwired/turbo-rails": "^7.1.0",
+    "autoprefixer": "^10.4.0",
+    "chart.js": "^3.6.1",
+    "chartkick": "^4.1.1",
+    "esbuild": "^0.14.1",
+    "flatpickr": "^4.6.9",
+    "postcss": "^8.4.4",
+    "stimulus": "^3.0.1",
+    "stimulus-checkbox-select-all": "^5.0.0",
+    "stimulus-flatpickr": "^1.4.0",
+    "stimulus-rails-nested-form": "^4.0.0",
+    "tailwindcss": "^2.2.19",
+    "tailwindcss-stimulus-components": "^3.0.1"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
+  }
+}

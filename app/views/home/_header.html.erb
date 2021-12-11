@@ -1,0 +1,31 @@
+<!-- Home Navbar -->
+<section class="relative w-full px-8 text-gray-700 dark:text-white dark:bg-gray-900 body-font py-0">
+  <div class="container flex flex-col flex-wrap items-center justify-between py-4 mx-auto md:flex-row max-w-7xl">
+		<div class="relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-black dark:text-white select-none mb-8 md:mb-0">
+			<%= link_to 'phiLearn' , root_path %>
+		</div>
+
+    <div class="relative z-10 inline-flex items-center space-x-3 md:ml-5 lg:justify-end">
+			
+			<% if user_signed_in? %>
+				<%= link_to "Dashboard", schools_path, class:"inline-flex items-center justify-center font-medium text-gray-800 dark:text-white" %>
+					
+				<span class="inline-flex rounded-md shadow-sm">
+					<div class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 whitespace-no-wrap bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+						<%= link_to "Sign Out", destroy_user_session_path, "data-turbo-method": "delete", class:"text-white hover:text-white " %>
+					</div>
+				</span>
+
+			<% else %>
+				<%= link_to "Register", new_school_path, class:"inline-flex items-center justify-center font-medium text-gray-800 dark:text-white px-4" %>
+
+				<span class="inline-flex rounded-md shadow-sm">
+					<div class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 whitespace-no-wrap bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+						<%= link_to "Log In", new_user_session_path, class:"text-white hover:text-white" %>
+					</div>
+				</span>
+
+			<% end %>
+    </div>
+  </div>
+</section>

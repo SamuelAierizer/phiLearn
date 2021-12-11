@@ -1,0 +1,55 @@
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/sidenav' %>
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+          <%= link_to schools_path do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Sign Up</h1>
+            <h2 class="text-md text-gray-400">Royal Rangers</h2>
+          </div>
+        </div>
+
+        <div class="mt-16 flex flex-col">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+
+            <%= f.text_field :first_name, autocomplete: "first name", class:"form-field w-full", placeholder:"First Name" %>
+
+            <%= f.text_field :last_name, autocomplete: "last name", class:"form-field w-full", placeholder:"Last Name" %>
+
+            <%= f.text_field :username, autocomplete: "username", class:"form-field w-full", placeholder:"Username" %>
+
+            <%= f.email_field :email, autocomplete: "email", class:"form-field w-full", placeholder:"Email" %>
+
+            <%= f.password_field :password, autocomplete: "new-password", class:"form-field w-full", placeholder:"Password" %>
+
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-field w-full", placeholder:"Password confirmation" %>
+              
+            <%= select_tag(:role, options_for_select([['Admin', 'admin'], ['Teacher', 'teacher'], ['Student', 'student']], 'student'), {:class => 'form-field w-full'}) %>
+
+            <%= f.submit "Sign up", class:"btn-submit mt-4" %>
+          <% end %>        
+
+        <div class="mt-16 mb-24">  
+          <h2 class="text-4xl font-semibold text-gray-800 dark:text-white">Import users from csv</h2>
+
+          <div class="flex flex-col">
+            <%= form_tag users_import_path, multipart: true do %>
+              <div class="my-4 dark:text-gray-400"><%= file_field_tag :file %></div>
+              <div class="my-4"><%= submit_tag "Import CSV", class:"btn btn-green" %></div>
+            <% end %>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</main>

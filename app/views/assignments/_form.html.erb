@@ -1,0 +1,41 @@
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+<% end %>
+
+<div class="signup-form">
+  <%= form_with(model: assignment) do |form| %>
+    <% if assignment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+
+        <ul>
+          <% assignment.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Name of the assignment" %>
+
+    <%= form.text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full", placeholder:"Description" %>
+
+    <%= select_tag(:assignment_type, options_for_select([['Hand in', 'handIn'], ['Quizz', 'quizz']], 'handIn'), {:class => 'form-field w-full'}) %>
+
+    <%= form.text_field :deadline,
+      data: {
+      controller: "flatpickr",
+      flatpickr_enable_time: true,
+      flatpickr_alt_format: t("date.formats.long"),
+      flatpickr_date_format: "%B %d, %Y H:i",
+      flatpickr_min_date: Time.current - 1.day
+      }, class:"form-field w-full", placeholder:'Select date for deadline' %>
+
+    <div class="">
+      <div class="form-field w-full bg-white"> <%= @course.name %> </div>
+      <%= form.number_field :course_id, id: :assignment_course_id, value: @course.id, type: :hidden %>
+    </div>
+
+    <%= form.submit 'Submit', class:"btn-submit mt-4" %>
+  <% end %>
+</div>

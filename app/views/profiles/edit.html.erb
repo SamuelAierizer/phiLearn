@@ -1,0 +1,7 @@
+<%= turbo_frame_tag 'profile' do %>
+  <h1 class="text-2xl font-semibold mb-8">Editing Profile</h1>
+
+  <%= render 'profiles/form', profile: @profile %>
+
+  <%= link_to 'Cancel', profile_path(@profile.id), class:'btn-sm btn-red mt-8' %>
+<% end %>
