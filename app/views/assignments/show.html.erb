@@ -79,7 +79,7 @@
             <%= f.submit 'Submit', class: 'btn btn-blue' %>
           <% end %>
           <div class="mt-5 mb-16">
-            <%= render @assignment.comments %>
+            <%= render @assignment.comments, target: @assignment %>
           </div>
         </div>
         

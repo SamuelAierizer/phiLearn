@@ -83,7 +83,7 @@
             <%= f.submit 'Submit', class: 'btn btn-blue' %>
           <% end %>
           <div class="mt-4 mb-16">
-            <%= render @course.comments %>
+            <%= render @course.comments, target: @course %>
           </div>
         </div> 
       </div>
