@@ -48,55 +48,20 @@
           <% end %>
 
           <div class="mt-5">
-              <p class="mb-2"><b>Deadline:</b> <%= @assignment.deadline.to_formatted_s(:long) %></p>
-              <% if @warn %>
-                <div class="px-4 py-3 leading-normal text-blue-700 bg-blue-100 dark:text-blue-900 dark:bg-blue-400 rounded-lg" role="alert">
-                  <b>Time left:</b> <%= @left %>
-                </div>
-              <% else %>
-                <div class="px-4 py-3 leading-normal text-red-700 bg-red-100 dark:text-red-900 dark:bg-red-400  rounded-lg" role="alert">
-                  <b>Time left:</b> <%= @left + ' overdue' %>
-                </div>
-              <% end %>
+              <%= printDeadline @assignment %>
+              <%= printTimeLeft @assignment %>
             </div>
         </div>
 
         <div class="my-5 dark:text-white">
-          <% if current_user.student? %>
-            <% if @exists %>
-              <p>
-                <strong>Grade for assignment:</strong>
-                <%= @solution.grade.truncate(2) unless @solution.grade.blank? %>
-              </p>
+          <%= solveAssignment @assignment %>
 
-              <p>
-                <strong>Your solution:</strong>
-                <%= link_to "View", solution_path(@solution.id), class:"font-semibold" %>
-              </p>
-            <% else %>
-              <div class="">
-                <% if @assignment.handIn? %>
-                  <%= render 'solutions/handIn_form', solution: @newSolution %>
-                <% else %>
-                  <%= link_to "Solve Quizz", new_solution_path(id: @assignment.id), class:"btn btn-blue" %>
-                <% end %>
-              </div>
-            <% end %>
-          <% elsif @assignment.quizz? %>
+          
+          <% if @assignment.quizz? and !current_user.student? %>
             <h2 class="text-2xl font-bold mt-16">Questions</h2>
 
             <% @questions.each do |question| %>
-            <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 dark:text-white relative my-4">
-              <div class="">
-                <h3 class="text-xl"><%= link_to question.question_asked, edit_question_path(question, assignment_id: @assignment.id), class:"" %></h3>
-                <h4 class="text-gray-600 dark:text-gray-300"><%= question.mark_available %> points</h4>
-                <p class="mt-4 ml-4">
-                  <% question.question_options.each do |option| %>
-                    <%= option.value %> </br>
-                  <% end %>
-                </p>
-              </div>
-            </div>
+              <%= render 'questions/question', assignment_id: @assignment.id, question: question %>
             <% end %>
           <% end %>
         </div>

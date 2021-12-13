@@ -15,28 +15,10 @@ class AssignmentsController < ApplicationController
   def show
     authorize @assignment
 
-    @target = @assignment
-    if current_user.student?
-      @exists = Solution.where(user_id: current_user.id, assignment_id: @assignment.id).exists?
-      @solution = Solution.where(user_id: current_user.id, assignment_id: @assignment.id).first
-      @newSolution = Solution.new
-    else
-      @questions = Question.where(assignment_id: @assignment.id)
-    end
-    @assets = Resource.get_for(@assignment.class.name, @assignment.id)
+    @questions = Question.where(assignment_id: @assignment.id)
 
-    time = Time.current
-    if @assignment.deadline
-      @left = distance_of_time_in_words(time, @assignment.deadline)
-    else
-      @assignment.deadline = Time.current + 5.years
-      @left = 'No deadline'
-    end
-    if time < @assignment.deadline
-      @warn = true
-    else
-      @warn = false
-    end
+    @target = @assignment
+    @assets = Resource.get_for(@assignment.class.name, @assignment.id)
   end
 
   def new

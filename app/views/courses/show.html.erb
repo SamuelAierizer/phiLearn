@@ -20,7 +20,7 @@
           </div>
           <div class="flex flex-row my-auto md:justify-between">
             <% unless current_user.student? %>
-              <div><%= link_to 'Students', course_add_users_path(course_id: @course.id), class:'btn-sm btn-indigo' %></div>
+              <div><%= link_to 'Students', course_add_users_path(course_id: @course.id), class:'btn-sm btn-blue' %></div>
               <div class="mx-2 relative" data-controller="dropdown">
                 <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="btn-sm btn-lime">
                   Add To Course

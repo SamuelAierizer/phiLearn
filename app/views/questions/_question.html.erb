@@ -1,0 +1,11 @@
+<div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 dark:text-white relative my-4">
+  <div class="">
+    <h3 class="text-xl"><%= link_to question.question_asked, edit_question_path(question, assignment_id: assignment_id), class:"" %></h3>
+    <h4 class="text-gray-600 dark:text-gray-300"><%= question.mark_available %> points</h4>
+    <p class="mt-4 ml-4">
+      <% question.question_options.each do |option| %>
+        <%= option.value %> </br>
+      <% end %>
+    </p>
+  </div>
+</div>
