@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "parentField" ]
+  static targets = [ "parentField", "text" ]
 
   static values = {
     privilage: String,
@@ -23,5 +23,9 @@ export default class extends Controller {
   setParent(event) {
     let parentId = event.target.id;
     this.parentFieldTarget.value = parentId;
+  }
+
+  setText({ params: { text } }) {
+    this.textTarget.textContent = text;
   }
 }

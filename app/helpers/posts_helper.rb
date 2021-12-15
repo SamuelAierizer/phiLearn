@@ -15,7 +15,7 @@ module PostsHelper
 
   def mainReplyButton(topic)
     unless topic.is_blocked
-      content_tag :button, "data-action": 'click->toggle#show touch->toggle#show click->reply#setParent', id: 0, class:"btn-sm btn-lime" do 
+      content_tag :button, "data-action": 'click->toggle#show touch->toggle#show click->reply#setParent click->reply#setText', "data-reply-text-param": 'current topic', id: 0, class:"btn-sm btn-lime" do 
         "Reply"
       end
     end
@@ -24,7 +24,7 @@ module PostsHelper
   def replyButton(post)
     unless post.topic.is_blocked
       content_tag :div, class:"ml-1 hover:bg-gray-200 px-1" do
-        content_tag :button, "data-action": 'click->toggle#show touch->toggle#show click->reply#setParent', id: post.id,  class:"p-1" do           
+        content_tag :button, "data-action": 'click->toggle#show touch->toggle#show click->reply#setParent click->reply#setText', "data-reply-text-param": "#{post.user.username}'s post - #{truncate(post.content)}", id: post.id,  class:"p-1" do           
           concat content_tag :i, '', class:"fas fa-reply mr-1", id: post.id
           concat content_tag :span, "Reply", id: post.id
         end

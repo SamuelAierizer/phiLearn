@@ -36,24 +36,10 @@
         </div>
 
         <!-- Reply Popup -->
-        <div data-toggle-target='toggleable' class="hidden w-11/12 lg:w-9/12 xl:w-4/5 absolute bottom-4 flex justify-center min-h-48 z30">
-          <div class="w-11/12 bg-white dark:bg-gray-800 shadow-xl">
-            <div class="w-full h-2 bg-blue-500 mb-2"></div>
-            <div class="flex flex-row-reverse">
-              <button data-action='click->toggle#hide touch->toggle#hide' class="mr-2 dark:text-white">
-                <i class="fas fa-chevron-down font-normal mx-4"></i>
-              </button>
-            </div>
-            
-            <div class="px-8 pb-8">
-              <%= turbo_frame_tag "post_form" do %>
-                <%= render 'form2', post: @post, topic_id: @topic.id %>
-              <% end %>
-            </div>
-
-          </div>
-        </div>
-      
+        <%= turbo_frame_tag "post_form" do %>
+          <%= render 'form2', post: @post, topic_id: @topic.id %>
+        <% end %>
+    
       </div>
     </div>
   </div>

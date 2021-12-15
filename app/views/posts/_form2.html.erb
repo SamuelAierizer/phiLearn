@@ -1,32 +1,51 @@
 <%= turbo_frame_tag "post_form" do %>
-  <%= form_with(model: post, id: dom_id(post), remote: true) do |form| %>
-    
-    <% if post.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-        <ul>
-          <% post.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
+  <div data-toggle-target='toggleable' class="hidden w-11/12 lg:w-9/12 xl:w-4/5 absolute bottom-4 flex justify-center min-h-48 z30">
+    <div class="w-11/12 bg-white dark:bg-gray-800 shadow-xl">
+      <div class="w-full h-2 bg-blue-500 mb-2"></div>
+      <div class="flex flex-row-reverse">
+        <button data-action='click->toggle#hide touch->toggle#hide' class="mr-2 dark:text-white">
+          <i class="fas fa-chevron-down font-normal mx-4"></i>
+        </button>
       </div>
-    <% end %>
+      
+      <div class="px-8 pb-8">
 
-    <div class="w-full">
-      <%= form.text_area :content, size:"5x5", autocomplete: "content", class:"form-field w-11/12", placeholder:"Write your reply" %>
+        <%= form_with(model: post, id: dom_id(post), remote: true) do |form| %>
+          
+          <% if post.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+              <ul>
+                <% post.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-field w-11/12 bg-white"> 
+            <strong>Reply to: </strong>
+            <span data-reply-target="text"></span>
+          </div>
+
+          <div class="w-full">
+            <%= form.text_area :content, size:"3x3", autocomplete: "content", class:"form-field w-11/12", placeholder:"Write your reply" %>
+          </div>
+          
+          <%= form.hidden_field :topic_id, value: topic_id %>
+
+          <%= form.hidden_field :parent_id, value: 0, "data-reply-target": "parentField" %>
+
+          <div class="flex flex-row">
+            <%= form.submit 'Post', class:'btn-sm btn-blue mx-4' %>
+            <button data-action='click->toggle#hide touch->toggle#hide' class="btn-sm btn-red">
+              Cancle
+            </button>
+          </div>
+
+        <% end %>
+      </div>
     </div>
-    
-    <%= form.hidden_field :topic_id, value: topic_id %>
-
-    <%= form.hidden_field :parent_id, value: 0, "data-reply-target": "parentField" %>
-
-    <div class="flex flex-row">
-      <%= form.submit 'Post', class:'btn-sm btn-blue mx-4' %>
-      <button data-action='click->toggle#hide touch->toggle#hide' class="btn-sm btn-red">
-        Cancle
-      </button>
-    </div>
-
-  <% end %>
+  </div>
 <% end %>
