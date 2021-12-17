@@ -8,7 +8,7 @@
       <!-- Header -->
       <%= render 'shared/navbar' %>
 
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6" data-controller="reply" data-reply-privilage-value=<%= current_user.role %> data-reply-uid-value=<%= current_user.id %> > 
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6 z-20" data-controller="reply" data-reply-privilage-value=<%= current_user.role %> data-reply-uid-value=<%= current_user.id %> > 
         <!-- Page Head -->
         <div class="mt-4 flex flex-row dark:text-white">
           <%= link_to forum_path(id: @topic.forum.id) do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>

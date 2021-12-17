@@ -1,73 +1,20 @@
 <div class="h-screen hidden lg:block shadow-lg relative w-80" data-look-target="nav">
-  <div class="bg-gray-900 h-full dark:bg-black">
+  <div class="bg-gray-900 h-full dark:bg-black" data-controller="animation">
     <div class="flex items-center justify-center pt-6">
       <%= link_to "phiLearn", root_path, class:"text-2xl font-bold font-serif text-gray-500 dark:text-white dark:hover:text-blue-700" %>
     </div>
-    <nav class="mt-12">
-      <div>
-        <%= link_to schools_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
-          <i class="fas fa-tachometer-alt text-left"></i>
-          <div class="mx-4 text-md">Dashboard</div>
-        <% end %>
+    <div class="w-full mt-12 relative">
+    
+    <% if current_user.admin? %>
+      <%= render 'shared/admin_panel' %>
+    <% elsif current_user.teacher? %>
+      <%= render 'shared/teacher_panel' %>
+    <% else %>
+      <%= render 'shared/student_panel' %>
+    <% end %>
+    
+    <div class="bg-gray-100 dark:bg-gray-900 h-screen w-full translate-x-full absolute top-0 z-10"></div>
 
-        <% if current_user.admin? %>
-          <!-- Admin options -->
-          <%= link_to schools_overview_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
-            <i class="fas fa-users text-left"></i>
-            <div class="mx-4 text-md">Users</div>
-          <% end %>
-              
-          <%= link_to courses_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
-            <i class="fas fa-atlas text-left"></i>
-            <div class="mx-4 text-md">Courses</div>
-          <% end %>
-
-          <%= link_to admin_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
-            <i class="fas fa-user-shield text-left"></i>
-            <div class="mx-4 text-md">Admin</div>
-          <% end %>
-
-        <% elsif current_user.teacher? %>
-          <!-- Teacher options -->
-          <%= link_to courses_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
-            <i class="fas fa-atlas text-left"></i>
-            <div class="mx-4 text-md">Courses</div>
-          <% end %>
-
-          <% @courses.each do |course| %>
-            <div data-controller='toggle' class="items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100">
-              <button data-action='click->toggle#toggle touch->toggle#toggle' class="flex flex-row w-full">
-                <i class="fas fa-user-graduate text-left"></i>
-                <div class="mx-4 text-md  flex-grow text-left"> <%= course.name %> </div>
-                <i class="fas fa-angle-down float-right"></i>
-              </button>
-              <div data-toggle-target='toggleable' class="flex flex-col ml-8 md:ml-16 my-2 hidden ">
-                <%= link_to 'Visit', course, class:'my-1' %>
-                <%= link_to 'Lectures', lectures_path(course_id: course.id), class:'my-1' %>
-                <%= link_to 'Assignments', assignments_path(course_id: course.id), class:'my-1' %>
-              </div>
-            </div>
-          <% end %>
-
-        <% else %>
-          <!-- User options -->
-          <% @courses.each do |course| %> 
-            <div data-controller='toggle' class="items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100">
-              <button data-action='click->toggle#toggle touch->toggle#toggle' class="flex flex-row w-full">
-                <i class="fas fa-user-graduate text-left"></i>
-                <div class="mx-4 text-md  flex-grow text-left"> <%= course.name %> </div>
-                <i class="fas fa-angle-down text-right"></i>
-              </button>
-              <div data-toggle-target='toggleable' class="flex flex-col ml-8 md:ml-16 my-2 hidden ">
-                <%= link_to 'Visit', course, class:'my-1' %>
-                <%= link_to "Grades", course_grades_path(course) , class:"my-1"%>
-                <%= link_to "Deadlines", course_deadlines_path(course) , class:"my-1"%>
-              </div>
-            </div>
-          <% end %>
-
-        <% end %>
-      </div>
-    </nav>
+    </div>
   </div>
 </div>

@@ -1,13 +1,13 @@
 <main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
   <div class="flex items-start justify-between">
     <!-- Sidenav --> 
-    <%= render 'shared/admin_sidenav' %>
+    <%= render 'shared/sidenav' %>
 
     <div class="flex flex-col w-full md:space-y-4">
       <!-- Header -->
       <%= render 'shared/navbar' %>
 
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6 z-20">
         <!-- Page Head -->
         <div class="mt-4 flex flex-col md:flex-row dark:text-white">
           <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
