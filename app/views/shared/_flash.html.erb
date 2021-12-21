@@ -1,7 +1,7 @@
 <% if flash.any? %>
   <% flash.each do |type, message| %>
     <div class="fixed inset-x-0 top-0 flex items-end justify-right px-4 py-6 sm:p-6 justify-end z-50 pointer-events-none">
-      <div data-controller="alert" class="max-w-sm w-full shadow-lg rounded px-4 py-3 relative <%= tailwind_classes_for type %> pointer-events-auto">
+      <div data-controller="alert" data-alert-dismiss-after-value="3000" class="max-w-sm w-full shadow-lg rounded px-4 py-3 relative <%= tailwind_classes_for type %> pointer-events-auto">
         <div class="p-2">
           <div class="flex items-start">
             <div class="ml-3 w-0 flex-1 pt-0.5">

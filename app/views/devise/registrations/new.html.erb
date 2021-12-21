@@ -13,7 +13,7 @@
           <%= link_to schools_path do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
           <div class="flex-col flex-grow">
             <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Sign Up</h1>
-            <h2 class="text-md text-gray-400">Royal Rangers</h2>
+            <h2 class=" text-gray-400">Royal Rangers</h2>
           </div>
         </div>
 
@@ -36,18 +36,7 @@
             <%= select_tag(:role, options_for_select([['Admin', 'admin'], ['Teacher', 'teacher'], ['Student', 'student']], 'student'), {:class => 'form-field w-full'}) %>
 
             <%= f.submit "Sign up", class:"btn-submit mt-4" %>
-          <% end %>        
-
-        <div class="mt-16 mb-24">  
-          <h2 class="text-4xl font-semibold text-gray-800 dark:text-white">Import users from csv</h2>
-
-          <div class="flex flex-col">
-            <%= form_tag users_import_path, multipart: true do %>
-              <div class="my-4 dark:text-gray-400"><%= file_field_tag :file %></div>
-              <div class="my-4"><%= submit_tag "Import CSV", class:"btn btn-green" %></div>
-            <% end %>
-          </div>
-        </div>
+          <% end %>
       
       </div>
     </div>

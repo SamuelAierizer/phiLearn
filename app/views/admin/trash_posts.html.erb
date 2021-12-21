@@ -1,9 +1,10 @@
 <%= turbo_frame_tag "trash_posts" do %>
   <div class="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
-    <div class="px-4 py-5 sm:px-6 border-b w-full">
+    <div class="px-4 py-5 sm:px-6 border-b w-full flex flex-row justify-between">
       <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
         Deleted Posts
       </h3>
+      <%= link_to "Delete all", admin_trash_empty_path(klass: Post, ids: @posts.ids), data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }, class:'btn-sm btn-red' %>
     </div>
     <ul class="flex flex-col w-full">
       <% @posts.each do |post| %>

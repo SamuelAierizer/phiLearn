@@ -49,6 +49,8 @@ Rails.application.routes.draw do
   get 'admin', to: 'admin#index'
   get 'admin/stats', to: 'admin#general_stats'
   get 'admin/forum', to: 'admin#forum_panel'
+  get 'admin/accounts/import', to: 'admin#import'
+  get 'admin/accounts/export', to: 'admin#export'
   get 'admin/trash', to: 'admin#trash'
   get 'admin/trash/users', to: 'admin#trash_users'
   get 'admin/trash/courses', to: 'admin#trash_courses'
@@ -59,6 +61,7 @@ Rails.application.routes.draw do
   get 'admin/trash/topics', to: 'admin#trash_topics'
   get 'admin/trash/posts', to: 'admin#trash_posts'
   get 'admin/trash/restore', to: 'admin#restore'
+  delete 'admin/trash/empty', to: 'admin#empty'
 
 
   get 'public/profiles/:username', to: 'profiles#public'
@@ -67,6 +70,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   devise_scope :user do
+    get 'users', to: 'users/general#index'
     delete 'users/clear', to: 'users/registrations#clear'
     post 'users/import', to: 'users/registrations#import'
     delete 'users/mass_delete', to: 'users/registrations#mass_delete'

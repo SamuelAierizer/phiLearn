@@ -16,7 +16,7 @@
               <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= @lecture.name %></h1>
             <%= link_to '(edit)', edit_lecture_path(@lecture), class:"ml-2 my-auto underline" unless current_user.student? %> 
             </div>
-            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+            <h2 class=" text-gray-400"><%= @school.name %></h2>
           </div>
           <div class="mx-4">
             <%= link_to 'Add Asset', new_resource_path(material_type: @lecture.class.name, material_id: @lecture.id), class:"btn-sm btn-lime" unless current_user.student? %>

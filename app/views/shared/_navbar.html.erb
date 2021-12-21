@@ -12,7 +12,13 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
       </button>
-      <div class="relative mr-2 md:mr-8 " data-controller="dropdown">
+      <div class="relative mr-2 md:mr-8 " data-controller="dropdown"
+            data-dropdown-invisible-class="opacity-0 scale-95"
+            data-dropdown-visible-class="opacity-100 scale-100"
+            data-dropdown-entering-class="ease-out duration-300"
+            data-dropdown-enter-timeout="300"
+            data-dropdown-leaving-class="ease-in duration-300"
+            data-dropdown-leave-timeout="300">
         <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="inline-block select-none">
           <span class="appearance-none flex items-center text-gray-700 dark:text-white">
             <i class="fas fa-user fa-fw"></i>
@@ -20,7 +26,7 @@
             <i class="fas fa-angle-down"></i>
           </span>
         </div>
-        <div data-dropdown-target="menu" class="absolute right-0 mt-2 hidden w-48">
+        <div data-dropdown-target="menu" class="absolute right-0 mt-2 hidden w-48 transform transition opacity-0, scale-95">
           <div class="bg-white shadow rounded border overflow-hidden">
             <%= link_to "Profile", profile_path(current_user.id), data: {action: "click->dropdown#toggle"}, class: 'no-underline block px-8 pt-3 text-gray-900 bg-white whitespace-nowrap' %>
             <%= link_to "User Settings", edit_user_registration_path, data: {action: "click->dropdown#toggle"}, class: 'no-underline block px-8 py-3 text-gray-900 bg-white whitespace-nowrap' %>

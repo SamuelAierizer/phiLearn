@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_school, only: %i[index general_stats forum_panel trash]
+  before_action :set_school, only: %i[index general_stats forum_panel import export trash]
   
   def index
   end
@@ -9,6 +9,12 @@ class AdminController < ApplicationController
   end
 
   def forum_panel
+  end
+
+  def import
+  end
+
+  def export
   end
 
   def trash  
@@ -53,6 +59,12 @@ class AdminController < ApplicationController
     if @object.update(deleted_at: nil)
       redirect_to "#{admin_trash_path}/#{params[:klass].downcase.pluralize}"
     end
+  end
+
+  def empty
+    klass = Object.const_get params[:klass]
+    klass.where(id: params[:ids]).delete_all
+    redirect_to "#{admin_trash_path}/#{params[:klass].downcase.pluralize}", status: 303
   end
   
 end

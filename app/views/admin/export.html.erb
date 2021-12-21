@@ -1,0 +1,83 @@
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/sidenav' %>
+
+
+    <div class="flex flex-col w-full md:space-y-4">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6 z-20">
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Admin Dashboard</h1>
+            <h2 class=" text-gray-400"><%= @school.name %></h2>
+          </div>
+          <div class="mx-4">
+          </div>
+        </div>
+
+        <!-- Page Conent -->
+        <div class="mt-8 mb-16 dark:text-white">
+          <%= turbo_frame_tag "admin_content" do %>
+            <div class="mb-16 mt-8">
+              <h2 class="font-semibold text-3xl border-b dark:text-white">Export users to CSV</h2>
+
+              <div class="flex flex-col">
+                <div class="shadow-lg px-8 py-6 w-full bg-white dark:bg-gray-800 relative my-4 dark:text-white">
+                  <%= form_with url: "#{users_path}.csv", method: :get do |form| %>
+
+                    <p class="text-lg my-2 text-gray-600 dark:text-gray-300">You can download users data in CSV format based on your reqests.</p>
+
+                    <p class="text-lg mt-8"><strong>Step1:</strong> Set export options </p>
+                    <div class="flex flex-col">
+
+                      <div class="flex flex-row mt-8">
+                        <div class="text-lg w-1/4">&#8226 Role:</div>
+                        <div class="flex flex-grow">
+                          <%= select_tag :role,
+                            options_for_select(
+                              User.roles.map {|key, value| [key.titleize, User.roles.key(value)]}, params[:role]
+                            ),
+                            include_blank: "All Roles",
+                            class: "w-1/2 p-2 focus:border-blue-700 rounded border-2 outline-none dark:bg-gray-700 dark:border-black"
+                          %>
+                        </div>
+                      </div>
+
+                      <div class="flex flex-row mt-8">
+                        <div class="text-lg w-1/4">&#8226 With profile information:</div>
+                        <div class="relative inline-block w-10 mx-2 align-middle justify-center select-none transition duration-200 ease-in">
+                          <%= form.check_box :info, class: 'toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer' %>
+                          <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-600 cursor-pointer"></label>
+                        </div>
+                      </div>
+
+                      <div class="flex flex-row mt-8">
+                        <div class="text-lg w-1/4">&#8226 Export deleted:</div>
+                        <div class="relative inline-block w-10 mx-2 align-middle justify-center select-none transition duration-200 ease-in">
+                          <%= form.check_box :deleted, class: 'toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer' %>
+                          <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-600 cursor-pointer"></label>
+                        </div>
+                      </div>
+                    
+                    </div>
+                    
+                    <p class="text-lg mt-16"><strong>Step2:</strong> Export Users </p>
+
+                    <div class="mt-16"><%= submit_tag "Export to CSV", class:"btn btn-blue" %></div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+          <% end %>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</main>

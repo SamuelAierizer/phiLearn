@@ -66,6 +66,16 @@
     <div class="mx-4 text-lg">Main Menu</div>
   </a>
 
+  <%= link_to new_user_registration_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+    <i class="fas fa-user-plus text-left"></i>
+    <div class="mx-4 text-lg">Add Users</div>
+  <% end %>
+
+  <%= link_to schools_overview_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+    <i class="fas fa-users text-left"></i>
+    <div class="mx-4 text-lg">All</div>
+  <% end %>
+
   <%= link_to schools_overview_path(role: 'admin'), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
     <i class="fas fa-user-shield text-left"></i>
     <div class="mx-4 text-lg">Admins</div>
@@ -101,12 +111,7 @@
     <div class="mx-4 text-lg">Table</div>
   <% end %>
 
-  <% @myCourses.each_with_index do |course, index| %>
-    <%= link_to course, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
-      <div class="text-lg"><%= index + 1 %></div>
-      <div class="mx-4 text-lg"><%= course.name %></div>
-    <% end %>
-  <% end %>
+  
   
 </nav>
 
@@ -197,9 +202,23 @@
       <div class="mx-4 text-lg  flex-grow text-left">Accounts</div>
       <i class="fas fa-chevron-down float-right"></i>
     </button>
-    <div data-toggle-target='toggleable' class="text-md flex flex-col ml-8 md:ml-20 my-2 hidden ">
-      <%= link_to 'Imports', "", class:'my-1' %>
-      <%= link_to 'Exports', "", class:'my-1' %>
+    <div data-toggle-target='toggleable' class=" flex flex-col ml-8 md:ml-14 my-2 hidden ">
+      <a class="my-1" 
+          href=<%= admin_accounts_import_url %>
+          data-turbo-frame="admin_content" 
+          data-controller="turbo-frame-history"
+          data-action="click->turbo-frame-history#mutate"
+          data-turbo-frame-history-url-param=<%= admin_accounts_import_url %>>
+        Import
+      </a>
+      <a class="my-1" 
+          href=<%= admin_accounts_export_url %>
+          data-turbo-frame="admin_content" 
+          data-controller="turbo-frame-history"
+          data-action="click->turbo-frame-history#mutate"
+          data-turbo-frame-history-url-param=<%= admin_accounts_export_url %>>
+        Export
+      </a>
     </div>
   </div>
 

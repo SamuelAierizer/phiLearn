@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
+  def render_flash
+    render turbo_stream: turbo_stream.update("flash", partial: "shared/flash")
+  end
+
   private
 
   def user_not_authorized
@@ -41,6 +45,8 @@ class ApplicationController < ActionController::Base
       @courses = current_user.myCourses.where(deleted_at: nil).order(:id)
     elsif current_user.student?
       @courses = current_user.courses.where(deleted_at: nil).order(:id)
+    else
+      @courses = Course.where(owner_id: User.where(school_id: current_user.school_id).pluck(:id), deleted_at: nil).order(:name).all()
     end
   end
 

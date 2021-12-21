@@ -16,7 +16,7 @@
               <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Solution for <%= @solution.assignment.name %></h1>
             <%= link_to '(edit)', edit_solution_path(@solution), class:"ml-2 my-auto underline" unless current_user.student? %> 
             </div>
-            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+            <h2 class=" text-gray-400"><%= @school.name %></h2>
           </div>
           <div class="mx-4">
           </div>

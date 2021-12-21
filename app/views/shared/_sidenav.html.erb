@@ -3,17 +3,17 @@
     <div class="flex items-center justify-center pt-6">
       <%= link_to "phiLearn", root_path, class:"text-2xl font-bold font-serif text-gray-500 dark:text-white dark:hover:text-blue-700" %>
     </div>
-    <div class="w-full mt-12 relative">
+    <div class="w-full mt-12 relative cursor-pointer">
     
-    <% if current_user.admin? %>
-      <%= render 'shared/admin_panel' %>
-    <% elsif current_user.teacher? %>
-      <%= render 'shared/teacher_panel' %>
-    <% else %>
-      <%= render 'shared/student_panel' %>
-    <% end %>
+      <% if current_user.admin? %>
+        <%= render 'shared/admin_panel' %>
+      <% elsif current_user.teacher? %>
+        <%= render 'shared/teacher_panel' %>
+      <% else %>
+        <%= render 'shared/student_panel' %>
+      <% end %>
     
-    <div class="bg-gray-100 dark:bg-gray-900 h-screen w-full translate-x-full absolute top-0 z-10"></div>
+      <div class="bg-gray-100 dark:bg-gray-900 h-screen w-full translate-x-full absolute top-0 z-10"></div>
 
     </div>
   </div>

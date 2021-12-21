@@ -15,7 +15,10 @@
   </head>
 
   <body data-controller="look" data-look-target="page">
-    <%= render 'shared/toasts' %>
+
+    <turbo-frame id="flash">
+      <%= render 'shared/flash' %>
+    </turbo-frame>
 
     <%= yield %>
   </body>

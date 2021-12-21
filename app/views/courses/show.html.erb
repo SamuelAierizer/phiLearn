@@ -16,16 +16,22 @@
               <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= @course.name %></h1> 
               <%= link_to '(edit)', edit_course_path(@course), class:"ml-2 my-auto underline" unless current_user.student? %> 
             </div>
-            <h2 class="text-md text-gray-400"><%= @school.name %></h2>
+            <h2 class=" text-gray-400"><%= @school.name %></h2>
           </div>
           <div class="flex flex-row my-auto md:justify-between">
             <% unless current_user.student? %>
               <div><%= link_to 'Students', course_add_users_path(course_id: @course.id), class:'btn-sm btn-blue' %></div>
-              <div class="mx-2 relative" data-controller="dropdown">
+              <div class="mx-2 relative" data-controller="dropdown"
+                  data-dropdown-invisible-class="opacity-0 scale-95"
+                  data-dropdown-visible-class="opacity-100 scale-100"
+                  data-dropdown-entering-class="ease-out duration-300"
+                  data-dropdown-enter-timeout="300"
+                  data-dropdown-leaving-class="ease-in duration-300"
+                  data-dropdown-leave-timeout="300">
                 <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="btn-sm btn-lime">
                   Add To Course
                 </div>
-                <div data-dropdown-target="menu" class="absolute transform -ml-12 mt-2 hidden w-42 z-30 ">
+                <div data-dropdown-target="menu" class="absolute transform -ml-12 mt-2 hidden w-42 z-30 transition opacity-0 scale-95">
                   <div class="bg-white dark:bg-black shadow-2xl rounded-lg overflow-hidden">
                     <%= addOptions @course %>
                   </div>

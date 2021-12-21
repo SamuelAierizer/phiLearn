@@ -54,13 +54,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def import
     unless params[:file].blank?
       if params[:file].original_filename.split('.').last == "csv"
-        User.import_from(params[:file])
+        User.import_from(params[:file], current_user.school_id)
         redirect_to schools_overview_path, status: 303, notice: 'Users imported successfully.'
         return
       end
     end
 
-    redirect_to new_user_registration_path, alert: 'Could not import from file'
+    flash.now[:error] = 'Could not import from file'
+    render_flash
   end
 
   def mass_delete

@@ -17,7 +17,7 @@ gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'devise', '~> 4.8', git: 'https://github.com/heartcombo/devise', ref: '8593801'
 gem 'pundit', '~> 2.1'
 gem 'nested_form', '~> 0.3.2'
-gem 'activerecord-import', '~> 1.2'
+gem 'activerecord-import', '~> 1.3'
 gem 'filestack-rails', '~> 5.5', '>= 5.5.2'
 gem "chartkick"
 
@@ -38,3 +38,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'
