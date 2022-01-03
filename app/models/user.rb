@@ -40,13 +40,7 @@ class User < ApplicationRecord
     end
   end
 
-  def self.to_csv(with_profile_info)
-    if with_profile_info
-      attributes = %w[first_name last_name username email address phone role]
-    else 
-      attributes = %w[first_name last_name username email role]
-    end
-
+  def self.to_csv(attributes)
     CSV.generate(headers: true) do |csv|
       csv << attributes
 

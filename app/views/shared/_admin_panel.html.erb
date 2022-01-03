@@ -111,9 +111,57 @@
     <div class="mx-4 text-lg">Table</div>
   <% end %>
 
-  
+   <% @courses.each do |course| %>
+      <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+        data-action="animation#apply"
+        data-animation-old-param="course"
+        data-animation-oldfrom-param="translate-x-0"
+        data-animation-oldto-param="-translate-x-full"
+        data-animation-next-param=<%= course.name %>
+        data-animation-nextfrom-param="translate-x-full"
+        data-animation-nextto-param="translate-x-0"
+      >
+        <div class="mx-8 text-lg"><%= course.name %></div>
+        <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
+      </a>
+
+    <% end %>
   
 </nav>
+
+<% @courses.each do |course| %>
+  <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id=<%= course.name %>>
+    <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+          data-action="animation#apply"
+          data-animation-old-param=<%= course.name %>
+          data-animation-oldfrom-param="translate-x-0"
+          data-animation-oldto-param="translate-x-full"
+          data-animation-next-param="course"
+          data-animation-nextfrom-param="-translate-x-full"
+          data-animation-nextto-param="translate-x-0"
+    >
+      <i class="fas fa-chevron-left text-left"></i>
+      <div class="mx-4 text-lg">Main Menu</div>
+    </a>
+
+    <%= link_to course, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+      <div class="mx-8 text-lg">View Course</div>
+    <% end %>
+
+    <%= link_to lectures_path(course_id: course.id), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+      <i class="fas fa-book text-left"></i>
+      <div class="mx-4 text-lg">Lectures</div>
+    <% end %>
+
+    <%= link_to assignments_path(course_id: course.id), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+      <i class="far fa-clipboard text-left"></i>
+      <div class="mx-4 text-lg">Assignments</div>
+    <% end %>
+
+  </nav>
+  
+<% end %>
+  
 
 <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id="admin">
   <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"

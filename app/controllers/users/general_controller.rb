@@ -2,24 +2,22 @@ class Users::GeneralController < ApplicationController
   before_action :set_school
 
   def index
-    if params[:role].present?
-      if params[:deleted] == "1"
-        @users = User.where(school_id: @school.id, role: params[:role]).where.not(deleted_at: nil)
-      else 
-        @users = User.where(school_id: @school.id, role: params[:role], deleted_at: nil)
-      end
-    else
-      if params[:deleted] == "1"
-        @users = User.where(school_id: @school.id).where.not(deleted_at: nil)
-      else 
-        @users = User.where(school_id: @school.id, deleted_at: nil)
-      end
+    if params[:deleted] == "1"
+      @users = User.where(school_id: @school.id, role: params[:roles]).where.not(deleted_at: nil)
+    else 
+      @users = User.where(school_id: @school.id, role: params[:roles], deleted_at: nil)
     end
-
-    params[:info] == "0" ? info = false : info = true
+    
+    attributes = []
+    if params[:name] == "1" then attributes << "first_name" << "last_name" end
+    if params[:username] == "1" then attributes << "username" end
+    if params[:email] == "1" then attributes << "email" end
+    if params[:role] == "1" then attributes << "role" end
+    if params[:address] == "1" then attributes << "address" end
+    if params[:phone] == "1" then attributes << "phone" end
 
     respond_to do |format|
-      format.csv { send_data @users.to_csv(info), filename: "users_#{Time.current.to_i}.csv" }
+      format.csv { send_data @users.to_csv(attributes), filename: "users_#{Time.current.to_i}.csv" }
     end
   end
 

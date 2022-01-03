@@ -1,4 +1,4 @@
-<div class="h-screen hidden lg:block shadow-lg relative w-80" data-look-target="nav">
+<div class="h-screen hidden lg:block shadow-lg relative w-80 overflow-hidden" data-look-target="nav">
   <div class="bg-gray-900 h-full dark:bg-black" data-controller="animation">
     <div class="flex items-center justify-center pt-6">
       <%= link_to "phiLearn", root_path, class:"text-2xl font-bold font-serif text-gray-500 dark:text-white dark:hover:text-blue-700" %>
@@ -13,8 +13,6 @@
         <%= render 'shared/student_panel' %>
       <% end %>
     
-      <div class="bg-gray-100 dark:bg-gray-900 h-screen w-full translate-x-full absolute top-0 z-10"></div>
-
     </div>
   </div>
 </div>
