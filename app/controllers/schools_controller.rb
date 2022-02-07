@@ -7,7 +7,9 @@ class SchoolsController < ApplicationController
     if current_user.student?
       @myCourses = current_user.courses.where(deleted_at: nil).order(:name)
     elsif current_user.teacher?
-      @myCourses = current_user.myCourses.where(deleted_at: nil).order(:name)
+      teacher_courses = current_user.myCourses.where(deleted_at: nil)
+      student_courses = current_user.courses.where(deleted_at: nil)
+      @myCourses = teacher_courses + student_courses
     else
       @myCourses = Course.where(owner_id: User.where(school_id: current_user.school_id).pluck(:id), deleted_at: nil).order(:name).all()
     end

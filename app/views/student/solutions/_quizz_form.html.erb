@@ -1,4 +1,4 @@
-<%= form_with model: solution do |form|%>
+<%= form_with model: solution, url: student_solutions_path(solution) do |form|%>
   <%= form.number_field :grade, id: :solution_grade, value: 0.0, type: :hidden %>
   <%= form.number_field :user_id, id: :solution_user_id, value: current_user.id, type: :hidden %>
   <%= form.number_field :assignment_id, id: :solution_assignment_id, value: @assignment.id, type: :hidden %>

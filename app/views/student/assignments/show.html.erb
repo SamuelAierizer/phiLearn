@@ -23,7 +23,7 @@
             <h2 class="text-gray-400"><%= @school.name %></h2>
           </div>
           <div class="mx-4">
-            <%= link_to "Administrate", @assignment, class:"btn-sm btn-blue" unless current_user.student? %>
+            <%= link_to "Administrate", @assignment, class:"btn-sm btn-blue" if policy(@assignment).update? %>
           </div>
         </div>
 
