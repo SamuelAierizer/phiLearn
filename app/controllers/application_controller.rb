@@ -45,9 +45,9 @@ class ApplicationController < ActionController::Base
 
   def set_data
     @school = School.new(session[:school])
-
     if current_user.teacher?
       @courses = current_user.myCourses.where(deleted_at: nil).order(:id)
+      @studies = current_user.courses.where(deleted_at: nil).order(:id)
     elsif current_user.student?
       @courses = current_user.courses.where(deleted_at: nil).order(:id)
     else

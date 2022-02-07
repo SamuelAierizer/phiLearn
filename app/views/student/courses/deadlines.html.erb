@@ -35,12 +35,12 @@
               <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
                 <% @assignments.each do |assignment| %>
                   <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
-                    <td class="px-4 py-3"><%= link_to assignment.name, assignment, class:"font-semibold" %></td>
+                    <td class="px-4 py-3"><%= link_to assignment.name, student_assignment_path(assignment), class:"font-semibold" %></td>
                     
                     <% if assignment.handIn? %>
                       <td class="px-4 py-3"><%= link_to "Uploaded file", assignment.userSolution(current_user.id).file, class:"underline" unless assignment.userSolution(current_user.id).blank? %></td>
                     <% else %>
-                      <td class="px-4 py-3"><%= link_to "View submission", assignment.userSolution(current_user.id), class:"underline" unless assignment.userSolution(current_user.id).blank? %></td>
+                      <td class="px-4 py-3"><%= link_to "View submission", student_solution_path(assignment.userSolution(current_user.id)), class:"underline" unless assignment.userSolution(current_user.id).blank? %></td>
                     <% end %>
 
                     <td class="px-4 py-3">

@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!
   before_action :not_student
   before_action :set_course, only: %i[ show edit update destroy ]
-  before_action :my_set, only: %i[ add_users new_users stats ]
+  before_action :my_set, only: %i[ grades add_users new_users stats ]
   before_action :set_data
 
   def index
@@ -28,6 +28,15 @@ class CoursesController < ApplicationController
     unless @course.forum
       @forum = @course.build_forum
       @forum.save
+    end
+  end
+
+  def grades
+    @solutions = []
+    if current_user.student?
+      @solutions = Solution.where(user_id: current_user.id, course_id: @course.id, deleted_at: nil).order(:assignment_id)
+    else 
+      @solutions = Solution.where(course_id: @course.id, deleted_at: nil).order(:assignment_id)
     end
   end
 

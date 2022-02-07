@@ -40,6 +40,10 @@
                 <%= render 'admin/trash_placeholder' %>
               <% end %>
 
+              <%= turbo_frame_tag "trash_solutions", src: admin_trash_solutions_path do %>
+                <%= render 'admin/trash_placeholder' %>
+              <% end %>
+
               <%= turbo_frame_tag "trash_forums", src: admin_trash_forums_path do %>
                 <%= render 'admin/trash_placeholder' %>
               <% end %>

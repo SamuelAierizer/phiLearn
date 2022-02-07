@@ -30,7 +30,7 @@ module AssignmentsHelper
 
   def solveAssignment(assignment)
 
-      solution = Solution.where(user_id: current_user.id, assignment_id: @assignment.id).first
+      solution = Solution.where(user_id: current_user.id, assignment_id: @assignment.id, deleted_at: nil).first
       if solution.present?
 
         content_tag :div, class:"flex flex-col space-y-2" do

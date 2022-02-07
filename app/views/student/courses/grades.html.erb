@@ -29,27 +29,17 @@
                 <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                   <th class="px-4 py-3">Assignment</th>
                   <th class="px-4 py-3">File Uploaded</th>
-                  <% unless current_user.student? %>
-                    <th class="px-4 py-3">User</th>
-                    <th class="px-2 py-3"></th>
-                    <th class="px-2 py-3"></th>
-                  <% end %>
                   <th class="px-4 py-3">Grade</th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
                 <% @solutions.each do |solution| %>
                   <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black" >
-                    <td class="px-4 py-3 font-semibold"><%= link_to solution.assignment.name, solution.assignment %></td>
+                    <td class="px-4 py-3 font-semibold"><%= link_to solution.assignment.name, student_assignment_path(solution.assignment) %></td>
                     <% if solution.assignment.handIn? %>
                       <td class="px-4 py-3"><%= link_to "Solution uploaded", solution.file, class:"underline" %></td>
                     <% else %>
-                      <td class="px-4 py-3"><%= link_to "View submission", solution, class:"underline" %></td>
-                    <% end %>
-                    <% unless current_user.student? %>
-                      <td class="px-4 py-3"><%= solution.user.username %></td>
-                      <td class="px-2 py-3"><%= link_to "Grade", edit_solution_path(solution), class:"btn-sm btn-yellow" %></td>
-                      <td class="px-2 py-3"><%= link_to 'Delete', solution_url(id: solution.id), data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }, class:"btn-sm btn-red" %></td>
+                      <td class="px-4 py-3"><%= link_to "View submission", student_solution_path(solution), class:"underline" %></td>
                     <% end %>
                     <td class="px-4 py-3 font-semibold"><%= solution.grade.truncate(2) unless solution.grade.blank? %></td>
                   </tr>

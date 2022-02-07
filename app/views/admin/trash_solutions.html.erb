@@ -1,0 +1,26 @@
+<%= turbo_frame_tag "trash_solutions" do %>
+  <div class="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
+    <div class="px-4 py-5 sm:px-6 border-b w-full flex flex-row justify-between">
+      <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white flex flex-row justify-between">
+        Deleted Solutions
+      </h3>
+      <%= link_to "Delete all", admin_trash_empty_path(klass: Solution, ids: @solutions.ids), data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }, class:'btn-sm btn-red' %>
+    </div>
+    <ul class="flex flex-col w-full">
+      <% @solutions.each do |solution| %>
+        <li class="flex flex-row">
+          <div class="select-none cursor-pointer flex flex-1 items-center p-4 justify-between">
+            <div class="justify-center items-center mr-4">
+              <%= solution.user.username %>
+              <div class="ml-4">- <%= solution.assignment.name %></div>
+            </div>
+            <div class="text-gray-600 dark:text-gray-200 text-xs">
+              <%= solution.deleted_at.strftime("%d/%m/%Y - %k:%M") %>
+            </div>
+            <%= link_to "Recover", admin_trash_restore_path(klass: Solution, id: solution.id), class:'btn-sm btn-indigo' %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

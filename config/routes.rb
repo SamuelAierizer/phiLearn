@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     get 'add_users', to: 'courses#add_users'
     get 'new_users', to: 'courses#new_users'
     post 'populate', to: 'courses#populate'
-    
+    get 'grades', to: 'courses#grades'
     post 'toggle', to: 'courses#toggle_user'
     resources :comments
   end
