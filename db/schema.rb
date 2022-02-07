@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_08_113234) do
+ActiveRecord::Schema.define(version: 2022_01_13_114223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_12_08_113234) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at", precision: 6
+    t.integer "like_count"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -70,6 +71,28 @@ ActiveRecord::Schema.define(version: 2021_12_08_113234) do
     t.datetime "deleted_at", precision: 6
   end
 
+  create_table "group_posts", force: :cascade do |t|
+    t.text "body"
+    t.integer "user_id"
+    t.integer "group_id"
+    t.integer "post_type"
+    t.integer "like_count"
+    t.datetime "deleted_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "access_code"
+    t.integer "group_type"
+    t.integer "created_by"
+    t.datetime "deleted_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "lectures", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -90,6 +113,15 @@ ActiveRecord::Schema.define(version: 2021_12_08_113234) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "members", force: :cascade do |t|
+    t.integer "uid"
+    t.integer "memable_id"
+    t.integer "memable_type"
+    t.integer "mem_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "content"
     t.integer "topic_id"
@@ -102,9 +134,9 @@ ActiveRecord::Schema.define(version: 2021_12_08_113234) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.text "about", default: "about me text"
-    t.string "address", default: "address"
-    t.string "phone", default: "phone no."
+    t.text "about"
+    t.string "address"
+    t.string "phone"
     t.integer "status"
     t.string "public_src"
     t.integer "user_id"

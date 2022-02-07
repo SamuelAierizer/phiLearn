@@ -1,13 +1,13 @@
 <%= turbo_frame_tag 'new_users' do %>
-
-  <%= form_with(url: course_new_users_path(@course.id), method: :get, data: {controller: 'user', user_target: "form"}) do |form| %>
+<div data-controller="user">
+  <%= form_with(url: course_new_users_path(@course.id), method: :get, data: {user_target: "form"}) do |form| %>
   <div class="flex flex-row mb-6">
     <%= label_tag :searched, 'Search for:', class:'my-auto mr-4 dark:text-white' %>
     <%= form.text_field :searched, data: { action: "input->user#search" }, class:"p-2 focus:border-blue-700 rounded border-2 outline-none", value:params[:searched] %>
   </div>
   <% end %>
           
-  <div class="w-full overflow-x-auto" data-controller="checkbox">
+  <div class="w-full overflow-x-auto" data-controller="checkbox" data-user-target="load">
     <table class="w-full whitespace-no-wrap">
       <thead>
         <tr
@@ -40,9 +40,9 @@
         <% end %>
       </tbody>
     </table>
+    <div class="my-8">
+      <%= paginate @users %>
+    </div>
   </div>
-  <div class="my-8">
-    <%= paginate @users %>
-  </div>
-
+</div>
 <% end %>

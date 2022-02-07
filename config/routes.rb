@@ -1,5 +1,23 @@
 Rails.application.routes.draw do
 
+  post 'group_post/like', to: 'group_posts#like'
+  resources :group_posts do
+    resources :comments, controller: 'group_comments' do
+      post 'like', to: 'group_comments#like'
+    end
+  end
+
+  post 'group/join', to: 'groups#join'
+  post 'group/leave', to: 'groups#leave'
+  resources :groups do
+    post 'reset_code', to: 'groups#reset_code'
+    get 'widgets', to: 'groups#widgets'
+    get 'activity', to: 'groups#activity'
+    post 'giveAdmin', to: 'groups#giveAdmin'
+    get 'members', to: 'groups#members'
+    delete 'members', to: 'groups#mass_delete'
+  end
+
   post 'forum/school_toggle', to: 'forums#school_toggle'
   post 'forum/courses_toggle', to: 'forums#courses_toggle'
   get 'forum/school', to: 'forums#get_for_school'
@@ -14,6 +32,7 @@ Rails.application.routes.draw do
 
   resources :comments
   resources :resources
+
   resources :answers
   resources :questions
 
@@ -36,10 +55,27 @@ Rails.application.routes.draw do
     get 'add_users', to: 'courses#add_users'
     get 'new_users', to: 'courses#new_users'
     post 'populate', to: 'courses#populate'
-    get 'deadlines', to: 'courses#deadlines'
-    get 'grades', to: 'courses#grades'
+    
     post 'toggle', to: 'courses#toggle_user'
     resources :comments
+  end
+
+  namespace :student do
+    resources :solutions
+
+    resources :assignments do
+      resources :comments
+    end
+
+    resources :lectures do
+      resources :comments
+    end
+
+    resources :courses do
+      get 'grades', to: 'courses#grades'
+      get 'deadlines', to: 'courses#deadlines'
+      resources :comments
+    end
   end
   
   get 'schools/search', to: 'schools#search'

@@ -1,7 +1,6 @@
 class SchoolsController < ApplicationController
   before_action :authenticate_user!, except: %i[ create new ]
-  before_action :set_school
-  before_action :set_courses, only: %i[ index overview stats ]
+  before_action :set_data, only: %i[ index overview stats ]
 
   def index
     policies = policy_scope(School)

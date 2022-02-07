@@ -1,28 +1,22 @@
 module SchoolHelper
   def done_tasks
-    if current_user.student?
-      done = current_user.solutions.where(deleted_at: nil).count
-    else
-      '∞'
-    end
+    current_user.solutions.where(deleted_at: nil).count
   end
 
   def all_tasks
-    if current_user.student?
-      all = Assignment.where(course_id: Student.where(user_id: current_user.id).pluck(:course_id).uniq, deleted_at: nil).count
-    else
-      '∞'
-    end
+    all = Assignment.where(course_id: Student.where(user_id: current_user.id).pluck(:course_id).uniq, deleted_at: nil).count
   end
 
   def progress_bar
-    bar_width = "w-full"
-    if current_user.student?
-      done = done_tasks
-      all = all_tasks
-      
+    done = done_tasks
+    all = all_tasks
+    
+    if all == 0 and done == 0
+      bar_width = calculate_bar_width(100)
+    else     
       bar_width = calculate_bar_width(done*100 / all)
     end
+      
     content_tag(:div, '', class:"#{bar_width} h-full text-center text-xs text-white bg-green-400")
   end
 

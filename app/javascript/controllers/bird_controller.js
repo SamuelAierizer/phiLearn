@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["switch"]
+  static targets = ["switch", "like", "unlike", "counter"]
 
   fly(event) {
     let formData = new FormData()
@@ -26,7 +26,25 @@ export default class extends Controller {
     }
   }
 
-  carry({ params: { url, payload, method } }) {
+  like({ params: {url, count} }) {
+    this.likeTarget.classList.toggle('hidden');
+    this.unlikeTarget.classList.toggle('hidden');
+
+    this.counterTarget.textContent = count;
+
+    this.likeTarget.dataset.birdCountParam = count + 1;
+    this.unlikeTarget.dataset.birdCountParam = count - 1;
+    
+    if (count > 0) {
+      this.counterTarget.parentElement.classList.remove('hidden');
+    } else {
+      this.counterTarget.parentElement.classList.add('hidden');
+    }
+
+    this.call(url, 0, "POST");
+  }
+
+  call(url, payload, method) {
     let formData = new FormData()
     let csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
@@ -43,7 +61,6 @@ export default class extends Controller {
         "X-CSRF-Token": csrf
       },
     })
-
   }
 
 }

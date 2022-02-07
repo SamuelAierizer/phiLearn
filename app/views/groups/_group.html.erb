@@ -1,0 +1,16 @@
+<div class="w-11/12 rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800">
+  <%= link_to group do %>
+    <img class="h-36 lg:h-48 w-full" src="https://images.unsplash.com/photo-1641815719016-588cdfb6ab66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=640&q=80" alt="Sunset in the mountains">
+    <div class="px-6 py-4 hover:text-blue-800">
+      <div class="font-bold text-xl mb-2 dark:text-white dark:hover:text-blue-800"><%= group.name %></div>
+      <p class="text-gray-700 dark:text-white text-base h-10">
+        <%= text group.description %>
+      </p>
+    </div>
+  <% end %>
+  
+  <div class="flex flex-row justify-around px-6 pt-4 pb-2">
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#<%= group.group_type %></span>
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#members</span>
+  </div>
+</div>

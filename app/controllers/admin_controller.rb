@@ -1,7 +1,6 @@
 class AdminController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_school, only: %i[index general_stats forum_panel import export trash]
-  before_action :set_courses, only: %i[index general_stats forum_panel import export trash]
+  before_action :set_data, only: %i[index general_stats forum_panel import export trash]
   
   def index
   end

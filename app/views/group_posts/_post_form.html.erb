@@ -1,0 +1,11 @@
+<%= form_with(model: group_post, id: dom_id(group_post)) do |form| %>
+  <%= form.text_area :body, size:"10xx", class:"form-field w-full" %>
+
+  <%= form.text_field :post_type, id: :group_post_post_type, value: "post", type: :hidden %>
+  <%= form.number_field :group_id, id: :group_post_group_id, value: group_id, type: :hidden %>
+
+  <div class="flex flex-row space-x-2 justify-end">
+    <button class="btn-sm btn-gray" data-action="click->tabs#change" data-index="0">Cancle</button>
+    <%= form.submit 'Send', class:"btn-sm btn-blue" %>
+  </div>
+<% end %>

@@ -43,6 +43,9 @@ module ApplicationHelper
     }.stringify_keys[flash_type.to_s] || flash_type.to_s
   end
 
+  def text(content)
+    truncate(safe_join(content.split("\n"),tag(:br)), length: 40)
+  end
 
   def resource_name
     :user

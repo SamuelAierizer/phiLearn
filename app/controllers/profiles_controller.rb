@@ -1,7 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!, except: %i[ public ]
-  before_action :set_school
-  before_action :set_courses, only: %i[ show edit ]
+  before_action :set_data, only: %i[ show edit ]
   before_action :set_profile, only: %i[ show edit update destroy ]
 
   def show

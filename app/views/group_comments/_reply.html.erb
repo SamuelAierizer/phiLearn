@@ -1,0 +1,58 @@
+<% unless !reply.persisted? %>
+  <%= turbo_frame_tag dom_id(reply) do %>
+    <div data-controller="toggle">
+      <div class="flex flex-row items-center px-4 py-2" data-controller="bird">
+        <div class="mr-4"><%= profilePic reply.user %></div>
+        <div class="flex flex-col">
+          <div class="flex flex-row bg-gray-100 dark:bg-gray-900 rounded-full px-3 py-1 space-x-2">
+            <div><%= link_to reply.user.username, profile_path(reply.user.id), class:'text-base text-blue-800 dark:text-blue-300' %></div>
+            <span class="dark:text-white">-</span>
+            <div class="dark:text-white"><%= reply.body %></div>
+          </div>
+          <div class="flex flex-row space-x-4 mt-2 ml-2">
+            <button <% unless reply.likes.exists?(user_id: session[:user_id]) %> class="hidden" <% end %>
+              data-bird-target="unlike"
+              data-bird-url-param=<%= group_post_comment_like_path(reply.target_id, reply.id) %>
+              data-bird-count-param=<%= reply.like_count - 1 %>
+              data-action="click->bird#like"
+            >
+              <i class="fas fa-heart text-red-600"></i>
+            </button>
+
+            <button <% if reply.likes.exists?(user_id: session[:user_id]) %> class="hidden" <% end %>
+              data-bird-target="like"
+              data-bird-url-param=<%= group_post_comment_like_path(reply.target_id, reply.id) %>
+              data-bird-count-param=<%= reply.like_count + 1 %>
+              data-action="click->bird#like"
+            >
+              <i class="far fa-heart dark:text-white hover:text-red-600"></i>
+            </button>
+
+            <div class="text-sm text-gray-700 dark:text-gray-200"><%= reply.created_at.to_formatted_s(:short) %></div>
+          </div>
+        </div>
+        <div class="flex flex-row flex-grow justify-end">
+          <%= likeCounter reply %>
+
+          <div class="mx-2 relative" data-controller="dropdown"
+              data-dropdown-invisible-class="opacity-0 scale-95"
+              data-dropdown-visible-class="opacity-100 scale-100"
+              data-dropdown-entering-class="ease-out duration-300"
+              data-dropdown-enter-timeout="300"
+              data-dropdown-leaving-class="ease-in duration-100"
+              data-dropdown-leave-timeout="100">
+            <div data-dropdown-target="menu" class="absolute transform right-0 -mt-16 hidden z-30 transition opacity-0 scale-95">
+              <div class="bg-white dark:bg-black shadow rounded-lg overflow-hidden text-sm border-2 dark:border-0">
+                <%= link_to "edit", edit_group_post_comment_path(reply.target_id, reply.id), class:"no-underline block px-4 py-2 text-gray-900 dark:text-white bg-white dark:bg-black whitespace-nowrap" %>
+                <%= link_to "delete", group_post_comment_path(reply.target_id, reply.id), class:"no-underline block px-4 pb-2 text-gray-900 dark:text-white bg-white dark:bg-black whitespace-nowrap", data: { turbo_method:"delete", turbo_confirm: 'Are you sure?' } %>
+              </div>
+            </div>
+            <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="text-gray-500">
+              <i class="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

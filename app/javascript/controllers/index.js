@@ -14,6 +14,8 @@ import ReplyController from "./reply_controller"
 import TurboFrameHistoryController from "./turbo_frame_history_controller"
 import UserController from "./user_controller"
 import AnimationController from "./animation_controller"
+import ModalController from "./modal_controller"
+
 
 application.register("bird", BirdController)
 application.register("checkbox", CheckBoxController)
@@ -26,3 +28,4 @@ application.register("reply", ReplyController)
 application.register("turbo-frame-history", TurboFrameHistoryController)
 application.register("user", UserController)
 application.register("animation", AnimationController)
+application.register("modal", ModalController)

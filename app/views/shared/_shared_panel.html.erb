@@ -1,0 +1,121 @@
+<div data-controller="modal">
+
+  <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id="groups">
+    <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+          data-action="animation#apply"
+          data-animation-old-param="groups"
+          data-animation-oldfrom-param="translate-x-0"
+          data-animation-oldto-param="translate-x-full"
+          data-animation-next-param="main"
+          data-animation-nextfrom-param="-translate-x-full"
+          data-animation-nextto-param="translate-x-0"
+    >
+      <i class="fas fa-chevron-left text-left"></i>
+      <div class="mx-4">Main Menu</div>
+    </a>
+
+    <% unless current_user.student? %>
+      <a href="#" data-modal-select-param="create" data-action="click->modal#open" class="w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100">
+        <i class="fas fa-plus text-left"></i>
+        <div class="mx-4 text-base">Create</div>
+      </a>
+    <% end %>
+
+    <a href="#" data-modal-select-param="join" data-action="click->modal#open" class="w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100">
+      <i class="fas fa-arrow-right text-left"></i>
+      <div class="mx-4 text-base">Join</div>
+    </a>
+
+    <%= link_to groups_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" do %>
+      <i class="fas fa-columns text-left"></i>
+      <div class="mx-4 text-base">Catalog</div>
+    <% end %>
+
+  </nav>
+
+  <!-- Create Group Modal Container -->
+  <div id="create" data-modal-target="container" data-modal-select-param="create" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+    <!-- Create Group Modal Inner Container -->
+    <div class="max-h-screen w-full max-w-3xl relative">
+      <!-- Create Group Modal Card -->
+      <div class="m-1 bg-white dark:bg-gray-800 rounded shadow">
+        <%= form_with(model: Group.new) do |form| %>
+          
+          <div class="flex flex-row justify-between p-2 bg-indigo-300 dark:bg-indigo-900 rounded-t">
+            <h2 class="text-2xl dark:text-white px-2 py-2">Create new Group</h2>
+            <button class="text-xl px-4 py-2 text-gray-800 dark:text-white hover:text-red-800 dark:hover:text-red-800" data-modal-select-param="create" data-action="click->modal#close"><i class="fas fa-times"></i></button>
+          </div>
+
+          <div class="p-4">
+            <%= label_tag :name, "Name", class:"mb-1 dark:text-white" %>
+            <%= form.text_field :name, class:"form-field-sm w-full" %>
+
+            <%= label_tag :description, "Description*", class:"mb-1 dark:text-white" %>
+            <%= form.text_area :description, size: "10x4", class:"form-field w-full" %>
+
+            <div class="flex flex-col pb-4 w-1/2 border-r-2">
+              <%= label_tag :access_code, "Access Code?", class:"mb-1 dark:text-white" %>
+              <%= form.check_box :access_code, class:"h-4 w-4" %>
+            </div>
+            
+            <div class="flex flex-col w-1/2 border-r-2">
+              <%= label_tag :group_type, "Type", class:"mb-1 dark:text-white" %>
+              <%= select_tag(:group_type, options_for_select(
+                [['Interest', 'Interest'], 
+                ['Study', 'Study'],
+                ['Club', 'Club'],
+                ['Hobby', 'Hobby'],
+                ['Faculty', 'Faculty'],
+                ['Learners', 'Learners'],
+                ['Topic', 'Topic'],
+                ['Translators', 'Translators']],
+                'Study'), 
+                {:class => 'form-field-sm w-11/12'}) %>
+            </div>
+
+          </div>
+          <div class="flex justify-between items-center flex-wrap bg-gray-200 dark:bg-gray-900 p-2 rounded-b">
+            <div class="ml-4 text-sm text-gray-800 dark:text-gray-200">*Optional</div>
+            <div class="w-28" ><%= form.submit 'Save', class:"btn-sm btn-submit", data:{modal_select_param: "create", action:"click->click->modal#close"} %></div>
+          </div>
+
+        <% end %>  
+      </div>
+    </div>
+  </div>
+
+
+  <div id="join" data-modal-target="container" data-modal-select-param="join" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+    <!-- Create Group Modal Inner Container -->
+    <div class="max-h-screen w-full max-w-3xl relative">
+      <!-- Create Group Modal Card -->
+      <div class="m-1 bg-white dark:bg-gray-800 rounded shadow">
+        <%= form_with(url: group_join_path, data:{turbo_method: 'post'}) do |form| %>
+
+          <div class="flex flex-row justify-between p-2 bg-indigo-300 dark:bg-indigo-900 rounded-t">
+            <h2 class="text-2xl dark:text-white px-2 py-2">Join Group</h2>
+            <button class="text-xl px-4 py-2 text-gray-800 dark:text-white hover:text-red-800 dark:hover:text-red-800" data-modal-select-param="join" data-action="click->modal#close"><i class="fas fa-times"></i></button>
+          </div>
+
+          <div class="p-4">
+            <div class="flex flex-row items-center">
+              <%= label_tag :access_code, "Access Code", class:"mr-6 mb-6 dark:text-white" %>
+              <%= form.text_field :access_code, class:"form-field-sm w-64" %>
+            </div>
+
+            <p class="dark:text-white">
+              If the group does not have an access code, you can join by finding it in the 
+              <%= link_to "group catalog", groups_path, class:"text-indigo-500" %>
+              and then clicking its Join option.
+            </p>
+          </div>
+
+          <div class="flex justify-end items-center flex-wrap bg-gray-200 dark:bg-gray-900 p-2 rounded-b">
+            <div class="w-28" ><%= form.submit 'Join', class:"btn-sm btn-submit", data:{modal_select_param: "join", action:"click->click->modal#close"} %></div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

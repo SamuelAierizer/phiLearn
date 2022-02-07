@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
-  before_action :set_school
-  before_action :set_courses
+  before_action :set_data
 
   def index
     @topic = Topic.find(params[:id])

@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
 a:hover {
-  color:#1D4ED8;
+  @apply text-blue-800
 }
 
 h1, h2, h3, h4 {
@@ -13,18 +14,22 @@ h1, h2, h3, h4 {
 /* CHECKBOX TOGGLE SWITCH */
 /* @apply rules for documentation, these do not work as inline style */
 .toggle-checkbox:checked {
-  @apply: right-0 border-green-400;
+  @apply right-0 border-green-400;
   right: 0;
   border-color: #68d391;
 }
 .toggle-checkbox:checked + .toggle-label {
-  @apply: bg-green-400;
+  @apply bg-green-400;
   background-color: #68d391;
 }
 
 
 .form-field {
   @apply mb-6 p-3 focus:border-blue-700 rounded border-2 outline-none;
+}
+
+.form-field-sm {
+  @apply mb-6 p-2 focus:border-blue-700 rounded border-2 outline-none;
 }
 
 .btn-submit {

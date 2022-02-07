@@ -1,0 +1,11 @@
+<div class="px-4 mt-2" data-controller="toggle">
+  <%= form_with(model: [group_post, comment]) do |f| %>
+    <%= f.text_field :body, placeholder: "Write a comment", class: 'form-field-sm w-full', data: {action: "click->toggle#show touch->toggle#show"} %>
+    <%= f.text_field :target_type, id: :comment_target_type, value: group_post.class.name, type: :hidden %>
+    <%= f.number_field :target_id, id: :comment_target_id, value: group_post.id, type: :hidden %>
+    <div data-toggle-target='toggleable' class="hidden flex flex-row justify-end space-x-2 -mt-4 pb-2">
+      <button class="btn-sm btn-gray" data-action='click->toggle#hide touch->toggle#hide'>Cancle</button>
+      <%= f.submit 'Send', class:'btn-sm btn-blue' %>
+    </div>
+  <% end %>      
+</div>

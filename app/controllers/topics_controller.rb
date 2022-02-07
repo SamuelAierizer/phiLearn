@@ -1,7 +1,6 @@
 class TopicsController < ApplicationController
   before_action :set_topic, only: %i[ show edit update destroy block bookmark ]
-  before_action :set_school
-  before_action :set_courses
+  before_action :set_data
 
   def edit
     authorize @topic

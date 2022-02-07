@@ -15,25 +15,33 @@ module CoursesHelper
   end
 
   def course_progress(course)
-    if current_user.student?
-      all = course.assignments.where(deleted_at: nil).count
-      done = current_user.solutions.where(course_id: course.id, deleted_at: nil).count
+    all = course.assignments.where(deleted_at: nil).count
+    done = current_user.solutions.where(course_id: course.id, deleted_at: nil).count
 
-      progress = all - done
-      if all == 0 then all = 1 end
-      percentage = done*100 / all 
+    progress = all - done
+    all = 1 if all < 1
+    percentage = done*100 / all 
+    
+    content_tag :div, class:'w-full h-4 bg-gray-200 mt-4' do
+      bar_width = calculate_bar_width(percentage)
       
-      content_tag :div, class:'w-full h-4 bg-gray-200 mt-4' do
-        bar_width = calculate_bar_width(percentage)
-        
-        content_tag(:div, "#{percentage}%", class:"#{bar_width} h-full text-center text-xs text-white bg-indigo-500")
-      end
+      content_tag(:div, "#{percentage}%", class:"#{bar_width} h-full text-center text-xs text-white bg-indigo-500")
+    end
+  end
+
+  def coursePath(course, user)
+    if Student.where(course_id:course.id, user_id: user.id).exists?
+      student_course_path(course)
+    else 
+      course_path(course)
     end
   end
 
   def calculate_bar_width(percentage)
     case percentage
-    when 0..10
+    when 0..4
+      bar_width = "w-0"
+    when 5..10
       bar_width = "w-1/12"
     when 1..20
       bar_width = "w-1/5"

@@ -36,11 +36,16 @@ class ApplicationController < ActionController::Base
     redirect_to root_path and return
   end
 
-  def set_school
-    @school = School.new(session[:school])
+  def not_student
+    if current_user.student?
+      flash[:error] = "You have no access for this resource"
+      redirect_to schools_path
+    end
   end
 
-  def set_courses
+  def set_data
+    @school = School.new(session[:school])
+
     if current_user.teacher?
       @courses = current_user.myCourses.where(deleted_at: nil).order(:id)
     elsif current_user.student?

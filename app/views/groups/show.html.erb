@@ -1,0 +1,126 @@
+<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative" >
+  <div class="flex items-start justify-between">
+    <!-- Sidenav --> 
+    <%= render 'shared/sidenav' %>
+
+    <div class="flex flex-col w-full">
+      <!-- Header -->
+      <%= render 'shared/navbar' %>
+
+      <div class="overflow-auto h-screen pb-24 px-4 md:px-6"> 
+        <!-- Page Head -->
+        <div class="mt-4 flex flex-row dark:text-white">
+          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
+          <div class="flex-col flex-grow">
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= @group.name.capitalize %></h1>
+            <h2 class=" text-gray-400"><%= @school.name %></h2>
+          </div>
+          <div class="mx-4">
+          </div>
+        </div>
+
+        <!-- Page Conent -->
+        <div class="flex flex-col md:flex-row">
+
+          <!-- Main Content -->
+          <div class="mr-0 md:mr-4 mt-12 flex flex-grow">
+            <div class="flex flex-col w-full" data-controller="reply" data-reply-privilage-value=<%= @role %> data-reply-uid-value=<%= current_user.id %>>
+
+              <!-- Forms -->
+              <div data-tabs-index="0"  data-tabs-active-tab="block mt-4" data-controller="tabs">
+                <div class="space-x-4 flex flex-row justify-center" data-tabs-target="panel">
+                  <button class="hidden" data-tabs-target="tab" data-action="click->tabs#change"></button>
+                  <button class="btn-sm btn-blue" data-tabs-target="tab" data-action="click->tabs#change"><i class="fas fa-plus mr-2"></i> Post</button>
+                  <button class="btn-sm btn-indigo" data-tabs-target="tab" data-action="click->tabs#change"><i class="fas fa-bullhorn mr-2"></i> Announcement</button>
+                </div>
+
+                <div class="hidden md:w-4/5 mx-auto" data-tabs-target="panel">
+                  <%= turbo_frame_tag "group_post_form" do %>
+                    <%= render 'group_posts/post_form', group_id: @group.id, group_post: GroupPost.new %>
+                  <% end %>
+                </div>
+
+                <div class="hidden md:w-4/5 mx-auto" data-tabs-target="panel">
+                  <%= turbo_frame_tag "group_announcement_form" do %>
+                    <%= render 'group_posts/announcement_form', group_id: @group.id , group_announcement: GroupPost.new  %>
+                  <% end %>
+                </div>
+              </div>
+
+              <!-- Posts -->
+              <%= turbo_stream_from "group_#{@group.id}_posts" %>
+
+              <%= turbo_frame_tag "group_#{@group.id}_posts" do %>
+                <% @group_posts.each do |group_post| %>
+                  <%= render 'group_posts/group_post', group_post: group_post if group_post.post? %>
+                  <%= render 'group_posts/group_announcement', group_announcement: group_post if group_post.announcement? %>
+                <% end %>
+              <% end %>
+              
+
+            </div>
+          </div>
+
+          <!-- Widgets -->
+          <div class="mt-8 md:-mt-14 flex flex-col w-full md:w-64">
+
+            <%= turbo_frame_tag 'activity', src: group_activity_path(group_id: @group.id) do %>
+              <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow mb-4">
+                <div class="px-4 py-2">
+                  <div class="bg-gray-200 w-full animate-pulse h-6 rounded-xl mb-4"></div>
+                  
+                  <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl mb-2"></div>
+                  <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl"></div>
+                </div>
+              </div>
+            <% end %>
+
+            <%= turbo_frame_tag 'widgets', src: group_widgets_path(group_id: @group.id) do %>
+              <div class="space-y-4">
+
+                <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
+                  <div class="px-4 py-2">
+                    <div class="bg-gray-200 w-full animate-pulse h-6 rounded-xl mb-4"></div>
+                    
+                    <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl mb-2"></div>
+                    <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl"></div>
+                  </div>
+                </div>
+
+                <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
+                  <div class="px-4 py-2">
+                    <div class="bg-gray-200 w-full animate-pulse h-6 rounded-xl mb-4"></div>
+                    
+                    <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl mb-2"></div>
+                    <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl"></div>
+                  </div>
+                </div>
+
+                <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
+                  <div class="px-4 py-2">
+                    <div class="bg-gray-200 w-full animate-pulse h-6 rounded-xl mb-4"></div>
+                    
+                    <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl mb-2"></div>
+                    <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl"></div>
+                  </div>
+                </div>
+
+                <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
+                  <div class="px-4 py-2">
+                    <div class="bg-gray-200 w-full animate-pulse h-6 rounded-xl mb-4"></div>
+                    
+                    <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl mb-2"></div>
+                    <div class="bg-gray-200 w-full animate-pulse h-3 rounded-xl"></div>
+                  </div>
+                </div>
+                
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+</main>

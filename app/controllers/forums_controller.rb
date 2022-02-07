@@ -1,7 +1,6 @@
 class ForumsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_school
-  before_action :set_courses
+  before_action :set_data
 
   def show
     session[:user_id] = current_user.id

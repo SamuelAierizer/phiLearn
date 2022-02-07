@@ -29,28 +29,24 @@ module AssignmentsHelper
   end
 
   def solveAssignment(assignment)
-    if current_user.student?
-      if Solution.where(user_id: current_user.id, assignment_id: @assignment.id).exists?
-        solution = Solution.where(user_id: current_user.id, assignment_id: @assignment.id).first
 
-        content_tag :p do
-          concat content_tag(:span, "Grade for assignment: ", class:'font-bold')
-          concat content_tag(:span, @solution.grade.truncate(2))
+      solution = Solution.where(user_id: current_user.id, assignment_id: @assignment.id).first
+      if solution.present?
+
+        content_tag :div, class:"flex flex-col space-y-2" do
+          concat content_tag(:span, "Grade for assignment: #{solution.grade.truncate(2)}")
+
+          concat link_to "Your solution", student_solution_path(solution.id), class:"font-bold text-indigo-500"
         end
-
-        content_tag :p do
-          concat content_tag(:span, "Your solution: ", class:'font-bold')
-          concat link_to "View", solution_path(@solution.id), class:"underline"
-        end
-
+        
       else
         if assignment.handIn?
           render 'solutions/handIn_form', solution: Solution.new
         else
-          link_to "Solve Quizz", new_solution_path(id: assignment.id), class:"btn btn-blue"
+          link_to "Solve Quizz", new_student_solution_path(id: assignment.id), class:"btn btn-blue"
         end
       end
-    end
+
   end
 
 end

@@ -40,8 +40,9 @@ class CommentsController < ApplicationController
   def destroy
     authorize @comment
     @comment.destroy
+
     respond_to do |format|
-      format.html { redirect_to schools_path, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to request.referer, notice: "Comment was successfully destroyed." }
     end
   end
 

@@ -2,12 +2,12 @@
 
 <nav class="w-full transform duration-300 ease-in-out translate-x-0 absolute top-0" id="main">
   <div>
-    <%= link_to schools_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+    <%= link_to schools_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
       <i class="fas fa-tachometer-alt text-left"></i>
-      <div class="mx-4 text-lg">Dashboard</div>
+      <div class="mx-4 text-base">Dashboard</div>
     <% end %>
 
-    <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+    <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="main"
         data-animation-oldfrom-param="translate-x-0"
@@ -16,12 +16,12 @@
         data-animation-nextfrom-param="translate-x-full"
         data-animation-nextto-param="translate-x-0"
     >
-      <i class="fas fa-users text-left"></i>
-      <div class="mx-4 text-lg">Users</div>
+      <i class="fas fa-user text-left"></i>
+      <div class="mx-4">Users</div>
       <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
     </a>
 
-    <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+    <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="main"
         data-animation-oldfrom-param="translate-x-0"
@@ -31,11 +31,25 @@
         data-animation-nextto-param="translate-x-0"
     >
       <i class="fas fa-atlas text-left"></i>
-      <div class="mx-4 text-lg">Courses</div>
+      <div class="mx-4">Courses</div>
       <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
     </a> 
+
+    <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+        data-action="animation#apply"
+        data-animation-old-param="main"
+        data-animation-oldfrom-param="translate-x-0"
+        data-animation-oldto-param="-translate-x-full"
+        data-animation-next-param="groups"
+        data-animation-nextfrom-param="translate-x-full"
+        data-animation-nextto-param="translate-x-0"
+    >
+      <i class="fas fa-users text-left"></i>
+      <div class="mx-4">Groups</div>
+      <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
+    </a>
           
-    <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+    <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="main"
         data-animation-oldfrom-param="translate-x-0"
@@ -45,7 +59,7 @@
         data-animation-nextto-param="translate-x-0"
     >
       <i class="fas fa-user-shield text-left"></i>
-      <div class="mx-4 text-lg">Admin</div>
+      <div class="mx-4">Admin</div>
       <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
     </a>
     
@@ -53,7 +67,7 @@
 </nav>
 
 <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id="user">
-  <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+  <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="user"
         data-animation-oldfrom-param="translate-x-0"
@@ -63,37 +77,37 @@
         data-animation-nextto-param="translate-x-0"
   >
     <i class="fas fa-chevron-left text-left"></i>
-    <div class="mx-4 text-lg">Main Menu</div>
+    <div class="mx-4">Main Menu</div>
   </a>
 
-  <%= link_to new_user_registration_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+  <%= link_to new_user_registration_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
     <i class="fas fa-user-plus text-left"></i>
-    <div class="mx-4 text-lg">Add Users</div>
+    <div class="mx-4 text-base">Add Users</div>
   <% end %>
 
-  <%= link_to schools_overview_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+  <%= link_to schools_overview_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
     <i class="fas fa-users text-left"></i>
-    <div class="mx-4 text-lg">All</div>
+    <div class="mx-4 text-base">All</div>
   <% end %>
 
-  <%= link_to schools_overview_path(role: 'admin'), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+  <%= link_to schools_overview_path(role: 'admin'), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
     <i class="fas fa-user-shield text-left"></i>
-    <div class="mx-4 text-lg">Admins</div>
+    <div class="mx-4 text-base">Admins</div>
   <% end %>
 
-  <%= link_to schools_overview_path(role: 'teacher'), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+  <%= link_to schools_overview_path(role: 'teacher'), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
     <i class="fas fa-chalkboard-teacher text-left"></i>
-    <div class="mx-4 text-lg">Teachers</div>
+    <div class="mx-4 text-base">Teachers</div>
   <% end %>
 
-  <%= link_to schools_overview_path(role: 'student'), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+  <%= link_to schools_overview_path(role: 'student'), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
     <i class="fas fa-user-graduate text-left"></i>
-    <div class="mx-4 text-lg">Students</div>
+    <div class="mx-4 text-base">Students</div>
   <% end %>
 </nav>
 
 <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id="course">
-  <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+  <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="course"
         data-animation-oldfrom-param="translate-x-0"
@@ -103,16 +117,16 @@
         data-animation-nextto-param="translate-x-0"
   >
     <i class="fas fa-chevron-left text-left"></i>
-    <div class="mx-4 text-lg">Main Menu</div>
+    <div class="mx-4">Main Menu</div>
   </a>
 
-  <%= link_to courses_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+  <%= link_to courses_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
     <i class="far fa-chart-bar text-left"></i>
-    <div class="mx-4 text-lg">Table</div>
+    <div class="mx-4 text-base">Table</div>
   <% end %>
 
    <% @courses.each do |course| %>
-      <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+      <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="course"
         data-animation-oldfrom-param="translate-x-0"
@@ -121,7 +135,7 @@
         data-animation-nextfrom-param="translate-x-full"
         data-animation-nextto-param="translate-x-0"
       >
-        <div class="mx-8 text-lg"><%= course.name %></div>
+        <div class="mx-8 "><%= course.name %></div>
         <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
       </a>
 
@@ -131,7 +145,7 @@
 
 <% @courses.each do |course| %>
   <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id=<%= course.name %>>
-    <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+    <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
           data-action="animation#apply"
           data-animation-old-param=<%= course.name %>
           data-animation-oldfrom-param="translate-x-0"
@@ -141,21 +155,21 @@
           data-animation-nextto-param="translate-x-0"
     >
       <i class="fas fa-chevron-left text-left"></i>
-      <div class="mx-4 text-lg">Main Menu</div>
+      <div class="mx-4">Main Menu</div>
     </a>
 
-    <%= link_to course, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
-      <div class="mx-8 text-lg">View Course</div>
+    <%= link_to coursePath(course, current_user), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+      <div class="mx-8 text-base">View Course</div>
     <% end %>
 
-    <%= link_to lectures_path(course_id: course.id), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+    <%= link_to lectures_path(course_id: course.id), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
       <i class="fas fa-book text-left"></i>
-      <div class="mx-4 text-lg">Lectures</div>
+      <div class="mx-4 text-base">Lectures</div>
     <% end %>
 
-    <%= link_to assignments_path(course_id: course.id), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+    <%= link_to assignments_path(course_id: course.id), class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
       <i class="far fa-clipboard text-left"></i>
-      <div class="mx-4 text-lg">Assignments</div>
+      <div class="mx-4 text-base">Assignments</div>
     <% end %>
 
   </nav>
@@ -164,7 +178,7 @@
   
 
 <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id="admin">
-  <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+  <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="admin"
         data-animation-oldfrom-param="translate-x-0"
@@ -174,26 +188,26 @@
         data-animation-nextto-param="translate-x-0"
   >
     <i class="fas fa-chevron-left text-left"></i>
-    <div class="mx-4 text-lg">Main Menu</div>
+    <div class="mx-4 text-base">Main Menu</div>
   </a>
 
-  <%= link_to admin_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+  <%= link_to admin_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
     <i class="fas fa-user-shield text-left"></i>
-    <div class="mx-4 text-lg">Admin Dashboard</div>
+    <div class="mx-4 text-base">Admin Dashboard</div>
   <% end %>
 
-  <a class="w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" 
+  <a class="w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" 
           href=<%= admin_stats_url %>
           data-turbo-frame="admin_content" 
           data-controller="turbo-frame-history"
           data-action="click->turbo-frame-history#mutate"
           data-turbo-frame-history-url-param=<%= admin_stats_url %>>
     <i class="fas fa-chart-line text-left"></i>
-    <div class="mx-4 text-lg">Statistics</div>
+    <div class="mx-4 text-base">Statistics</div>
   </a>
 
 
-  <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+  <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="admin"
         data-animation-oldfrom-param="translate-x-0"
@@ -203,25 +217,25 @@
         data-animation-nextto-param="translate-x-0"
   >
     <i class="fas fa-cogs text-left"></i>
-    <div class="mx-4 text-lg">Settings</div>
+    <div class="mx-4 text-base">Settings</div>
     <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
   </a>
 
 
-  <a class="w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" 
+  <a class="w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" 
           href=<%= admin_trash_url %>
           data-turbo-frame="admin_content" 
           data-controller="turbo-frame-history"
           data-action="click->turbo-frame-history#mutate"
           data-turbo-frame-history-url-param=<%= admin_trash_url %>>
     <i class="fas fa-trash text-left"></i>
-    <div class="mx-4 text-lg">Dump</div>
+    <div class="mx-4 text-base">Dump</div>
   </a>
   
 </nav>
 
 <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id="admin_setting">
-  <a  class="text-lg w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+  <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="admin_setting"
         data-animation-oldfrom-param="translate-x-0"
@@ -231,23 +245,23 @@
         data-animation-nextto-param="translate-x-0"
   >
     <i class="fas fa-chevron-left text-left"></i>
-    <div class="mx-4 text-lg">Admin Menu</div>
+    <div class="mx-4 text-base">Admin Menu</div>
   </a>
 
-  <a class="w-full flex items-center px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" 
+  <a class="w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" 
           href=<%= admin_forum_url %> 
           data-turbo-frame="admin_content" 
           data-controller="turbo-frame-history"
           data-action="click->turbo-frame-history#mutate"
           data-turbo-frame-history-url-param=<%= admin_forum_url %>>
     <i class="fas fa-bullhorn text-left"></i>
-    <div class="mx-4 text-lg">Forum</div>
+    <div class="mx-4 text-base">Forum</div>
   </a>
 
-  <div data-controller='toggle' class=" px-4 py-2 my-3 justify-start text-gray-500 dark:text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100">
+  <div data-controller='toggle' class=" px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100">
     <button data-action='click->toggle#toggle touch->toggle#toggle' class="flex flex-row w-full items-center">
       <i class="fas fa-users text-left"></i>
-      <div class="mx-4 text-lg  flex-grow text-left">Accounts</div>
+      <div class="mx-4 text-base  flex-grow text-left">Accounts</div>
       <i class="fas fa-chevron-down float-right"></i>
     </button>
     <div data-toggle-target='toggleable' class=" flex flex-col ml-8 md:ml-14 my-2 hidden ">
@@ -271,3 +285,5 @@
   </div>
 
 </nav>
+
+<%= render 'shared/shared_panel' %>

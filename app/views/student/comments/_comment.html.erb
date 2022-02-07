@@ -1,0 +1,23 @@
+<% unless comment.parent_id || !comment.persisted? %>
+  <div data-controller="toggle">
+    <div class="bg-white dark:bg-gray-800 w-full rounded-lg p-3 mb-1 shadow sm:inline-block">
+      <div class="dark:text-white">
+        <p class="font-bold mb-2"><%= comment.user.username %></p>
+        <div class="flex flex-col">
+          <%= comment.body %>
+          <div class="mt-1 font-semibold cursor-pointer hover:text-blue-600" data-action="click->toggle#toggle">reply</div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 hidden" data-toggle-target='toggleable'>
+      <%= render 'comments/reply_form', target: target, parent_id: comment.id %>
+    </div>
+  <div>
+  <% if comment.replies.any? %>
+    <div class="ml-8">
+      <% comment.replies.each do |reply| %> 
+        <%= render partial: 'comments/reply', locals: { reply: reply } %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

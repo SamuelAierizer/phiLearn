@@ -1,0 +1,11 @@
+<%= turbo_frame_tag dom_id(@group_post) do %>
+  <div class="mt-8 w-full md:w-4/5 mx-auto bg-white dark:bg-gray-800 rounded-xl shadow">
+    <div class="p-4">
+      <% if @group_post.post? %>
+        <%= render 'group_posts/post_form', group_post: @group_post, group_id: @group_post.group_id %>
+      <% else %>
+        <%= render 'group_posts/announcement_form', group_announcement: @group_post, group_id: @group_post.group_id %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

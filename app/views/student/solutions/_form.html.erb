@@ -1,0 +1,20 @@
+<%= form_with(model: solution) do |form| %>
+  <% if solution.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(solution.errors.count, "error") %> prohibited this solution from being saved:</h2>
+
+      <ul>
+        <% solution.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.text_field :grade, class:"form-field w-full", placeholder: "Grade" %>
+
+  <%= form.text_field :file, class:"form-field w-full", placeholder: "File" %>
+
+  <%= form.submit 'Submit', class:"btn-submit" %>
+
+<% end %>

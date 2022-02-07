@@ -1,0 +1,19 @@
+<%= form_with(model: group_announcement, id: dom_id(group_announcement)) do |form| %>
+  <%= form.text_area :body, size:"10xx", class:"form-field w-full" %>
+
+  <%= form.text_field :post_type, id: :group_post_post_type, value: "announcement", type: :hidden %>
+  <%= form.number_field :group_id, id: :group_post_group_id, value: group_id, type: :hidden %>
+
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-row items-center dark:text-white space-x-4">
+      <%= form.label :notify, "Notify?" %>
+      <%= form.check_box :notify, class:'h-4 w-4' %>
+    </div>
+
+    <div class="space-x-2">
+      <button class="btn-sm btn-gray" data-action="click->tabs#change" data-index="0">Cancle</button>
+      <%= form.submit 'Send', class:"btn-sm btn-blue" %>
+    </div>
+  </div>
+  
+<% end %>

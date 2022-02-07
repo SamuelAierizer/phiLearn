@@ -32,4 +32,30 @@ module PostsHelper
     end
   end
 
+  # these are for group posts only
+
+  def likeCounter(group_post)
+    counter = 0
+    hide = ""
+    if group_post.like_count > 0
+      counter = group_post.like_count
+    else 
+      hide = "hidden"
+    end
+
+    content_tag :button, class:"flex flex-row items-center px-2 py-1 #{hide}" do
+      concat content_tag :span, counter, class:"flex justify-center align-items-center w-4 h-4 bg-gray-200 rounded-full text-xs font-semibold text-gray-700", "data-bird-target": "counter"
+      concat content_tag :span, "likes", class:"ml-1 text-sm dark:text-white"
+    end      
+  end
+
+  def commentCounter(group_post)
+    if group_post.comments.exists?
+      content_tag :button, class:"flex flex-row items-center px-2 py-1" do
+        concat content_tag :span, group_post.comments.count, class:"flex justify-center align-items-center w-4 h-4 bg-gray-200 rounded-full text-xs font-semibold text-gray-700"
+        concat content_tag :span, "comments", class:"ml-1 text-sm dark:text-white"
+      end
+    end
+  end  
+
 end

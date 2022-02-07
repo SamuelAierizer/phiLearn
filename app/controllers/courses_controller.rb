@@ -2,10 +2,10 @@ class CoursesController < ApplicationController
   include ActionView::Helpers::DateHelper
 
   before_action :authenticate_user!
+  before_action :not_student
   before_action :set_course, only: %i[ show edit update destroy ]
-  before_action :my_set, only: %i[ grades deadlines add_users new_users stats ]
-  before_action :set_school
-  before_action :set_courses
+  before_action :my_set, only: %i[ add_users new_users stats ]
+  before_action :set_data
 
   def index
     authorize Course
@@ -24,20 +24,11 @@ class CoursesController < ApplicationController
     @assignments = @course.assignments.where(deleted_at: nil)
     @assets = Resource.get_for(@course.class.name, @course.id)
     @target = @course
-  end
 
-  def grades
-    @solutions = []
-    if current_user.student?
-      @solutions = Solution.where(user_id: current_user.id, course_id: @course.id, deleted_at: nil).order(:assignment_id)
-    else 
-      @solutions = Solution.where(course_id: @course.id, deleted_at: nil).order(:assignment_id)
+    unless @course.forum
+      @forum = @course.build_forum
+      @forum.save
     end
-  end
-
-  def deadlines
-    @time = Time.current
-    @assignments = @course.assignments.where(deleted_at: nil)
   end
 
   def new
@@ -109,12 +100,12 @@ class CoursesController < ApplicationController
     if params[:searched].present?
       @users = User.where("username LIKE :username", username: "%#{params[:searched]}%")
                 .where.not(id: Student.where(course_id: @course.id).pluck(:user_id).uniq)
-                .where(school_id: current_user.school_id, role: 2).order(:id)
+                .where(school_id: current_user.school_id).order(:id)
                 .paginate(page: params[:page], per_page: 5)
     
     else 
       @users = User.where.not(id: Student.where(course_id: @course.id).pluck(:user_id).uniq)
-                .where(school_id: current_user.school_id, role: 2).order(:id)
+                .where(school_id: current_user.school_id).order(:id)
                 .paginate(page: params[:page], per_page: 5)
     end
    

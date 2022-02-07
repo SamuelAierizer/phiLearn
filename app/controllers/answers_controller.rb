@@ -1,8 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_answer, only: %i[ show edit update destroy ]
-  before_action :set_school
-  before_action :set_courses
+  before_action :set_data
 
   # GET /answers or /answers.json
   def index

@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 // import Rails from "@rails/ujs";
 
 export default class extends Controller {
-  static targets = ["test", "id", "switch", "form"]
+  static targets = ["test", "id", "switch", "form", "load"]
 
   toggle(event) {
     let formData = new FormData()
@@ -28,6 +28,11 @@ export default class extends Controller {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
       // Rails.fire(this.formTarget, 'submit')
+      const spinner = document.createElement("div");
+      spinner.className = "text-4xl flex flex-grow my-8";
+      spinner.innerHTML = "<i class=\"fas fa-spinner fa-spin mx-auto\"></i>";
+
+      this.loadTarget.replaceWith(spinner);
       this.formTarget.dispatchEvent(new CustomEvent('submit', {bubbles: true}))
     }, 200)
   }

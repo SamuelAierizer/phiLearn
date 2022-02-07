@@ -1,5 +1,5 @@
 class Users::GeneralController < ApplicationController
-  before_action :set_school
+  before_action :set_data
 
   def index
     if params[:deleted] == "1"

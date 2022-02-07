@@ -1,0 +1,15 @@
+<%= turbo_frame_tag 'activity' do %>
+
+  <!-- Activity -->
+  <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow mb-4 dark:text-white">
+    <div class="px-4 py-2">
+      <h3 class="text-lg mb-2">Activity</h3>
+      <div class="flex flex-col">
+        <%= link_to "", group_activity_path(group_id: @group.id), id: 'refresh', class:'hidden' %>
+        <%= displayActivity @activity %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+    

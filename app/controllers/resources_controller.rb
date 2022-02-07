@@ -1,17 +1,8 @@
 class ResourcesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_resource, only: %i[ show edit update destroy ]
-  before_action :set_school
-  before_action :set_courses, only: %i[ new show ]
+  before_action :set_data, only: %i[ new edit ]
 
-  def index
-    authorize Resource
-    @resources = Resource.all
-  end
-
-  def show
-    authorize @resource
-  end
 
   def new
     @resource = Resource.new

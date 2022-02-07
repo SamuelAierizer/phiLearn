@@ -4,7 +4,7 @@
     <%= render 'shared/sidenav' %>
 
 
-    <div class="flex flex-col w-full md:space-y-4">
+    <div class="flex flex-col w-full">
       <!-- Header -->
       <%= render 'shared/navbar' %>
 
@@ -28,9 +28,9 @@
         </div>
 
         <div class="mt-8" >
-          <%= turbo_stream_from "posts" %>
+          <%= turbo_stream_from "#{@topic.id}_posts" %>
 
-          <%= turbo_frame_tag "posts" do %>
+          <%= turbo_frame_tag "#{@topic.id}_posts" do %>
             <%= render @posts %>
           <% end %>
         </div>

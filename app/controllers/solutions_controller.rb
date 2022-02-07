@@ -1,8 +1,8 @@
 class SolutionsController < ApplicationController
   before_action :authenticate_user!
+  before_action :not_student
   before_action :set_solution, only: %i[ show edit update destroy ]
-  before_action :set_school
-  before_action :set_courses
+  before_action :set_data
 
   def index
     authorize Solution

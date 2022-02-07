@@ -1,0 +1,26 @@
+<%= turbo_frame_tag dom_id(@comment) do %>
+  <div data-controller="toggle">
+    <div class="flex flex-row items-center px-4 py-2">
+      <div class="mr-4"><%= profilePic @comment.user %></div>
+      <div class="flex flex-col w-full">
+        <div class="flex flex-row bg-gray-100 rounded px-3 py-1 space-x-2">
+          <div class="mt-2"><%= link_to @comment.user.username, profile_path(@comment.user.id), class:'text-base text-blue-800' %></div>
+          <span class="mt-2">-</span>
+          <div class="w-full">
+            <%= form_with(model: [@comment.target, @comment]) do |f| %>
+              <%= f.text_field :body, class: 'form-field-sm w-full' %>
+              <div class="flex flex-row justify-end space-x-2 -mt-4 pb-2">
+                <%= link_to "Cancle", group_post_comment_path(@comment.target_id, @comment.id), class:"btn-sm btn-gray" %>
+                <%= f.submit 'Send', class:'btn-sm btn-blue' %>
+              </div> 
+            <% end %> 
+          </div>
+        </div>
+        <div class="flex flex-row space-x-4 mt-2 ml-2">
+          <i class="far fa-heart"></i>
+          <div class="text-sm text-gray-700 dark:text-gray-200"><%= @comment.created_at.to_formatted_s(:short) %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>  

@@ -1,0 +1,25 @@
+  <%= form_with(model: course) do |form| %>
+    <% if course.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+        <ul>
+          <% course.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Course Name" %>
+
+    <%= form.text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full", placeholder:"Description" %>
+
+    <div class="field form-group dark:text-white">
+      <%= form.filestack_field :image_path, 'Upload photo', class:"btn-sm btn-blue" %>
+      <%= form.label :image_path %>
+    </div>
+
+    <%= form.submit 'Submit', class:"btn-submit mt-16" %>
+
+  <% end %>

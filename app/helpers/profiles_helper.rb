@@ -1,27 +1,30 @@
 module ProfilesHelper
 
+  def profilePic(user)
+    if user.profile_picture
+      filestack_image user.profile_picture, class:'rounded-full border border-gray-100 shadow-sm w-8 h-8'
+   else
+      image_tag("https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png", alt: "profile pic", class:"rounded-full border border-gray-100 shadow-sm w-8 h-8" )     
+   end
+  end
+
   def getGrade(profile, course)
-    if profile.student?
-      count = 0
-      total = 0
+    count = 0
+    total = 0
 
-      profile.solutions.where(deleted_at: nil).each do |solution|
-        if solution.course_id == course.id
-          count += 1
-          total += solution.grade
-        end
+    profile.solutions.where(deleted_at: nil).each do |solution|
+      if solution.course_id == course.id
+        count += 1
+        total += solution.grade
       end
+    end
 
-      if count == 0 then count = 1 end
+    if count == 0 then count = 1 end
 
-      if total == 0
-        'non yet'
-      else        
-        "grade: #{total/count}"
-      end
-
-    else
-      '∞'
+    if total == 0
+      'non'
+    else        
+      "grade: #{total/count}"
     end
   end
 

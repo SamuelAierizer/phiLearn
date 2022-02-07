@@ -12,7 +12,7 @@ class Post < ApplicationRecord
 
   after_create_commit do
     if self.parent_id == 0
-      broadcast_append_to "posts"
+      broadcast_append_to "#{self.topic_id}_posts", target: "#{self.topic_id}_posts"
     else 
       broadcast_append_to [self.parent, :replies], target: "#{dom_id(self.parent)}_replies"
     end
