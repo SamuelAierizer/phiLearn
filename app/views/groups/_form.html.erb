@@ -1,0 +1,39 @@
+<%= form_with(model: group) do |form| %>
+
+  <div class="">
+
+    <%= form.text_field :name, class:"form-field-sm w-full", placeholder:"Name" %>
+
+    <%= form.text_area :description, size: "10x4", class:"form-field w-full", placeholder:"Description*" %>
+    
+    <div class="flex flex-row space-x-16">
+      <div class="flex flex-row items-center w-1/2">
+        <%= label_tag :group_type, "Type", class:"mb-6 mr-4 dark:text-white" %>
+        <%= select_tag(:group_type, options_for_select(
+          [['Interest', 'Interest'], 
+          ['Study', 'Study'],
+          ['Club', 'Club'],
+          ['Hobby', 'Hobby'],
+          ['Faculty', 'Faculty'],
+          ['Learners', 'Learners'],
+          ['Topic', 'Topic'],
+          ['Translators', 'Translators']],
+          'Study'), 
+          {:class => 'form-field-sm w-11/12'}) %>
+      </div>
+
+      <% if group.access_code == 0 || group.access_code.nil? %>
+        <div class="flex flex-row items-center mb-6 w-1/2">
+          <%= label_tag :access_code, "Access Code?", class:"mr-4 dark:text-white" %>
+          <%= form.check_box :access_code, class:"h-4 w-4" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="mt-16">
+    <%= form.submit 'Save', class:"btn-submit" %>
+  </div>
+
+<% end %> 

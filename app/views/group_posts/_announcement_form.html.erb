@@ -1,13 +1,13 @@
 <%= form_with(model: group_announcement, id: dom_id(group_announcement)) do |form| %>
-  <%= form.text_area :body, size:"10xx", class:"form-field w-full" %>
+  <%= form.text_area :body, size:"10", class:"form-field w-full", placeholder:"Make an announcement" %>
 
   <%= form.text_field :post_type, id: :group_post_post_type, value: "announcement", type: :hidden %>
   <%= form.number_field :group_id, id: :group_post_group_id, value: group_id, type: :hidden %>
 
   <div class="flex flex-row justify-between">
     <div class="flex flex-row items-center dark:text-white space-x-4">
-      <%= form.label :notify, "Notify?" %>
-      <%= form.check_box :notify, class:'h-4 w-4' %>
+      <%= form.label :notify, "Notify?", class: "hidden" %>
+      <%= form.check_box :notify, class:'h-4 w-4 hidden' %>
     </div>
 
     <div class="space-x-2">

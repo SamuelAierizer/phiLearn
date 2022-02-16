@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'notifications', to: 'notifications#index'
+  post 'notifications', to: 'notifications#create'
+  post 'notifications/read', to: 'notifications#read'
+  get 'notifications/display', to: 'notifications#display'
+  delete 'notifications/mass_delete', to: 'notifications#mass_delete'
+
   post 'group_post/like', to: 'group_posts#like'
   resources :group_posts do
     resources :comments, controller: 'group_comments' do
@@ -12,7 +18,6 @@ Rails.application.routes.draw do
   resources :groups do
     post 'reset_code', to: 'groups#reset_code'
     get 'widgets', to: 'groups#widgets'
-    get 'activity', to: 'groups#activity'
     post 'giveAdmin', to: 'groups#giveAdmin'
     get 'members', to: 'groups#members'
     delete 'members', to: 'groups#mass_delete'

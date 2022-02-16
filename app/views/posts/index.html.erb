@@ -36,9 +36,7 @@
         </div>
 
         <!-- Reply Popup -->
-        <%= turbo_frame_tag "post_form" do %>
-          <%= render 'form2', post: @post, topic_id: @topic.id %>
-        <% end %>
+        <%= render 'form2', post: @post, topic_id: @topic.id %>
     
       </div>
     </div>

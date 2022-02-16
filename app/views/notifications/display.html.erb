@@ -1,0 +1,27 @@
+<%= turbo_frame_tag "notif_bar" do %>
+  <div data-controller="hider">
+    <div class="relative" data-controller="dropdown"
+          data-dropdown-invisible-class="opacity-0 scale-95"
+          data-dropdown-visible-class="opacity-100 scale-100"
+          data-dropdown-entering-class="ease-out duration-100"
+          data-dropdown-enter-timeout="100"
+          data-dropdown-leaving-class="ease-in duration-100"
+          data-dropdown-leave-timeout="100">
+      <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="inline-block select-none">
+        <span class="my-auto text-gray-700 dark:text-white">
+          <i class="fas fa-circle h-2 text-red-800 animate-pulse absolute top-0 mt-1 ml-1" data-hider-target="hideable"></i>
+          <i class="far fa-bell text-lg"></i>
+        </span>
+      </div>
+      <div data-dropdown-target="menu" class="absolute right-0 mt-2 hidden w-80 transform transition opacity-0 scale-95 max-h-80">
+        <div class="flex flex-col bg-white shadow rounded border overflow-y-auto text-black max-h-72">
+          <%= turbo_stream_from "#{current_user.id}_notifications" %>
+
+          <%= turbo_frame_tag "#{current_user.id}_notifications", data: { hider_target: "list"} do %>
+            <%= render @notifications %>
+          <% end %>           
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

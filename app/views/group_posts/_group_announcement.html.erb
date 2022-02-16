@@ -1,11 +1,21 @@
 <%= turbo_frame_tag dom_id(group_announcement) do %>
-  <div class="mt-8 w-full md:w-4/5 mx-auto bg-white dark:bg-gray-800 rounded-xl shadow">
+  <div class="mt-8 w-full md:w-4/5 mx-auto bg-white dark:bg-gray-800 shadow">
     <div class="flex flex-row items-center justify-between px-4 py-2 border-b">
       <div class="flex flex-row items-center space-x-2">
-        <img src="https://tony.matrixlms.com/images/icons/circular/megaphone.png?1642120459" alt="Announcement:" class="rounded-full border border-gray-100 shadow-sm w-10 h-10">
-        <%= link_to group_announcement.user.username, profile_path(group_announcement.user.id), class:'text-lg font-medium text-blue-800 dark:text-blue-300' %>
+        <div class="px-2 py-1 btn-indigo rounded-full"><i class="fas fa-bullhorn text-sm"></i></div>
+        <%= link_to group_announcement.user.username, profile_path(group_announcement.user.id), class:'text-xl text-blue-700 dark:text-blue-300' %>
       </div>
-      <div class="dark:text-white"><%= group_announcement.created_at.to_formatted_s(:short) %></div>
+      <div class="flex flex-row space-x-2 dark:text-white">
+        <div data-edit-target="options" data-controller="edit" id=<%= group_announcement.user_id %>>
+          <%= link_to edit_group_post_path(group_announcement), class:'text-blue-600 mr-2' do %>
+            <i class="fas fa-pen"></i>
+          <% end %>
+          <%= link_to group_announcement, class:'text-red-600 hover:text-red-800 mr-4', data: { turbo_method:"delete", turbo_confirm: 'Are you sure?' } do %>
+            <i class="fas fa-trash-alt"></i>
+          <% end %>
+        </div>
+        <%= group_announcement.created_at.to_formatted_s(:short) %>
+      </div>
     </div>
 
     <div class="px-4 py-2 dark:text-white">
@@ -34,26 +44,6 @@
       <div class="flex flex-row items-center">
         <%= likeCounter group_announcement %>
         <%= commentCounter group_announcement %>
-        <div data-edit-target="options" data-controller="edit" id=<%= group_announcement.user_id %>>
-          <div class="mx-2 relative" data-controller="dropdown"
-              data-dropdown-invisible-class="opacity-0 scale-95"
-              data-dropdown-visible-class="opacity-100 scale-100"
-              data-dropdown-entering-class="ease-out duration-300"
-              data-dropdown-enter-timeout="300"
-              data-dropdown-leaving-class="ease-in duration-100"
-              data-dropdown-leave-timeout="100">
-            <div data-dropdown-target="menu" class="absolute transform right-0 -mt-16 hidden z-30 transition opacity-0 scale-95">
-              <div class="bg-white dark:bg-black shadow rounded-lg overflow-hidden text-sm border-2 dark:border-0">
-                <%= link_to "edit", edit_group_post_path(group_announcement), class:"no-underline block px-4 py-2 text-gray-900 dark:text-white bg-white dark:bg-black whitespace-nowrap" %>
-                <%= link_to "delete", group_announcement, class:"no-underline block px-4 pb-2 text-gray-900 dark:text-white bg-white dark:bg-black whitespace-nowrap", data: { turbo_method:"delete", turbo_confirm: 'Are you sure?' } %>
-              </div>
-            </div>
-            <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="text-gray-500">
-              <i class="fas fa-ellipsis-h"></i>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
 

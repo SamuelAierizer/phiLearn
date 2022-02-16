@@ -1,10 +1,6 @@
 module PostsHelper
   include ActionView::Helpers::DateHelper
 
-  def posted_at(post)
-    distance_of_time_in_words(Time.current, post.created_at) + ' ago'
-  end
-
   def getHeart(post)
     if post.likes.exists?(user_id: session[:user_id])
       content_tag(:i, '', class:"fas fa-heart text-red-600")

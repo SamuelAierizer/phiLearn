@@ -1,0 +1,14 @@
+<%= turbo_frame_tag dom_id(notification) do %>
+  <div class="flex items-center space-x-2 px-4 py-2 max-h-96 border-b relative">
+    <%= notifBanner notification %>
+
+    <div class="flex flex-col">
+      <%= notification.message.truncate(28) %>
+      <span class="ml-4 text-xs text-gray-700"> - <%= createdFrom notification %></span>
+    </div>
+
+    <%= link_to notifications_read_path(id: notification.id), data: { turbo_method: 'post' }, class:"font-sm text-gray-700 hover:text-yellow-600 absolute right-0" do %>
+      <i class="far fa-check-circle mr-4"></i>
+    <% end %>
+  </div>
+<% end %>

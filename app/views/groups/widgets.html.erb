@@ -1,98 +1,43 @@
 <%= turbo_frame_tag 'widgets' do %>
-  <div class="space-y-4 dark:text-white"">
-
-    <!-- Announcements -->
-    <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
-      <div class="px-4 py-2">
-        <h3 class="text-lg mb-2">Announcements</h3>
-        <div>
-          <% @announcements.each do |announcement| %>
-            <div class="flex items-center">
-              <i class="fas fa-bullhorn mr-4 text-indigo-500 text-sm"></i>
-              <%= announcement.body.truncate(20) %>
-            </div>
-          <% end %>
+  <div class="flex my-4 items-center w-full space-y-4 md:space-x-4 md:space-y-0 flex-col md:flex-row">
+    <div class="w-full md:w-6/12">
+      <div class="shadow-lg w-full bg-white dark:bg-gray-800">
+        <div class="flex flex-col p-4">
+          <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Description</h2>
+          <div class="my-4 text-justify dark:text-white"><%= simple_format @group.description %></div>
         </div>
       </div>
     </div>
-
-    <!-- Admins -->
-    <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
-      <div class="px-4 py-2">
-        <div class="flex flex-row justify-between items-center mb-2">
-          <h3 class="text-lg">Admins</h3>
-          <%= link_to group_members_path(group_id: @group.id, type: 'admin'), class:"px-2 py-1", target: "_top" do %>
-            <i class="fas fa-chevron-right"></i>
-          <% end %>
-        </div>
-        <div>
-          <% @admins.each do |admin| %>
-            <div class="flex flex-row items-center">
-              <div class="mr-4"><%= profilePic admin %></div>
-              <div><%= link_to admin.username, profile_path(admin.id), class:'text-base text-blue-800 dark:text-blue-300' %></div>
+    <div class="flex items-center justify-center md:justify-start w-full md:w-1/2 space-x-4">
+      <div class="w-1/2">
+        <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800">
+          <div class="flex flex-row justify-between">
+            <div class="flex items-center dark:text-white">
+              <i class="fas fa-user mr-4 text-indigo-500 text-sm"></i>
+              <%= "Joined: #{@membership.to_formatted_s(:short)}" %>
             </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
 
-    <!-- Members -->
-    <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
-      <div class="px-4 py-2">
-        <div class="flex flex-row justify-between items-center mb-2">
-          <h3 class="text-lg">Members</h3>
-          <%= link_to group_members_path(group_id: @group.id), class:"px-2 py-1", target: "_top" do %>
-            <i class="fas fa-chevron-right"></i>
-          <% end %>
-        </div>
-        <div>
-          <% @members.each do |member| %>
-            <div class="flex flex-row items-center mt-1">
-              <div class="mr-4"><%= profilePic member %></div>
-              <div><%= link_to member.username, profile_path(member.id), class:'text-base text-blue-800 dark:text-blue-300' %></div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
+            <%= form_with(url: group_leave_path, data:{turbo_method: 'post', turbo_confirm: 'Are you sure?', turbo_frame: '_top'}) do |form| %>
+              <%= form.hidden_field :group_id, value: @group.id, class:"form-field-sm w-64" %>
 
-    <!-- Membership -->
-    <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
-      <div class="px-4 py-2">
-        <div class="flex flex-row justify-between">
-          <h3 class="text-lg mb-2">Membership</h3>
-          <%= form_with(url: group_leave_path, data:{turbo_method: 'post', turbo_confirm: 'Are you sure?', turbo_frame: '_top'}) do |form| %>
-            <%= form.hidden_field :group_id, value: @group.id, class:"form-field-sm w-64" %>
-
-            <%= form.submit 'leave', class:"text-indigo-500 bg-white dark:bg-gray-800 hover:text-blue-800 cursor-pointer" %>
-          <% end %>
-        </div>
-        <div class="flex items-center">
-          <i class="fas fa-user mr-4 text-indigo-500 text-sm"></i>
-          <%= "Joined: #{@membership.to_formatted_s(:short)}" %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Admin -->
-    <% if @isAdmin %>
-      <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow">
-        <div class="px-4 py-2">
-          <h3 class="text-lg mb-2">Admin</h3>
-          <div class="">
-            <div class="flex flex-row items-center">
-              <i class="fas fa-lock text-red-800 mr-4"></i>
-              <div class="flex flex-col">
-                <div>Access Code: <%= @group.access_code %></div>            
-                <%= link_to "reset", group_reset_code_path(@group), class:"text-indigo-500", data: { turbo_method: 'post', turbo_confirm: 'Are you sure?' } %>
-              </div>
-            </div>
+              <%= form.submit 'leave', class:"text-indigo-500 bg-white dark:bg-gray-800 hover:text-blue-800 cursor-pointer" %>
+            <% end %>
           </div>
         </div>
       </div>
-    <% end %>
-
+      <% if @isAdmin %>
+        <div class="w-1/2">
+          <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800">
+            <div class="flex flex-row justify-between">
+              <div class="flex items-center dark:text-white">
+                <i class="fas fa-lock text-red-800 mr-4"></i>
+                <%= "Access Code: #{@group.access_code}" %>
+              </div>
+              <%= link_to "reset", group_reset_code_path(@group), class:"text-indigo-500", data: { turbo_method: 'post', turbo_confirm: 'Are you sure?' } %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-
 <% end %>

@@ -35,4 +35,17 @@ module ProfilesHelper
 
     all - done
   end
+
+  def enrollementType(course, user)
+    type = ""
+    if user.admin? || (course.owner_id == user.id)
+      type = "admin"
+      if course.users.exists?(user.id) 
+        type << "/student"
+      end
+    else
+      type = "student"
+    end
+    type
+  end
 end

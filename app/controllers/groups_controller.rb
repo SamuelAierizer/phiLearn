@@ -20,6 +20,10 @@ class GroupsController < ApplicationController
     @role = 'admin' if isAdmin
   end
 
+  def new
+    @group = Group.new
+  end
+
   def edit
     authorize @group
   end
@@ -41,7 +45,7 @@ class GroupsController < ApplicationController
       redirect_to @group, notice: "Group was successfully created."
     else
       flash[:error] = "Group could not be created."
-      redirect_to request.referer, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -51,10 +55,10 @@ class GroupsController < ApplicationController
     @group.group_type = params[:group_type]
 
     if @group.update(group_params)
-      redirect_to request.referer, notice: "Group was successfully updated."
+      redirect_to @group, notice: "Group was successfully updated."
     else
       flash[:error] = "Group could not be updated"
-      redirect_to request.referer, status: :unprocessable_entity 
+      render :edit, status: :unprocessable_entity 
     end
   end
 
@@ -71,7 +75,7 @@ class GroupsController < ApplicationController
   def members
     @group = Group.find(params[:group_id])
 
-    @type = params[:type]
+    @type = params[:membership]
     @type ||= "member"
 
     admin_ids = @group.members.where(mem_type: 'admin').pluck(:uid)
@@ -159,13 +163,8 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:group_id])
     authorize @group
 
-    @announcements = @group.group_posts.where(post_type: 'announcement').limit(3)
-
     @membership = @group.members.where(uid: current_user.id).pluck(:created_at).first
     @isAdmin = @group.members.where(uid: current_user.id, mem_type: 'admin').exists?
-
-    @members = User.where(id: @group.members.where(mem_type: 'member').limit(3).pluck(:uid))
-    @admins = User.where(id: @group.members.where(mem_type: 'admin').limit(3).pluck(:uid))
   end
 
   def activity

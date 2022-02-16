@@ -41,6 +41,14 @@
                       <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">Name</th>
                         <th class="px-4 py-3">Username</th>
+                        <th class="px-3 py-2" data-controller="filters">
+                          <%= select_tag :membership,
+                            options_for_select(
+                              Member.mem_types.map {|key, value| [key.titleize, Member.mem_types.key(value)]}, params[:membership]
+                            ),
+                            class: "p-1 focus:border-blue-700 rounded border-2 outline-none dark:bg-gray-700 dark:border-black",
+                            data: { action: "filters#filter", filters_target: "filter" } %>
+                        </th>
                         <th class="px-4 py-3">email</th>
                         <% if @isAdmin %>
                           <th class="px-4 py-3" data-sort-ignore="true"><input id="checkbox-select-all" type="checkbox" data-checkbox-select-all-target="checkboxAll"></th>
@@ -54,6 +62,7 @@
                             <%= link_to member.first_name + ' ' + member.last_name, profile_path(member.id), class:"font-semibold" %>
                           </td>
                           <td class="px-4 py-3"><%= member.username %></td>
+                          <td class="px-4 py-3"><%= @type %></td>
                           <td class="px-4 py-3"><%= member.email %></td>
                           <% if @isAdmin %>
                             <td class="px-4 py-3"><%= check_box_tag 'user_ids[]', member.id, false, data: { checkbox_select_all_target: 'checkbox' } %></td>
@@ -65,9 +74,7 @@
                 </div>
               </div>
             <% end %>
-
           </div>
-
 
           <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
             <!-- Create Group Modal Inner Container -->

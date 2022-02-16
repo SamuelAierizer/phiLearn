@@ -7,6 +7,11 @@
       <div class="mx-4 text-base">Dashboard</div>
     <% end %>
 
+    <%= link_to notifications_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+      <i class="fas fa-bell text-left"></i>
+      <div class="mx-4 text-base">Notifications</div>
+    <% end %>
+
     <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="main"

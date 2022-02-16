@@ -34,6 +34,10 @@ module ApplicationHelper
     end
   end
 
+  def createdFrom(obj)
+    distance_of_time_in_words(Time.current, obj.created_at) + ' ago'
+  end
+
   def tailwind_classes_for(flash_type)
     {
       notice: "bg-green-400 border-l-4 border-green-700 text-white",
@@ -41,6 +45,19 @@ module ApplicationHelper
       error:  "bg-red-400 border-l-4 border-red-700 text-black",
       alert:  "bg-yellow-300 border-l-4 border-yellow-600 text-black",
     }.stringify_keys[flash_type.to_s] || flash_type.to_s
+  end
+
+  def notifBanner(notification)
+    case notification.notif_type
+    when "notify"
+      content_tag(:i, "", class:"fas fa-circle h-2 text-blue-500")
+    when "alert"
+      content_tag(:i, "", class:"fas fa-circle h-2 text-red-500")
+    when "warn"
+      content_tag(:i, "", class:"fas fa-circle h-2 text-yellow-500")
+    else
+      content_tag(:i, "", class:"fas fa-circle h-2 text-green-500")
+    end
   end
 
   def text(content)

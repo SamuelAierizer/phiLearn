@@ -1,4 +1,5 @@
 class GroupPostsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_group_post, only: %i[ show edit update destroy ]
 
   def index
@@ -29,6 +30,7 @@ class GroupPostsController < ApplicationController
       else
         format.turbo_stream { render turbo_stream: turbo_stream.replace("group_announcement_form", partial: 'group_posts/announcement_form', locals: {group_id: @group_post.group_id, group_announcement: GroupPost.new}) }
       end
+      helpers.notifyGroupMembersOnPost(@group_post)
     end
   end
 
@@ -60,6 +62,7 @@ class GroupPostsController < ApplicationController
     else 
       @group_post.likes.new(user_id: user_id)
       counter += 1
+      helpers.notifyUser(@group_post.user_id, "#{current_user.username} liked your post in #{@group_post.group.name}")
     end
 
     @group_post.update(like_count: counter)

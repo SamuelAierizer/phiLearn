@@ -3,18 +3,23 @@
     <div class="w-5/6 mx-auto md:w-full">
       <div class="flex items-center justify-center">
         <div class="w-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl hover:scale-105 duration-500 transform transition cursor-pointer">
+        <%= link_to coursePath(course, current_user), class:"" do %>
           <%= filestack_image course.image_path, class:'h-48 lg:h-64 w-full' %>
+          <div class="bg-gray-200 dark:bg-black rounded-full px-3 py-1 font-semibold text-gray-700 dark:text-white text-sm absolute top-2 right-2">
+            <%= enrollementType(course, current_user) %>
+          </div>
           <div class="p-5">
             <div class="flex flex-row justify-between">
-              <%= link_to course.name, coursePath(course, current_user), class:"text-2xl font-bold dark:text-white dark:hover:text-blue-500" %>
+              <div class="text-2xl font-bold dark:text-white dark:hover:text-blue-500"><%= course.name %></div>
               <div class="w-max inline-block bg-gray-200 dark:bg-black rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-white mr-6 mb-2">
                 <%= getGrade(current_user, course) %>
               </div>
             </div>
             <p class="mt-2 mb-4 text-lg font-semibold text-gray-600 dark:text-gray-200">by <%= course.owner.username %></p>
-            <%= simple_format truncate(course.description, length: 100), class:"dark:text-white" %>
+            <%= simple_format truncate(course.description, length: 100), class:"text-black dark:text-white" %>
           </div>
           <%= course_progress(course) %>
+        <% end %>
         </div>
       </div>
     </div>

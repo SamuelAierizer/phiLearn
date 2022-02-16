@@ -6,22 +6,34 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
+
     <div class="relative p-2 flex items-center w-full space-x-4 justify-end">
-      <button class="mx-4" data-action="click->look#dark">
+      <%= turbo_frame_tag "notif_bar", src: notifications_display_path do %>
+        <div class="relative">
+          <div class="inline-block select-none">
+            <span class="my-auto text-gray-700 dark:text-white">
+              <i class="far fa-bell text-lg"></i>
+            </span>
+          </div>
+        </div>
+      <% end %>
+      
+      <button class="" data-action="click->look#dark">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
       </button>
-      <div class="relative mr-2 md:mr-8 " data-controller="dropdown"
+
+      <div class="relative" data-controller="dropdown"
             data-dropdown-invisible-class="opacity-0 scale-95"
             data-dropdown-visible-class="opacity-100 scale-100"
-            data-dropdown-entering-class="ease-out duration-300"
-            data-dropdown-enter-timeout="300"
-            data-dropdown-leaving-class="ease-in duration-300"
-            data-dropdown-leave-timeout="300">
+            data-dropdown-entering-class="ease-out duration-100"
+            data-dropdown-enter-timeout="100"
+            data-dropdown-leaving-class="ease-in duration-100"
+            data-dropdown-leave-timeout="100">
         <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="inline-block select-none">
           <span class="appearance-none flex items-center text-gray-700 dark:text-white">
-            <i class="fas fa-user fa-fw"></i>
+            <i class="fas fa-user"></i>
             <p class="mx-2 font-semibold"><%= current_user.username %><p>
             <i class="fas fa-angle-down"></i>
           </span>

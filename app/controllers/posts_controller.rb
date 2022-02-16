@@ -22,14 +22,12 @@ class PostsController < ApplicationController
     @topic = Topic.find(@post.topic_id)
 
     unless @topic.is_blocked
+      if @post.save
+        @topic.update(last_poster: @post.user_id, last_post_at: @post.created_at)
+      end
+      
       respond_to do |format|
-        if @post.save
-          @topic.update(last_poster: @post.user_id, last_post_at: @post.created_at)
-          
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("post_form", partial: 'posts/form2', locals: {post: Post.new, topic_id: @topic.id}) }
-        else
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("post_form", partial: 'posts/form2', locals: {post: Post.new, topic_id: @topic.id}) }
-        end
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("post_form", partial: 'posts/form2', locals: {post: Post.new, topic_id: @topic.id}) }
       end
     else
       redirect_to request.referer, alert: 'This topic is blocked!'

@@ -30,6 +30,8 @@ class GroupCommentsController < ApplicationController
 
     @comment.save
 
+    helpers.notifyUser(@target.user_id, "#{current_user.username} commented to your #{@target.class.name.downcase}")
+
     redirect_to request.referer
   end
 
