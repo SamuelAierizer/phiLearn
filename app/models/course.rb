@@ -1,6 +1,13 @@
 class Course < ApplicationRecord
   include Paginatable
 
+  has_rich_text :description
+  has_one_attached :image do |attachable|
+    attachable.variant :thumb, resize_to_limit: [250, 250]
+  end
+  has_many_attached :files
+  
+
   belongs_to :owner, class_name: 'User', optional: true
   has_many :lectures, :dependent => :destroy
   has_many :assignments, :dependent => :destroy

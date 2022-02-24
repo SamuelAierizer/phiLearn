@@ -27,8 +27,9 @@ export default class extends Controller {
       noNotif.id = "noNotif"
       this.listTarget.appendChild(noNotif);
     } else {
-      this.hideableTarget.classList.remove("hidden");
-      if (document.contains(document.getElementById("noNotif"))) {
+      if (!document.contains(document.getElementById("noNotif"))) {
+        this.hideableTarget.classList.remove("hidden");
+      } else if (this.listTarget.children.length > 1) {
         document.getElementById("noNotif").remove();
       }
     }

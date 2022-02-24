@@ -4,7 +4,6 @@ module CoursesHelper
     content_tag :div, class:'font-medium text-gray-900 dark:text-gray-100' do
       concat link_to "Add Lecture", new_lecture_path(course_id: course.id), data: {action: "click->dropdown#toggle"}, class:"no-underline block px-8 pt-3 whitespace-nowrap"
       concat link_to "Add Assignment", new_assignment_path(course_id: course.id), data: {action: "click->dropdown#toggle"}, class:"no-underline block px-8 pt-3 whitespace-nowrap"
-      concat link_to 'Add Asset', new_resource_path(material_type: course.class.name, material_id: course.id), data: {action: "click->dropdown#toggle"}, class:"no-underline block px-8 py-3 whitespace-nowrap"
     end
   end
 

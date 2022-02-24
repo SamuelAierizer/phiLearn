@@ -11,7 +11,6 @@ class LecturesController < ApplicationController
 
   def show
     authorize @lecture
-    @assets = Resource.get_for(@lecture.class.name, @lecture.id)
     @target = @lecture
   end
 
@@ -68,6 +67,13 @@ class LecturesController < ApplicationController
     redirect_to schools_path, status: 303
   end
 
+  def delete_files_attachment
+    @lecture = Lecture.find(params[:lecture_id])
+    @lecture.files.find_by_id(params[:file_id]).purge
+    redirect_to @lecture, status: 303
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_lecture
@@ -76,6 +82,6 @@ class LecturesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lecture_params
-      params.require(:lecture).permit(:name, :description, :course_id)
+      params.require(:lecture).permit(:name, :description, :course_id, files: [])
     end
 end

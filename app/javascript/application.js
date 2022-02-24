@@ -2,3 +2,5 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import "chartkick/chart.js"
+import "trix"
+import "@rails/actiontext"

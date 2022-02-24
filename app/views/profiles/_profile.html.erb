@@ -1,8 +1,8 @@
 <div class="flex flex-col mb-4">
   <div class="flex flex-col sm:flex-row">
     <div class="flex flex-col mx-auto sm:mx-0 md:w-2/5 sm:mr-4">
-      <% unless profile.profile_picture.blank? %>
-        <%= filestack_image profile.profile_picture, class:'h-64 w-64' %>
+      <% if profile.profile_picture.attached? %>
+        <%= image_tag profile.profile_picture, class:'h-64 w-64 mb-8' %>  
       <% else %>
         <img src="https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png" alt="Profile picture" width="300" height="400">
       <% end %>
@@ -52,7 +52,7 @@
 
 <div class="mt-8">
   <div class="text-3xl font-semibold">About Me</div>
-  <div class="text-justify mt-4"><%= simple_format profile.info.about %></div>
+  <div class="text-justify mt-4"><%= profile.info.about %></div>
 </div>
 
 <% if current_user.id == profile.id || current_user.admin? %>

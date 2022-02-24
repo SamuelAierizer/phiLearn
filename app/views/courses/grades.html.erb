@@ -1,65 +1,67 @@
-<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
-  <div class="flex items-start justify-between">
-    <!-- Sidenav --> 
-    <%= render 'shared/sidenav' %>
+<div class="flex min-h-screen">
+  <!-- Sidenav --> 
+  <%= render 'shared/sidenav' %>
 
+  <main class="flex-shrink w-full bg-gray-100 dark:bg-gray-900 relative">
+    <!-- Header -->
+    <%= render 'shared/navbar' %>
 
-    <div class="flex flex-col w-full">
-      <!-- Header -->
-      <%= render 'shared/navbar' %>
-
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
-        <!-- Page Head -->
-        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
-          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
-          <div class="flex-col flex-grow">
+    <div class="px-4 md:px-6">
+    
+      <!-- Page Head -->
+      <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+        <div class="flex-col flex-grow">
+          <div class="flex flex-row space-x-2">
+            <%= link_to :back do %><i class="fas fa-chevron-left text-4xl"></i><% end %>
             <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Gradebook for <%= @course.name %></h1>
-            <h2 class=" text-gray-400"><%= @school.name %></h2>
           </div>
+          <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
+        </div>
+      </div>
+
+      <!-- Page Conent -->
+      <div class="w-full overflow-hidden shadow-xs my-8">
+        <div class="flex flex-row justify-between">
+          <h2 class="text-3xl my-2 ml-4 dark:text-white">Solutions<h2>
+        </div>
+        <div class="w-full overflow-x-auto">
+          <table class="w-full whitespace-no-wrap">
+            <thead>
+              <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                <th class="px-4 py-3">Assignment</th>
+                <th class="px-4 py-3">File Uploaded</th>
+                <% unless current_user.student? %>
+                  <th class="px-4 py-3">User</th>
+                  <th class="px-2 py-3"></th>
+                  <th class="px-2 py-3"></th>
+                <% end %>
+                <th class="px-4 py-3">Grade</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
+              <% @solutions.each do |solution| %>
+                <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black" >
+                  <td class="px-4 py-3 font-semibold"><%= link_to solution.assignment.name, solution.assignment %></td>
+                  <% if solution.assignment.handIn? %>
+                    <td class="px-4 py-3"><%= link_to "Solution uploaded", solution.file, class:"underline" %></td>
+                  <% else %>
+                    <td class="px-4 py-3"><%= link_to "View submission", solution, class:"underline" %></td>
+                  <% end %>
+                  <% unless current_user.student? %>
+                    <td class="px-4 py-3"><%= solution.user.username %></td>
+                    <td class="px-2 py-3"><%= link_to "Grade", edit_solution_path(solution), class:"btn-sm btn-yellow" %></td>
+                    <td class="px-2 py-3"><%= link_to 'Delete', solution_url(id: solution.id), data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }, class:"btn-sm btn-red" %></td>
+                  <% end %>
+                  <td class="px-4 py-3 font-semibold"><%= solution.grade.truncate(2) unless solution.grade.blank? %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
 
-        <!-- Page Conent -->
-        <div class="w-full overflow-hidden shadow-xs my-8">
-          <div class="flex flex-row justify-between">
-            <h2 class="text-3xl my-2 ml-4 dark:text-white">Solutions<h2>
-          </div>
-          <div class="w-full overflow-x-auto">
-            <table class="w-full whitespace-no-wrap">
-              <thead>
-                <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                  <th class="px-4 py-3">Assignment</th>
-                  <th class="px-4 py-3">File Uploaded</th>
-                  <% unless current_user.student? %>
-                    <th class="px-4 py-3">User</th>
-                    <th class="px-2 py-3"></th>
-                    <th class="px-2 py-3"></th>
-                  <% end %>
-                  <th class="px-4 py-3">Grade</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
-                <% @solutions.each do |solution| %>
-                  <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black" >
-                    <td class="px-4 py-3 font-semibold"><%= link_to solution.assignment.name, solution.assignment %></td>
-                    <% if solution.assignment.handIn? %>
-                      <td class="px-4 py-3"><%= link_to "Solution uploaded", solution.file, class:"underline" %></td>
-                    <% else %>
-                      <td class="px-4 py-3"><%= link_to "View submission", solution, class:"underline" %></td>
-                    <% end %>
-                    <% unless current_user.student? %>
-                      <td class="px-4 py-3"><%= solution.user.username %></td>
-                      <td class="px-2 py-3"><%= link_to "Grade", edit_solution_path(solution), class:"btn-sm btn-yellow" %></td>
-                      <td class="px-2 py-3"><%= link_to 'Delete', solution_url(id: solution.id), data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }, class:"btn-sm btn-red" %></td>
-                    <% end %>
-                    <td class="px-4 py-3 font-semibold"><%= solution.grade.truncate(2) unless solution.grade.blank? %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
+      </div> 
 
-        </div>      
-      </div>
     </div>
-  </div>
-</main>
+  </main>
+
+</div>

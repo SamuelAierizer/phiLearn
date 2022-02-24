@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :courses, through: :students
   has_one :info, class_name: 'Profile', :dependent => :destroy
 
+  has_one_attached :profile_picture
+
   after_create :create_profile
 
   accepts_nested_attributes_for :school, allow_destroy: true

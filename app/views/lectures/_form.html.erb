@@ -14,7 +14,7 @@
 
     <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Name of the lecture" %>
 
-    <%= form.text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full", placeholder:"Description" %>
+    <%= form.rich_text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full bg-white", placeholder:"Description" %>
 
     <div class="">
       <div class="form-field w-full bg-white"> <%= @course.name %> </div>

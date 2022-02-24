@@ -18,7 +18,7 @@
 
     <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Name of the assignment" %>
 
-    <%= form.text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full", placeholder:"Description" %>
+    <%= form.rich_text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full bg-white", placeholder:"Description" %>
 
     <%= select_tag(:assignment_type, options_for_select([['Hand in', 'handIn'], ['Quizz', 'quizz']], 'handIn'), {:class => 'form-field w-full'}) %>
 

@@ -1,9 +1,6 @@
 <%= form_with model: solution, url: student_solutions_path(solution) do |form| %>
   <div class="flex flex-row gap-32">
-    <div class="">
-      <%= form.filestack_field :file, 'Upload solution', class:"btn btn-black" %>
-      <%= form.label :path %>
-    </div>
+    <%= form.file_field :file %>
 
     <%= form.number_field :user_id, id: :solution_user_id, value: current_user.id, type: :hidden %>
     <%= form.number_field :assignment_id, id: :solution_assignment_id, value: @assignment.id, type: :hidden %>

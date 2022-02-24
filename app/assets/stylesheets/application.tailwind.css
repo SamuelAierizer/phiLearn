@@ -1,7 +1,8 @@
+@import "actiontext.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 a:hover {
   @apply text-blue-800
@@ -33,11 +34,11 @@ h1, h2, h3, h4 {
 }
 
 .btn-submit {
-  @apply py-3 px-4 bg-gradient-to-r from-green-400 to-blue-600 hover:from-green-500 hover:to-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg
+  @apply py-3 px-4 bg-gradient-to-r from-green-400 to-blue-600 hover:from-green-500 hover:to-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg cursor-pointer;
 }
 
 .btn {
-  @apply px-4 py-2 text-base font-medium leading-6 shadow-md focus:outline-none inline-flex items-center justify-center rounded-md;
+  @apply px-4 py-2 text-base font-medium leading-6 shadow-md focus:outline-none inline-flex items-center justify-center rounded-md cursor-pointer;
 }
 
 .btn-sm {
@@ -75,3 +76,4 @@ h1, h2, h3, h4 {
 .btn-black {
   @apply bg-black hover:bg-gray-900 focus:ring-0 text-white hover:text-white;
 }
+@import 'actiontext.css';

@@ -24,6 +24,10 @@ module NotificationsHelper
     Notification.create(notif_type: "notify", message: message, status: "unread", user_id: uid)
   end
 
+  def warnUser(uid, message)
+    Notification.create(notif_type: "warn", message: message, status: "unread", user_id: uid)
+  end
+
   def displayStatus(notification)
     content_tag :div do
       concat content_tag(:span, notification.status)

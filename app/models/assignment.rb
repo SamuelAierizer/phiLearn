@@ -1,6 +1,10 @@
 class Assignment < ApplicationRecord
   include Paginatable
 
+  has_rich_text :description
+  has_many_attached :files
+
+
   belongs_to :course, :optional => true
   has_many :questions, :dependent => :destroy
   has_many :solutions, :dependent => :destroy

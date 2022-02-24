@@ -13,12 +13,9 @@
 
     <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Course Name" %>
 
-    <%= form.text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full", placeholder:"Description" %>
+    <%= form.rich_text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full bg-white", placeholder:"Description" %>
 
-    <div class="field form-group dark:text-white">
-      <%= form.filestack_field :image_path, 'Upload photo', class:"btn-sm btn-blue" %>
-      <%= form.label :image_path %>
-    </div>
+    <%= form.file_field :image %>
 
     <%= form.submit 'Submit', class:"btn-submit mt-16" %>
 

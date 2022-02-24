@@ -1,79 +1,82 @@
-<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
-  <div class="flex items-start justify-between" >
-    <!-- Sidenav --> 
-    <%= render 'shared/sidenav' %>
+<div class="flex min-h-screen">
+  <!-- Sidenav --> 
+  <%= render 'shared/sidenav' %>
 
-    <div class="flex flex-col w-full">
-      <!-- Header -->
-      <%= render 'shared/navbar' %>
+  <main class="flex-shrink w-full bg-gray-100 dark:bg-gray-900 relative">
+    <!-- Header -->
+    <%= render 'shared/navbar' %>
 
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
-        <!-- Page Head -->
-        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
-          <%= link_to schools_path do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
-          <div class="flex-col flex-grow">
-            <div class="flex flex-row">
-              <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= @course.name %></h1> 
-            </div>
-            <h2 class=" text-gray-400"><%= @school.name %></h2>
+    <div class="px-4 md:px-6">
+
+      <!-- Page Head -->
+      <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+        <div class="flex-col flex-grow">
+          <div class="flex flex-row space-x-2">
+            <%= link_to schools_path do %><i class="fas fa-chevron-left text-4xl"></i><% end %>
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= @course.name %></h1> 
           </div>
-          <div class="flex flex-row my-auto md:justify-between">
-            <%= link_to "Administrate", @course, class:"btn-sm btn-blue" if policy(@course).update? %>
-          </div>
+          <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
         </div>
-        
-        <!-- Page Conent -->
-        <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
-          <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Description</h2>
-          <div class="my-4 text-justify"><%= simple_format @course.description %></div>
-
-          <% unless @assets.blank? %>
-            <h3 class="text-xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Assets</h3>
-            <div class="mt-8 flex flex-col">
-              <% @assets.each do |asset| %>
-                <%= link_to asset.name, asset.path, class:"font-semibold -my-2" %></br>
-              <% end %>
-            </div>
-          <% end %>
+        <div class="flex flex-row my-auto md:justify-between">
+          <%= link_to "Administrate", @course, class:"btn-sm btn-blue" if policy(@course).update? %>
         </div>
-
-        <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
-          <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Lectures</h2>
-          <div class="mt-8 flex flex-col">
-            <% @lectures.each do |lecture| %>
-              <%= link_to lecture.name, student_lecture_path(lecture), class:"font-semibold -my-2" %></br>
-            <% end %>
-          </div>
-        </div>
-
-        <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
-          <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Assignments</h2>
-          <div class="mt-8 flex flex-col">
-            <% @assignments.each do |assignment| %>
-              <%= link_to assignment.name, student_assignment_path(assignment), class:"font-semibold -my-2" %></br>
-            <% end %>
-          </div>
-        </div>
-
-        <%= showForum @course, @school %>
-
-       <div class="mt-16 ml-8 dark:text-white ">
-          <h2 class="text-2xl font-bold">Comments</h2>
-          <%= form_with(model: [@course, @course.comments.build]) do |f| %>
-            <div class="my-2">
-              <%= f.label 'New comment' %>
-              <%= f.text_area :body, class: 'flex-1 my-2 appearance-none border border-gray-300 w-full py-3 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent' %>
-              <%= f.text_field :target_type, id: :comment_target_type, value: @course.class.name, type: :hidden %>
-              <%= f.number_field :target_id, id: :comment_target_id, value: @course.id, type: :hidden %>
-              <%= f.number_field :user_id, id: :comment_user_id, value: current_user.id, type: :hidden %>
-            </div>
-            <%= f.submit 'Submit', class: 'btn btn-blue' %>
-          <% end %>
-          <div class="mt-4 mb-16">
-            <%= render @course.comments, target: @course %>
-          </div>
-        </div> 
       </div>
+      
+      <!-- Page Conent -->
+      <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
+        <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Description</h2>
+        <div class="my-4 text-justify"><%= @course.description %></div>
+
+        <% if @course.files.attached? %>
+          <h3 class="text-xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200 mt-12">Assets</h3>
+          <div class="mt-4 flex flex-col">
+            <% @course.files.each do |file| %>
+              <div class="text-lg mb-2">               
+                <%= link_to file.filename, rails_blob_path(file, disposition: 'preview'), class:'underline' %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
+        <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Lectures</h2>
+        <div class="mt-8 flex flex-col">
+          <% @lectures.each do |lecture| %>
+            <%= link_to lecture.name, student_lecture_path(lecture), class:"font-semibold -my-2" %></br>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
+        <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Assignments</h2>
+        <div class="mt-8 flex flex-col">
+          <% @assignments.each do |assignment| %>
+            <%= link_to assignment.name, student_assignment_path(assignment), class:"font-semibold -my-2" %></br>
+          <% end %>
+        </div>
+      </div>
+
+      <%= showForum @course, @school %>
+
+      <div class="mt-16 ml-8 dark:text-white ">
+        <h2 class="text-2xl font-bold">Comments</h2>
+        <%= form_with(model: [@course, @course.comments.build]) do |f| %>
+          <div class="my-2">
+            <%= f.label 'New comment' %>
+            <%= f.text_area :body, class: 'flex-1 my-2 appearance-none border border-gray-300 w-full py-3 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent' %>
+            <%= f.text_field :target_type, id: :comment_target_type, value: @course.class.name, type: :hidden %>
+            <%= f.number_field :target_id, id: :comment_target_id, value: @course.id, type: :hidden %>
+            <%= f.number_field :user_id, id: :comment_user_id, value: current_user.id, type: :hidden %>
+          </div>
+          <%= f.submit 'Submit', class: 'btn btn-blue' %>
+        <% end %>
+        <div class="mt-4 mb-16">
+          <%= render @course.comments, target: @course %>
+        </div>
+      </div>
+
     </div>
-  </div>
-</main>
+  </main>
+
+</div>

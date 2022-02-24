@@ -1,47 +1,47 @@
-<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
-  <div class="flex items-start justify-between">
-    <!-- Sidenav --> 
-    <%= render 'shared/sidenav' %>
+<div class="flex min-h-screen">
+  <!-- Sidenav --> 
+  <%= render 'shared/sidenav' %>
 
-    <div class="flex flex-col w-full">
-      <!-- Header -->
-      <%= render 'shared/navbar' %>
+  <main class="flex-shrink w-full bg-gray-100 dark:bg-gray-900 relative">
+    <!-- Header -->
+    <%= render 'shared/navbar' %>
 
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
-        <!-- Page Head -->
-        <div class="mt-4 flex flex-row dark:text-white">
-          <%= link_to @solution.assignment.course do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
-          <div class="flex-col flex-grow">
-            <div class="flex flex-row ">
-              <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Solution for <%= @solution.assignment.name %></h1>
-            <%= link_to '(edit)', edit_solution_path(@solution), class:"ml-2 my-auto underline" unless current_user.student? %> 
-            </div>
-            <h2 class=" text-gray-400"><%= @school.name %></h2>
+    <div class="px-4 md:px-6">
+
+      <!-- Page Head -->
+      <div class="mt-4 flex flex-row dark:text-white">
+        <div class="flex-col flex-grow">
+          <div class="flex flex-row space-x-2">
+            <%= link_to @solution.assignment do %><i class="fas fa-chevron-left text-4xl"></i><% end %>
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Solution for <%= @solution.assignment.name %></h1>
+            <%= link_to '(edit)', edit_solution_path(@solution), class:"my-auto underline" unless current_user.student? %> 
           </div>
-          <div class="mx-4">
-          </div>
+          <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
         </div>
-
-        <!-- Page Conent -->
-        <div class="mt-4 mb-16">
-          <% if @assignment.handIn? %>
-            <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 ">
-              <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Your solution</h2>
-              <div class="mt-4 flex">
-              <p class="dark:text-white">
-                  <strong>Uploaded: </strong>
-                  <%= link_to "Uploaded file", @solution.file, class:"underline" unless @solution.file.blank? %>
-                </p>
-              </div>
-            </div>
-
-          <% else %>
-            <%= render 'quizz_show' %>
-          <% end %>
-
+        <div class="mx-4">
         </div>
-        
       </div>
+
+      <!-- Page Conent -->
+      <div class="mt-4 mb-16">
+        <% if @assignment.handIn? %>
+          <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 ">
+            <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Your solution</h2>
+            <div class="mt-4 flex">
+            <p class="dark:text-white">
+                <strong>Uploaded: </strong>
+                <%= link_to "Uploaded file", @solution.file, class:"underline" unless @solution.file.blank? %>
+              </p>
+            </div>
+          </div>
+
+        <% else %>
+          <%= render 'quizz_show' %>
+        <% end %>
+
+      </div>
+        
     </div>
-  </div>
-</main>
+  </main>
+
+</div>

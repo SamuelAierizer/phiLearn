@@ -1,8 +1,8 @@
 module ProfilesHelper
 
   def profilePic(user)
-    if user.profile_picture
-      filestack_image user.profile_picture, class:'rounded-full border border-gray-100 shadow-sm w-8 h-8'
+    if user.profile_picture.attached?
+      image_tag(user.profile_picture, class:'rounded-full border border-gray-100 shadow-sm w-8 h-8')
    else
       image_tag("https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png", alt: "profile pic", class:"rounded-full border border-gray-100 shadow-sm w-8 h-8" )     
    end

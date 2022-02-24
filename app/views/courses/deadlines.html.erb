@@ -1,78 +1,80 @@
-<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
-  <div class="flex items-start justify-between">
-    <!-- Sidenav --> 
-    <%= render 'shared/sidenav' %>
+<div class="flex min-h-screen">
+  <!-- Sidenav --> 
+  <%= render 'shared/sidenav' %>
 
-    <div class="flex flex-col w-full">
-      <!-- Header -->
-      <%= render 'shared/navbar' %>
+  <main class="flex-shrink w-full bg-gray-100 dark:bg-gray-900 relative">
+    <!-- Header -->
+    <%= render 'shared/navbar' %>
 
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
-        <!-- Page Head -->
-        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
-          <%= link_to :back do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
-          <div class="flex-col flex-grow">
+    <div class="px-4 md:px-6">
+    
+      <!-- Page Head -->
+      <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+        <div class="flex-col flex-grow">
+          <div class="flex flex-row space-x-2">
+            <%= link_to :back do %><i class="fas fa-chevron-left text-4xl"></i><% end %>
             <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Deadlines for <%= @course.name %></h1>
-            <h2 class=" text-gray-400"><%= @school.name %></h2>
           </div>
+          <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
         </div>
+      </div>
 
-        <!-- Page Conent -->
-        <div class="w-full overflow-hidden rounded-lg shadow-xs my-8">
-          <div class="flex flex-row justify-between">
-            <h2 class="text-3xl my-2 ml-4 dark:text-white">Assignments<h2>
-          </div>
-          <div class="w-full overflow-x-auto">
-            <table class="w-full whitespace-no-wrap">
-              <thead>
-                <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                  <th class="px-4 py-3">Assignment</th>
-                  <th class="px-4 py-3">Solution</th>
-                  <th class="px-4 py-3">Submitted On</th>
-                  <th class="px-4 py-3">Deadline</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
-                <% @assignments.each do |assignment| %>
-                  <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
-                    <td class="px-4 py-3"><%= link_to assignment.name, assignment, class:"font-semibold" %></td>
-                    
-                    <% if assignment.handIn? %>
-                      <td class="px-4 py-3"><%= link_to "Uploaded file", assignment.userSolution(current_user.id).file, class:"underline" unless assignment.userSolution(current_user.id).blank? %></td>
-                    <% else %>
-                      <td class="px-4 py-3"><%= link_to "View submission", assignment.userSolution(current_user.id), class:"underline" unless assignment.userSolution(current_user.id).blank? %></td>
-                    <% end %>
+      <!-- Page Conent -->
+      <div class="w-full overflow-hidden rounded-lg shadow-xs my-8">
+        <div class="flex flex-row justify-between">
+          <h2 class="text-3xl my-2 ml-4 dark:text-white">Assignments<h2>
+        </div>
+        <div class="w-full overflow-x-auto">
+          <table class="w-full whitespace-no-wrap">
+            <thead>
+              <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                <th class="px-4 py-3">Assignment</th>
+                <th class="px-4 py-3">Solution</th>
+                <th class="px-4 py-3">Submitted On</th>
+                <th class="px-4 py-3">Deadline</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
+              <% @assignments.each do |assignment| %>
+                <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
+                  <td class="px-4 py-3"><%= link_to assignment.name, assignment, class:"font-semibold" %></td>
+                  
+                  <% if assignment.handIn? %>
+                    <td class="px-4 py-3"><%= link_to "Uploaded file", assignment.userSolution(current_user.id).file, class:"underline" unless assignment.userSolution(current_user.id).blank? %></td>
+                  <% else %>
+                    <td class="px-4 py-3"><%= link_to "View submission", assignment.userSolution(current_user.id), class:"underline" unless assignment.userSolution(current_user.id).blank? %></td>
+                  <% end %>
 
-                    <td class="px-4 py-3">
-                      <% if assignment.userSolution(current_user.id).present? %>
-                        <%= assignment.userSolution(current_user.id).created_at.to_formatted_s(:long) %>
-                        <% if assignment.userSolution(current_user.id).created_at < (assignment.deadline || @time+1.second) %>
-                          <i class="fas fa-check text-green-500 ml-2"></i>
-                        <% else %>
-                          <i class="fas fa-exclamation-circle text-red-700 ml-2"></i>
-                        <% end %>
+                  <td class="px-4 py-3">
+                    <% if assignment.userSolution(current_user.id).present? %>
+                      <%= assignment.userSolution(current_user.id).created_at.to_formatted_s(:long) %>
+                      <% if assignment.userSolution(current_user.id).created_at < (assignment.deadline || @time+1.second) %>
+                        <i class="fas fa-check text-green-500 ml-2"></i>
+                      <% else %>
+                        <i class="fas fa-exclamation-circle text-red-700 ml-2"></i>
                       <% end %>
-                    </td>
-                    
-                    <% if @time > (assignment.deadline || @time+1.day) %>
-                      <td class="px-2 py-2">
-                        <div class="py-1 px-2 bg-red-100 dark:bg-red-400 dark:text-red-800 rounded-lg md:w-max">
-                          <%= assignment.deadline.to_formatted_s(:long) %>
-                        </div>
-                      </td>
-                    <% else %>
-                      <td class="px-4 py-3"><i class="fas fa-hourglass-half text-indigo-700 mr-4"></i><%= assignment.deadline.to_formatted_s(:long) unless assignment.deadline.blank? %></td>                    
                     <% end %>
+                  </td>
+                  
+                  <% if @time > (assignment.deadline || @time+1.day) %>
+                    <td class="px-2 py-2">
+                      <div class="py-1 px-2 bg-red-100 dark:bg-red-400 dark:text-red-800 rounded-lg md:w-max">
+                        <%= assignment.deadline.to_formatted_s(:long) %>
+                      </div>
+                    </td>
+                  <% else %>
+                    <td class="px-4 py-3"><i class="fas fa-hourglass-half text-indigo-700 mr-4"></i><%= assignment.deadline.to_formatted_s(:long) unless assignment.deadline.blank? %></td>                    
+                  <% end %>
 
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-          
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
         
       </div>
+      
     </div>
-  </div>
-</main>
+  </main>
+
+</div>

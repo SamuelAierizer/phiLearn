@@ -46,11 +46,13 @@ Rails.application.routes.draw do
   
   delete 'assignments/mass_delete', to: 'assignments#mass_delete'
   resources :assignments do
+    delete :delete_files_attachment
     resources :comments
   end
 
   delete 'lectures/mass_delete', to: 'lectures#mass_delete'
   resources :lectures do
+    delete :delete_files_attachment
     resources :comments
   end
 
@@ -62,6 +64,7 @@ Rails.application.routes.draw do
     post 'populate', to: 'courses#populate'
     get 'grades', to: 'courses#grades'
     post 'toggle', to: 'courses#toggle_user'
+    delete :delete_files_attachment
     resources :comments
   end
 
@@ -119,6 +122,4 @@ Rails.application.routes.draw do
 
   get 'home/about'
   root 'home#index'
-
-  get '*path', to: 'application#render_404'
 end

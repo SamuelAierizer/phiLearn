@@ -18,7 +18,9 @@ class NotificationsController < ApplicationController
   def read
     @notification = Notification.find(params[:id])
     @notification.update(status: 'read')
-    render turbo_stream: turbo_stream.remove(@notification)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@notification) }
+    end
   end
 
   def mass_delete

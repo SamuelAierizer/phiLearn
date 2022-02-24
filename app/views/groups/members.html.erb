@@ -1,129 +1,131 @@
-<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
-  <div class="flex items-start justify-between">
-    <!-- Sidenav --> 
-    <%= render 'shared/sidenav' %>
+<div class="flex min-h-screen">
+  <!-- Sidenav --> 
+  <%= render 'shared/sidenav' %>
 
+  <main class="flex-shrink w-full bg-gray-100 dark:bg-gray-900 relative">
+    <!-- Header -->
+    <%= render 'shared/navbar' %>
 
-    <div class="flex flex-col w-full">
-      <!-- Header -->
-      <%= render 'shared/navbar' %>
-
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
-        <!-- Page Head -->
-        <div class="mt-4 flex flex-col md:flex-row dark:text-white">
-          <%= link_to @group do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
-          <div class="flex-col flex-grow">
+    <div class="px-4 md:px-6">
+    
+      <!-- Page Head -->
+      <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+        <div class="flex-col flex-grow">
+          <div class="flex flex-row space-x-2">
+            <%= link_to @group do %><i class="fas fa-chevron-left text-4xl"></i><% end %>
             <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= "#{@type.capitalize}s of: #{@group.name}" %></h1>
-            <h2 class=" text-gray-400"><%= @school.name %></h2>
+          </div>
+          <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
+        </div>
+      </div>
+
+      <!-- Page Conent -->
+      <div class="w-full overflow-hidden shadow-xs my-8" data-controller="modal" data-modal-allow-background-close="true">
+        
+        <div class="my-4">
+          <%= form_tag group_members_path(group_id: @group.id, type: @type), method: 'delete', data: { turbo_confirm: 'Are you sure?' } do %>
+            <div class="w-full overflow-hidden rounded-lg shadow-xs my-8">
+              <div class="flex flex-row justify-between">
+                <h2 class="text-3xl my-2 ml-4 dark:text-white"><%= "#{@type.capitalize}s" %><h2>
+                <div class="mx-8 space-x-2">
+                  <% if @isAdmin %>
+                    <%= submit_tag "kick", :class => 'btn-sm btn-gray' %>
+                    <a href="#" data-action="click->modal#open" class="btn-sm btn-lime">
+                      <span>Add Admins</span>
+                    </a>
+                  <% end %>
+                </div>
+              </div>
+              <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap" data-controller="checkbox-select-all">
+                  <thead>
+                    <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                      <th class="px-4 py-3">Name</th>
+                      <th class="px-4 py-3">Username</th>
+                      <th class="px-3 py-2" data-controller="filters">
+                        <%= select_tag :membership,
+                          options_for_select(
+                            Member.mem_types.map {|key, value| [key.titleize, Member.mem_types.key(value)]}, params[:membership]
+                          ),
+                          class: "p-1 focus:border-blue-700 rounded border-2 outline-none dark:bg-gray-700 dark:border-black",
+                          data: { action: "filters#filter", filters_target: "filter" } %>
+                      </th>
+                      <th class="px-4 py-3">email</th>
+                      <% if @isAdmin %>
+                        <th class="px-4 py-3" data-sort-ignore="true"><input id="checkbox-select-all" type="checkbox" data-checkbox-select-all-target="checkboxAll"></th>
+                      <% end %>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
+                      <% @members.each do |member| %>
+                      <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
+                        <td class="px-4 py-3">
+                          <%= link_to member.first_name + ' ' + member.last_name, profile_path(member.id), class:"font-semibold" %>
+                        </td>
+                        <td class="px-4 py-3"><%= member.username %></td>
+                        <td class="px-4 py-3"><%= @type %></td>
+                        <td class="px-4 py-3"><%= member.email %></td>
+                        <% if @isAdmin %>
+                          <td class="px-4 py-3"><%= check_box_tag 'user_ids[]', member.id, false, data: { checkbox_select_all_target: 'checkbox' } %></td>
+                        <% end %>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+          <!-- Create Group Modal Inner Container -->
+          <div class="max-h-screen w-full max-w-3xl relative">
+            <!-- Create Group Modal Card -->
+            <div class="m-1 bg-white dark:bg-gray-800 rounded shadow">
+              <%= form_tag group_giveAdmin_path(group_id: @group.id), method: 'post' do %>
+                
+                <div class="flex flex-row justify-between p-2 bg-indigo-300 dark:bg-indigo-900 rounded-t">
+                  <h2 class="text-2xl dark:text-white px-2 py-2">Add New Admins</h2>
+                  <button class="text-xl px-4 py-2 text-gray-800 dark:text-white hover:text-red-800 dark:hover:text-red-800" data-action="click->modal#close"><i class="fas fa-times"></i></button>
+                </div>
+
+                <div class="p-4">
+                  <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap" data-controller="checkbox-select-all">
+                      <thead>
+                        <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                          <th class="px-4 py-3">Name</th>
+                          <th class="px-4 py-3">Username</th>
+                          <th class="px-4 py-3" data-sort-ignore="true"><input id="checkbox-select-all" type="checkbox" data-checkbox-select-all-target="checkboxAll"></th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
+                        <% @non_admins.each do |user| %>
+                          <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
+                            <td class="px-4 py-3">
+                              <%= link_to user.first_name + ' ' + user.last_name, profile_path(user.id), class:"font-semibold" %>
+                            </td>
+                            <td class="px-4 py-3"><%= user.username %></td>
+                            <td class="px-4 py-3"><%= check_box_tag 'user_ids[]', user.id, false, data: { checkbox_select_all_target: 'checkbox' } %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+                <div class="flex justify-end bg-gray-200 dark:bg-gray-900 p-2 rounded-b">
+                  <div class="w-28" ><%= submit_tag 'Add', class:"btn-sm btn-submit", data:{action:"click->click->modal#close"} %></div>
+                </div>
+
+              <% end %>  
+            </div>
           </div>
         </div>
 
-        <!-- Page Conent -->
-        <div class="w-full overflow-hidden shadow-xs my-8" data-controller="modal" data-modal-allow-background-close="true">
-          
-          <div class="my-4">
-            <%= form_tag group_members_path(group_id: @group.id, type: @type), method: 'delete', data: { turbo_confirm: 'Are you sure?' } do %>
-              <div class="w-full overflow-hidden rounded-lg shadow-xs my-8">
-                <div class="flex flex-row justify-between">
-                  <h2 class="text-3xl my-2 ml-4 dark:text-white"><%= "#{@type.capitalize}s" %><h2>
-                  <div class="mx-8 space-x-2">
-                    <% if @isAdmin %>
-                      <%= submit_tag "kick", :class => 'btn-sm btn-gray' %>
-                      <a href="#" data-action="click->modal#open" class="btn-sm btn-lime">
-                        <span>Add Admins</span>
-                      </a>
-                    <% end %>
-                  </div>
-                </div>
-                <div class="w-full overflow-x-auto">
-                  <table class="w-full whitespace-no-wrap" data-controller="checkbox-select-all">
-                    <thead>
-                      <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">Name</th>
-                        <th class="px-4 py-3">Username</th>
-                        <th class="px-3 py-2" data-controller="filters">
-                          <%= select_tag :membership,
-                            options_for_select(
-                              Member.mem_types.map {|key, value| [key.titleize, Member.mem_types.key(value)]}, params[:membership]
-                            ),
-                            class: "p-1 focus:border-blue-700 rounded border-2 outline-none dark:bg-gray-700 dark:border-black",
-                            data: { action: "filters#filter", filters_target: "filter" } %>
-                        </th>
-                        <th class="px-4 py-3">email</th>
-                        <% if @isAdmin %>
-                          <th class="px-4 py-3" data-sort-ignore="true"><input id="checkbox-select-all" type="checkbox" data-checkbox-select-all-target="checkboxAll"></th>
-                        <% end %>
-                      </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
-                       <% @members.each do |member| %>
-                        <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
-                          <td class="px-4 py-3">
-                            <%= link_to member.first_name + ' ' + member.last_name, profile_path(member.id), class:"font-semibold" %>
-                          </td>
-                          <td class="px-4 py-3"><%= member.username %></td>
-                          <td class="px-4 py-3"><%= @type %></td>
-                          <td class="px-4 py-3"><%= member.email %></td>
-                          <% if @isAdmin %>
-                            <td class="px-4 py-3"><%= check_box_tag 'user_ids[]', member.id, false, data: { checkbox_select_all_target: 'checkbox' } %></td>
-                          <% end %>
-                        </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            <% end %>
-          </div>
-
-          <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
-            <!-- Create Group Modal Inner Container -->
-            <div class="max-h-screen w-full max-w-3xl relative">
-              <!-- Create Group Modal Card -->
-              <div class="m-1 bg-white dark:bg-gray-800 rounded shadow">
-                <%= form_tag group_giveAdmin_path(group_id: @group.id), method: 'post' do %>
-                  
-                  <div class="flex flex-row justify-between p-2 bg-indigo-300 dark:bg-indigo-900 rounded-t">
-                    <h2 class="text-2xl dark:text-white px-2 py-2">Add New Admins</h2>
-                    <button class="text-xl px-4 py-2 text-gray-800 dark:text-white hover:text-red-800 dark:hover:text-red-800" data-action="click->modal#close"><i class="fas fa-times"></i></button>
-                  </div>
-
-                  <div class="p-4">
-                    <div class="w-full overflow-x-auto">
-                      <table class="w-full whitespace-no-wrap" data-controller="checkbox-select-all">
-                        <thead>
-                          <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th class="px-4 py-3">Name</th>
-                            <th class="px-4 py-3">Username</th>
-                            <th class="px-4 py-3" data-sort-ignore="true"><input id="checkbox-select-all" type="checkbox" data-checkbox-select-all-target="checkboxAll"></th>
-                          </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
-                          <% @non_admins.each do |user| %>
-                            <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
-                              <td class="px-4 py-3">
-                                <%= link_to user.first_name + ' ' + user.last_name, profile_path(user.id), class:"font-semibold" %>
-                              </td>
-                              <td class="px-4 py-3"><%= user.username %></td>
-                              <td class="px-4 py-3"><%= check_box_tag 'user_ids[]', user.id, false, data: { checkbox_select_all_target: 'checkbox' } %></td>
-                            </tr>
-                          <% end %>
-                        </tbody>
-                      </table>
-                    </div>
-
-                  </div>
-                  <div class="flex justify-end bg-gray-200 dark:bg-gray-900 p-2 rounded-b">
-                    <div class="w-28" ><%= submit_tag 'Add', class:"btn-sm btn-submit", data:{action:"click->click->modal#close"} %></div>
-                  </div>
-
-                <% end %>  
-              </div>
-            </div>
-          </div>
-
-        </div>      
       </div>
+
     </div>
-  </div>
-</main>
+  </main>
+
+</div>

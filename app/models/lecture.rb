@@ -1,4 +1,9 @@
 class Lecture < ApplicationRecord
+
+  has_rich_text :description
+  has_many_attached :files
+  
+
   belongs_to :course, :optional => true
   has_many :comments, as: :target, :dependent => :destroy
   has_many :resources, as: :material, :dependent => :destroy

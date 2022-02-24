@@ -1,33 +1,32 @@
-<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
-  <div class="flex items-start justify-between">
-    <!-- Sidenav --> 
-    <%= render 'shared/sidenav' %>
+<div class="flex min-h-screen">
+  <!-- Sidenav --> 
+  <%= render 'shared/sidenav' %>
 
+  <main class="flex-shrink w-full bg-gray-100 dark:bg-gray-900 relative">
+    <!-- Header -->
+    <%= render 'shared/navbar' %>
 
-    <div class="flex flex-col w-full">
-      <!-- Header -->
-      <%= render 'shared/navbar' %>
-
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
-        <!-- Page Head -->
-        <div class="my-4 flex flex-col md:flex-row dark:text-white">
-          <%= link_to @course do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
-          <div class="flex-col flex-grow">
+    <div class="px-4 md:px-6">
+    
+      <!-- Page Head -->
+      <div class="my-4 flex flex-col md:flex-row dark:text-white">
+        <div class="flex-col flex-grow">
+          <div class="flex flex-row space-x-2">
+            <%= link_to @course do %><i class="fas fa-chevron-left text-4xl"></i><% end %>
             <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Add New Assignment</h1>
-            <h2 class=" text-gray-400"><%= @school.name %></h2>
           </div>
+          <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
         </div>
-
-        <!-- Page Conent -->
-        <div class="w-full overflow-hidden shadow-xs my-8">
-          
-          <div class="mb-8">
-            <%= render 'assignments/form', assignment: @assignment %>      
-          </div>
-
-        </div>  
-        
       </div>
+
+      <!-- Page Conent -->
+      <div class="w-full overflow-hidden shadow-xs my-8">
+        <div class="mb-8">
+          <%= render 'assignments/form', assignment: @assignment %>      
+        </div>
+      </div>  
+        
     </div>
-  </div>
-</main>
+  </main>
+
+</div>

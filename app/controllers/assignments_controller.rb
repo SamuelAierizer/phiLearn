@@ -19,7 +19,6 @@ class AssignmentsController < ApplicationController
     @questions = Question.where(assignment_id: @assignment.id)
 
     @target = @assignment
-    @assets = Resource.get_for(@assignment.class.name, @assignment.id)
   end
 
   def new
@@ -42,7 +41,7 @@ class AssignmentsController < ApplicationController
     @assignment.assignment_type = params[:assignment_type]
 
     if @assignment.save
-      redirect_to @assignment.course, notice: "Assignment was successfully created."
+      redirect_to @assignment, notice: "Assignment was successfully created."
     else
       flash[:error] = "Assignment could not be created."
       redirect_to new_assignment_path(course_id: @assignment.course_id), status: :unprocessable_entity
@@ -54,7 +53,7 @@ class AssignmentsController < ApplicationController
 
     @assignment.assignment_type = params[:assignment_type]
     if @assignment.update(assignment_params)
-      redirect_to @assignment.course, notice: "Assignment was successfully updated."
+      redirect_to @assignment, notice: "Assignment was successfully updated."
     else
       render :edit, status: :unprocessable_entity 
     end
@@ -68,7 +67,7 @@ class AssignmentsController < ApplicationController
     @assignment.update(deleted_at: Time.current)
 
     flash[:info] = "Assignment was successfully destroyed."
-    redirect_to @course, status: 303
+    redirect_to request.referer, status: 303
   end
 
   def mass_delete
@@ -81,12 +80,18 @@ class AssignmentsController < ApplicationController
     redirect_to schools_path, status: 303
   end
 
+  def delete_files_attachment
+    @assignment = Assignment.find(params[:assignment_id])
+    @assignment.files.find_by_id(params[:file_id]).purge
+    redirect_to @assignment, status: 303
+  end
+
   private
     def set_assignment
       @assignment = Assignment.find(params[:id])
     end
 
     def assignment_params
-      params.require(:assignment).permit(:name, :description, :assignment_type, :deadline, :course_id)
+      params.require(:assignment).permit(:name, :description, :assignment_type, :deadline, :course_id, files: [])
     end
 end

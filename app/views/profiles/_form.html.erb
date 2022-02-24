@@ -1,12 +1,14 @@
-<%= form_with url:profile_path(profile), data: { turbo_method: 'put' } do |form| %>
+<%= form_with(url: profile_path(profile), method: :put)do |form| %>
 
-  <% unless profile.profile_picture.blank? %>
-    <%= filestack_image profile.profile_picture, class:'h-64 w-64 mb-8' %>
+  <% if profile.profile_picture.attached? %>
+    <%= image_tag profile.profile_picture, class:'h-64 w-64 mb-8' %>  
+  <% else %>
+    <img src="https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png" alt="Profile picture" width="300" height="400">
   <% end %>
 
-  <div class="dark:text-white mb-4">
-    <%= form.filestack_field :profile_picture, 'Upload picture', class:"btn-sm btn-blue" %>
-    <%= form.label :profile_picture %>
+  <div class="grid grid-rows-2 dark:text-white mb-8">
+    <%= form.label :profile_picture, class:'font-semibold' %>
+    <%= form.file_field :profile_picture %>
   </div>
 
   <div class="grid grid-cols-6 gap-4">
@@ -44,7 +46,7 @@
   <div class="border-t mt-4 mb-8"></div>
 
   <%= form.label :about, "About me", class:'font-semibold text-xl' %>
-  <%= form.text_area :about, value: profile.info.about, size:"10x10", autocomplete: "description", class:"form-field w-full" %>
+  <%= form.rich_text_area :about, value: profile.info.about, class:"form-field w-full" %>
   
 
   <%= form.submit 'Submit', class:"btn-submit my-4" %>

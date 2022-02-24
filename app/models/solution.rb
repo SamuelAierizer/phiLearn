@@ -3,6 +3,8 @@ class Solution < ApplicationRecord
   belongs_to :user
   has_many :answers, :dependent => :destroy
 
+  has_one_attached :file
+
   accepts_nested_attributes_for :answers
 
   def owner(user)

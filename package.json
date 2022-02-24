@@ -4,6 +4,7 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.1.0",
+    "@rails/actiontext": "^7.0.2-2",
     "autoprefixer": "^10.4.0",
     "chart.js": "^3.6.1",
     "chartkick": "^4.1.1",
@@ -15,7 +16,8 @@
     "stimulus-flatpickr": "^1.4.0",
     "stimulus-rails-nested-form": "^4.0.0",
     "tailwindcss": "^2.2.19",
-    "tailwindcss-stimulus-components": "^3.0.1"
+    "tailwindcss-stimulus-components": "^3.0.1",
+    "trix": "^2.0.0-alpha.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --outdir=app/assets/builds",

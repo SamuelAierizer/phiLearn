@@ -22,7 +22,6 @@ class CoursesController < ApplicationController
     authorize @course
     @lectures = @course.lectures.where(deleted_at: nil)
     @assignments = @course.assignments.where(deleted_at: nil)
-    @assets = Resource.get_for(@course.class.name, @course.id)
     @target = @course
 
     unless @course.forum
@@ -97,6 +96,12 @@ class CoursesController < ApplicationController
     redirect_to courses_path, status: 303
   end
 
+  def delete_files_attachment
+    @course = Course.find(params[:course_id])
+    @course.files.find_by_id(params[:file_id]).purge
+    redirect_to @course, status: 303
+  end
+
   def add_users
     authorize @course
 
@@ -164,6 +169,6 @@ class CoursesController < ApplicationController
     end
 
     def course_params
-      params.require(:course).permit(:name, :description, :image_path, :owner_id, :user_ids)
+      params.require(:course).permit(:name, :description, :image_path, :owner_id, :user_ids, :image, files: [])
     end
 end

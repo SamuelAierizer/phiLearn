@@ -2,7 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.0"
-gem "rails", "~> 7.0.0.alpha2"
+gem 'rails', '~> 7.0', '>= 7.0.2'
 gem "puma", "~> 5.0"
 gem "jsbundling-rails", "~> 0.1.0"
 
@@ -18,7 +18,6 @@ gem 'devise', '~> 4.8', git: 'https://github.com/heartcombo/devise', ref: '85938
 gem 'pundit', '~> 2.1'
 gem 'nested_form', '~> 0.3.2'
 gem 'activerecord-import', '~> 1.3'
-gem 'filestack-rails', '~> 5.5', '>= 5.5.2'
 gem "chartkick"
 
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
@@ -40,3 +39,4 @@ group :test do
 end
 
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'
+gem "image_processing", ">= 1.2"

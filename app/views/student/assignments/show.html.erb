@@ -1,74 +1,71 @@
-<% content_for :head do %>
-  <%= filestack_js_include_tag %>
-  <%= filestack_js_init_tag %>
-<% end %>
+<div class="flex min-h-screen">
+  <!-- Sidenav --> 
+  <%= render 'shared/sidenav' %>
 
-<main class="bg-gray-100 dark:bg-gray-900 h-screen overflow-hidden relative">
-  <div class="flex items-start justify-between">
-    <!-- Sidenav --> 
-    <%= render 'shared/sidenav' %>
+  <main class="flex-shrink w-full bg-gray-100 dark:bg-gray-900 relative">
+    <!-- Header -->
+    <%= render 'shared/navbar' %>
 
-    <div class="flex flex-col w-full">
-      <!-- Header -->
-      <%= render 'shared/navbar' %>
+    <div class="px-4 md:px-6">
 
-      <div class="overflow-auto h-screen pb-24 px-4 md:px-6">
-        <!-- Page Head -->
-        <div class="mt-4 flex flex-row dark:text-white">
-          <%= link_to student_course_path(@assignment.course) do %><i class="fas fa-chevron-left text-4xl mb-4 md:mx-4"></i><% end %>
-          <div class="flex-col flex-grow">
-            <div class="flex flex-row">
-              <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= @assignment.name %></h1>
-            </div>
-            <h2 class="text-gray-400"><%= @school.name %></h2>
+      <!-- Page Head -->
+      <div class="mt-4 flex flex-row dark:text-white">
+        <div class="flex-col flex-grow">
+          <div class="flex flex-row space-x-2">
+            <%= link_to student_course_path(@assignment.course) do %><i class="fas fa-chevron-left text-4xl"></i><% end %>
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white"><%= @assignment.name %></h1>
           </div>
-          <div class="mx-4">
-            <%= link_to "Administrate", @assignment, class:"btn-sm btn-blue" if policy(@assignment).update? %>
-          </div>
+          <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
         </div>
-
-        <!-- Page Conent -->
-        <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
-          <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Description</h2>
-          <div class="my-4 text-justify"><%= simple_format @assignment.description %></div>
-
-          <% unless @assets.blank? %>
-            <h3 class="text-xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Assets</h3>
-            <div class="flex flex-col">
-              <% @assets.each do |asset| %>
-                <%= link_to asset.name, asset.path, class:"font-semibold" %></br>
-              <% end %>
-            </div>
-          <% end %>
-
-          <div class="mt-5">
-              <%= printDeadline @assignment %>
-              <%= printTimeLeft @assignment %>
-            </div>
+        <div class="mx-4">
+          <%= link_to "Administrate", @assignment, class:"btn-sm btn-blue" if policy(@assignment).update? %>
         </div>
-
-        <div class="my-5 dark:text-white">
-          <%= solveAssignment @assignment %>
-        </div>
-
-        <div class="mt-16 ml-8 dark:text-white">
-          <h2 class="text-2xl font-bold">Comments</h2>
-          <%= form_with(model: [@assignment, @assignment.comments.build]) do |f| %>
-            <div class="my-2">
-              <%= f.label 'New comment' %>
-              <%= f.text_area :body, class: 'flex-1 my-2 appearance-none border border-gray-300 w-full py-3 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent' %>
-              <%= f.text_field :target_type, id: :comment_target_type, value: @assignment.class.name, type: :hidden %>
-              <%= f.number_field :target_id, id: :comment_target_id, value: @assignment.id, type: :hidden %>
-              <%= f.number_field :user_id, id: :comment_user_id, value: current_user.id, type: :hidden %>
-            </div>
-            <%= f.submit 'Submit', class: 'btn btn-blue' %>
-          <% end %>
-          <div class="mt-5 mb-16">
-            <%= render @assignment.comments, target: @assignment %>
-          </div>
-        </div>
-        
       </div>
+
+      <!-- Page Conent -->
+      <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative my-8 dark:text-white">
+        <h2 class="text-2xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200">Description</h2>
+        <div class="my-4 text-justify"><%= @assignment.description %></div>
+
+        <% if @assignment.files.attached? %>
+          <h3 class="text-xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200 mt-12">Assets</h3>
+          <div class="my-4 flex flex-col">
+            <% @assignment.files.each do |file| %>
+              <div class="text-lg mb-2">               
+                <%= link_to file.filename, rails_blob_path(file, disposition: 'preview'), class:'underline' %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="pt-4 border-t">
+          <%= printDeadline @assignment %>
+          <%= printTimeLeft @assignment %>
+        </div>
+      </div>
+
+      <div class="my-5 dark:text-white">
+        <%= solveAssignment @assignment %>
+      </div>
+
+      <div class="mt-16 ml-8 dark:text-white">
+        <h2 class="text-2xl font-bold">Comments</h2>
+        <%= form_with(model: [@assignment, @assignment.comments.build]) do |f| %>
+          <div class="my-2">
+            <%= f.label 'New comment' %>
+            <%= f.text_area :body, class: 'flex-1 my-2 appearance-none border border-gray-300 w-full py-3 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent' %>
+            <%= f.text_field :target_type, id: :comment_target_type, value: @assignment.class.name, type: :hidden %>
+            <%= f.number_field :target_id, id: :comment_target_id, value: @assignment.id, type: :hidden %>
+            <%= f.number_field :user_id, id: :comment_user_id, value: current_user.id, type: :hidden %>
+          </div>
+          <%= f.submit 'Submit', class: 'btn btn-blue' %>
+        <% end %>
+        <div class="mt-5 mb-16">
+          <%= render @assignment.comments, target: @assignment %>
+        </div>
+      </div>
+        
     </div>
-  </div>
-</main>
+  </main>
+
+</div>
