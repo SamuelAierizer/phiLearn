@@ -40,3 +40,4 @@ end
 
 gem 'sprockets-rails', '~> 3.4', '>= 3.4.2'
 gem "image_processing", ">= 1.2"
+gem "aws-sdk-s3", "~> 1.113"
