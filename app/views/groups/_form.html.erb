@@ -4,7 +4,7 @@
 
     <%= form.text_field :name, class:"form-field-sm w-full", placeholder:"Name" %>
 
-    <%= form.text_area :description, size: "10x4", class:"form-field w-full", placeholder:"Description*" %>
+    <%= form.rich_text_area :description, class:"form-field w-full bg-white", placeholder:"Description*" %>
     
     <div class="flex flex-row space-x-16">
       <div class="flex flex-row items-center w-1/2">
@@ -28,6 +28,8 @@
           <%= form.check_box :access_code, class:"h-4 w-4" %>
         </div>
       <% end %>
+
+      <%= form.file_field :image %>
     </div>
 
   </div>

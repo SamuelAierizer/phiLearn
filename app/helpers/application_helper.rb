@@ -60,10 +60,6 @@ module ApplicationHelper
     end
   end
 
-  def text(content)
-    truncate(safe_join(content.split("\n"),tag(:br)), length: 40)
-  end
-
   def resource_name
     :user
   end

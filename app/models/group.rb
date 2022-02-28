@@ -1,4 +1,7 @@
 class Group < ApplicationRecord
+  has_one_attached :image
+  has_rich_text :description
+
   has_many :group_posts, :dependent => :destroy
   has_many :members, as: :memable, :dependent => :destroy
 
