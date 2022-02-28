@@ -52,7 +52,7 @@ class SolutionsController < ApplicationController
     respond_to do |format|
       if @solution.update(solution_params)
         helpers.warnUser(@solution.user_id, "Your solution for #{@solution.assignment.name} was graded!") if @solution.grade != old_grade
-        format.html { redirect_to , notice: "Solution was successfully updated." }
+        format.html { redirect_to @solution.assignment, notice: "Solution was successfully updated." }
         format.json { render :show, status: :ok, location: @solution }
       else
         format.html { render :edit, status: :unprocessable_entity }
