@@ -27,7 +27,7 @@ module SchoolHelper
       elsif !school.forum.topics.nil?
         count = school.forum.topics.count
         subject = " topics"
-        if count = 1 then subject = " topic" end
+        if count == 1 then subject = " topic" end
         link_to school.forum.topics.count.to_s + subject, forum_path(id: school.forum.id)
       else 
         link_to "0 active topic", forum_path(id: school.forum.id)
