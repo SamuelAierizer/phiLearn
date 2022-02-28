@@ -276,9 +276,6 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   jsbundling-rails (~> 0.1.0)
   nested_form (~> 0.3.2)
-  net-imap
-  net-pop
-  net-smtp
   pg (~> 1.2, >= 1.2.3)
   puma (~> 5.0)
   pundit (~> 2.1)
