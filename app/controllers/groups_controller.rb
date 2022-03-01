@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
   def index
     public_groups = Group.where(access_code: 0)
     member_groups = Group.where(id: Member.where(uid: current_user.id, memable_type: 'Group').pluck(:memable_id))
-    @groups = public_groups + member_groups
+    @groups = member_groups | public_groups
   end
 
   def show
@@ -34,10 +34,8 @@ class GroupsController < ApplicationController
 
     @group.group_type = params[:group_type]
     @group.created_by = current_user.id
-    
-    unless params[:access_code] == 0
-      @group.access_code = helpers.generateCode()
-    end
+        
+    @group.access_code = helpers.generateCode() unless params[:group][:access_code] == "0"
 
     if @group.save
       @group.members.create(uid: current_user.id, mem_type: 'admin')
@@ -74,6 +72,7 @@ class GroupsController < ApplicationController
 
   def members
     @group = Group.find(params[:group_id])
+    authorize @group
 
     @type = params[:membership]
     @type ||= "member"
@@ -92,7 +91,15 @@ class GroupsController < ApplicationController
   end
 
   def join
-    @group = Group.where(access_code: params[:access_code]).first
+    if params[:id].present?
+      @group = Group.find(params[:id])
+      if @group.access_code != "0"
+        flash[:alert] = "This group is not public"
+        redirect_to schools_path and return
+      end
+    else 
+      @group = Group.where(access_code: params[:access_code]).first
+    end
 
     unless @group.members.exists?(uid: current_user.id, mem_type: 'member')
       @group.members.create(uid: current_user.id, mem_type: 'member')
@@ -101,7 +108,7 @@ class GroupsController < ApplicationController
       flash[:alert] = "This group is already available"
     end
 
-    redirect_to request.referer
+    redirect_to @group
   end
 
   def giveAdmin

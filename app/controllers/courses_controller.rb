@@ -72,7 +72,7 @@ class CoursesController < ApplicationController
     if @course.update(course_params)
       redirect_to @course, notice: "Course was successfully updated."
     else
-      redirect_to @course, error: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

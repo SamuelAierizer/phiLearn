@@ -2,6 +2,20 @@
 
   <div class="">
 
+    <% if group.errors.any? %>
+      <div id="error_explanation" class="my-8">
+        <h2 class="text-xl mb-2"><%= pluralize(group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+        <ul class="space-y-2">
+          <% group.errors.each do |error| %>
+            <li class="w-full flex items-center px-4 py-2  text-base rounded-full text-red-600 bg-red-200">
+              <%= error.full_message %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <%= form.text_field :name, class:"form-field-sm w-full", placeholder:"Name" %>
 
     <%= form.rich_text_area :description, class:"form-field w-full bg-white", placeholder:"Description*" %>
@@ -28,7 +42,9 @@
           <%= form.check_box :access_code, class:"h-4 w-4" %>
         </div>
       <% end %>
+    </div>
 
+    <div class="mb-6">
       <%= form.file_field :image %>
     </div>
 

@@ -11,6 +11,10 @@ class GroupPolicy < ApplicationPolicy
     (group.hasMember(user) || admin_rights) && group.deleted_at.nil?
   end
 
+  def members?
+    show?
+  end
+
   def create?
     teacher_rights
   end

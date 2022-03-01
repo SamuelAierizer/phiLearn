@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 a:hover {
-  @apply text-blue-800
+  @apply text-blue-800 dark:text-blue-600
 }
 
 h1, h2, h3, h4 {

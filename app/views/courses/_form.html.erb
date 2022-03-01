@@ -1,19 +1,21 @@
   <%= form_with(model: course) do |form| %>
     <% if course.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <div id="error_explanation" class="my-8">
+        <h2 class="text-xl mb-2"><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
 
-        <ul>
+        <ul class="space-y-2">
           <% course.errors.each do |error| %>
-            <li><%= error.full_message %></li>
+            <li class="w-full flex items-center px-4 py-2  text-base rounded-full text-red-600 bg-red-200">
+              <%= error.full_message %>
+            </li>
           <% end %>
         </ul>
       </div>
     <% end %>
 
-    <%= form.text_field :name, autocomplete: "name", class:"form-field w-full", placeholder:"Course Name" %>
+    <%= form.text_field :name, class:"form-field w-full", placeholder:"Course Name" %>
 
-    <%= form.rich_text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full bg-white", placeholder:"Description" %>
+    <%= form.rich_text_area :description, size:"10x10", class:"form-field w-full bg-white", placeholder:"Description" %>
 
     <%= form.file_field :image %>
 
