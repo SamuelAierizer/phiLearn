@@ -63,8 +63,7 @@ class GroupsController < ApplicationController
   def destroy
     authorize @group
 
-    # @group.destroy
-    @group.update(deleted_at: Time.current)
+    @group.destroy
 
     flash[:info] = "Group was successfully destroyed."
     redirect_to request.referer, status: 303
@@ -133,6 +132,11 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:group_id])
 
     Member.destroy(@group.members.where(uid: current_user.id).pluck(:id))
+
+    if @group.members.empty?
+      @group.destroy
+      flash[:info] = "Group was destroyed."
+    end
 
     redirect_to groups_path
   end
