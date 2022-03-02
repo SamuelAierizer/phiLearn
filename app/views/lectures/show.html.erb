@@ -34,7 +34,7 @@
           <h3 class="text-xl w-max text-gray-800 dark:text-white font-semibold border-b border-gray-200 mt-12">Assets</h3>
           <div class="mt-4 flex flex-col">
             <% @lecture.files.each do |file| %>
-              <div class="text-lg mb-2">
+              <div class="mb-2">
                 <%= link_to lecture_delete_files_attachment_path(lecture_id: @lecture.id, file_id: file.id), 
                 data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' } do %>
                   <i class="fas fa-trash text-red-600 hover:text-red-800"> </i>
@@ -68,20 +68,20 @@
         <!-- Modal Inner Container -->
         <div class="max-h-screen w-full max-w-xl relative">
           <!-- Modal Card -->
-          <div class="m-1 bg-white dark:bg-gray-900 rounded shadow">
-            <div class="p-8">
-              <%= form_with(model: @lecture, local: true) do |form| %>
+          <div class="m-2 bg-white dark:bg-gray-900 rounded shadow">
+            <%= form_with(model: @lecture, local: true) do |form| %>
+              <div class="p-4">
                 <div class="flex flex-col space-y-2">
                   <%= form.label :files, class:'font-semibold' %>
                   <%= form.file_field :files, multiple: true %>
                 </div>
+              </div>
 
-                <div class="flex flex-row justify-between items-center flex-wrap mt-12">
-                  <button class="btn-sm btn-gray" data-action="click->modal#close">Close</button>
-                  <div class="w-28"><%= form.submit 'Submit', class:'btn-sm btn-submit' %></div>
-                </div>
-              <% end %>           
-            </div>
+              <div class="flex justify-end items-center flex-wrap space-x-2 p-4 rounded-b">
+                <button class="btn-sm btn-gray" data-action="click->modal#close">Cancle</button>
+                <div class="w-28"><%= form.submit 'Add', class:'btn-sm btn-submit' %></div>
+              </div>
+            <% end %>           
           </div>
         </div>
       </div>

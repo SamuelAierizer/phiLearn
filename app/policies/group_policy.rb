@@ -35,6 +35,10 @@ class GroupPolicy < ApplicationPolicy
     update?
   end
 
+  def giveMember?
+    update?
+  end
+
   def mass_delete?
     update?
   end

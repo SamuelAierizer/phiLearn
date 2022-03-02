@@ -19,7 +19,7 @@
           <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
         </div>
         <div class="mr-6 my-auto">
-          <%= link_to "Members", group_members_path(@group.id), class:"btn-sm btn-blue" %>
+          <%= link_to "Members", group_members_path(@group.id, membership: "member"), class:"btn-sm btn-blue" %>
         </div>
       </div>
 

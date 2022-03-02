@@ -49,20 +49,17 @@
     <!-- Modal Inner Container -->
     <div class="max-h-screen w-full max-w-6xl relative">
       <!-- Modal Card -->
-      <div class="m-1 bg-white dark:bg-gray-900 rounded shadow">
-        <div class="p-8" data-controller="populate">
-          <div class="mb-4">
-            <%= turbo_frame_tag 'new_users', src: course_new_users_path(@course) do %>
-              <h2 class="text-4xl font-semibold"><i class="fas fa-spinner fa-spin"></i></h2>
-            <% end %>
-          </div>
+      <div class="m-2 bg-white dark:bg-gray-900 rounded shadow">
+        <div class="p-4" data-controller="populate">
+          <%= turbo_frame_tag 'new_users', src: course_new_users_path(@course) do %>
+            <h2 class="flex items-center h-36 text-4xl font-semibold"><i class="fas fa-spinner fa-spin mx-auto"></i></h2>
+          <% end %>
 
           <%= form.hidden_field :user_ids, data: { populate_target: "field" } %>
-
-          <div class="flex flex-row justify-between items-center flex-wrap mt-6">
-            <div class="w-1/5"><button class="btn-submit" data-action="populate#commit">Submit</button></div>
-            <button class="btn btn-gray" data-action="click->modal#close">Close</button>
-          </div>
+        </div>
+        <div class="flex justify-end items-center flex-wrap space-x-2 p-4 rounded-b -mt-16">
+          <button class="btn-sm btn-gray" data-action="click->modal#close">Close</button>
+          <div class="w-28"><button class="btn-sm btn-submit" data-action="populate#commit">Submit</button></div>
         </div>
       </div>
     </div>

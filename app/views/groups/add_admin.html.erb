@@ -1,0 +1,52 @@
+<%= turbo_frame_tag 'add_users' do %>
+
+  <%= form_with(url: group_giveAdmin_path(group_id: @group.id), data: {populate_target: "form", turbo_method: 'post', turbo_frame: :_top}) do |form| %>
+    
+    <div class="flex flex-row justify-between items-center px-4 py-4">
+      <h2 class="text-2xl dark:text-white">Add New Admins</h2>
+      <div class="space-x-2">
+        <span class="btn-sm btn-gray cursor-not-allowed">admins</span>
+        <%= link_to "members", group_add_member_path(@group), class:"btn-sm btn-blue" %>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <div class="w-full overflow-x-auto max-h-80 overflow-y-auto">
+        <table class="w-full whitespace-no-wrap">
+          <thead>
+            <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+              <th class="px-4 py-3">Name</th>
+              <th class="px-4 py-3">Username</th>
+              <th class="px-4 py-3"></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700" data-controller="checkbox">
+            <% @non_admins.each do |user| %>
+              <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
+                <td class="px-4 py-3">
+                  <%= link_to user.first_name + ' ' + user.last_name, profile_path(user.id), class:"font-semibold" %>
+                </td>
+                <td class="px-4 py-3"><%= user.username %></td>
+                <td class="px-4 py-4"><input type="checkbox" data-action="populate#update_ids" id="<%= user.id %>" class="w-4 h-4"/></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <%= form.hidden_field :user_ids, data: { populate_target: "field" } %>
+
+    <div class="mx-4 mt-2">
+      <%= paginate @non_admins %>
+    </div>
+
+    <div class="flex justify-end items-center flex-wrap space-x-2 p-4 rounded-b">
+      <button class="btn-sm btn-gray" data-action="click->modal#close">Cancle</button>
+      <div class="w-28" ><button class="btn-sm btn-submit" data-action="populate#commit">Submit</button></div>
+    </div>
+
+  <% end %>
+  
+<% end %>
+  

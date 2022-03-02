@@ -29,10 +29,10 @@
                 <h2 class="text-3xl my-2 ml-4 dark:text-white"><%= "#{@type.capitalize}s" %><h2>
                 <div class="mx-8 space-x-2">
                   <% if @isAdmin %>
-                    <%= submit_tag "kick", :class => 'btn-sm btn-gray' %>
                     <a href="#" data-action="click->modal#open" class="btn-sm btn-lime">
-                      <span>Add Admins</span>
+                      <span>Add new</span>
                     </a>
+                    <%= submit_tag "Remove selected", :class => 'btn-sm btn-gray' %>
                   <% end %>
                 </div>
               </div>
@@ -77,48 +77,18 @@
           <% end %>
         </div>
 
+        <div class="my-4">
+          <%= paginate @members %>
+        </div>
+
         <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
           <!-- Create Group Modal Inner Container -->
           <div class="max-h-screen w-full max-w-3xl relative">
             <!-- Create Group Modal Card -->
-            <div class="m-1 bg-white dark:bg-gray-800 rounded shadow">
-              <%= form_tag group_giveAdmin_path(group_id: @group.id), method: 'post' do %>
-                
-                <div class="flex flex-row justify-between p-2 bg-indigo-300 dark:bg-indigo-900 rounded-t">
-                  <h2 class="text-2xl dark:text-white px-2 py-2">Add New Admins</h2>
-                  <button class="text-xl px-4 py-2 text-gray-800 dark:text-white hover:text-red-800 dark:hover:text-red-800" data-action="click->modal#close"><i class="fas fa-times"></i></button>
-                </div>
-
-                <div class="p-4">
-                  <div class="w-full overflow-x-auto">
-                    <table class="w-full whitespace-no-wrap" data-controller="checkbox-select-all">
-                      <thead>
-                        <tr class="text-sm font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-800 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                          <th class="px-4 py-3">Name</th>
-                          <th class="px-4 py-3">Username</th>
-                          <th class="px-4 py-3" data-sort-ignore="true"><input id="checkbox-select-all" type="checkbox" data-checkbox-select-all-target="checkboxAll"></th>
-                        </tr>
-                      </thead>
-                      <tbody class="bg-white divide-y dark:divide-gray-800 dark:bg-gray-700">
-                        <% @non_admins.each do |user| %>
-                          <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
-                            <td class="px-4 py-3">
-                              <%= link_to user.first_name + ' ' + user.last_name, profile_path(user.id), class:"font-semibold" %>
-                            </td>
-                            <td class="px-4 py-3"><%= user.username %></td>
-                            <td class="px-4 py-3"><%= check_box_tag 'user_ids[]', user.id, false, data: { checkbox_select_all_target: 'checkbox' } %></td>
-                          </tr>
-                        <% end %>
-                      </tbody>
-                    </table>
-                  </div>
-
-                </div>
-                <div class="flex justify-end bg-gray-200 dark:bg-gray-900 p-2 rounded-b">
-                  <div class="w-28" ><%= submit_tag 'Add', class:"btn-sm btn-submit", data:{action:"click->click->modal#close"} %></div>
-                </div>
-
-              <% end %>  
+            <div class="m-2 bg-white dark:bg-gray-800 rounded shadow" data-controller="populate">
+              <%= turbo_frame_tag 'add_users', src: group_add_admin_path(@group) do %>
+                <h2 class="flex items-center h-36 text-4xl font-semibold"><i class="fas fa-spinner fa-spin mx-auto"></i></h2>
+              <% end  %>
             </div>
           </div>
         </div>

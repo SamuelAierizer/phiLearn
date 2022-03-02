@@ -19,8 +19,11 @@ Rails.application.routes.draw do
     post 'reset_code', to: 'groups#reset_code'
     get 'widgets', to: 'groups#widgets'
     post 'giveAdmin', to: 'groups#giveAdmin'
+    post 'giveMember', to: 'groups#giveMember'
     get 'members', to: 'groups#members'
     delete 'members', to: 'groups#mass_delete'
+    get 'add_admin', to: 'groups#add_admin'
+    get 'add_member', to: 'groups#add_member'
   end
 
   post 'forum/school_toggle', to: 'forums#school_toggle'

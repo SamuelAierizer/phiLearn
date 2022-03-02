@@ -76,17 +76,29 @@ class GroupsController < ApplicationController
     @type = params[:membership]
     @type ||= "member"
 
-    admin_ids = @group.members.where(mem_type: 'admin').pluck(:uid)
-    member_ids = @group.members.where(mem_type: 'member').pluck(:uid)
-
     if @type == 'admin'
-      @members = User.where(id: admin_ids)
+      @members = User.where(id: @group.members.where(mem_type: 'admin').pluck(:uid))
+                      .order(:id).paginate(page: params[:page], per_page: 10)
     else
-      @members = User.where(id: member_ids)
+      @members = User.where(id:  @group.members.where(mem_type: 'member').pluck(:uid))
+                      .order(:id).paginate(page: params[:page], per_page: 10)
     end
 
-    @non_admins = User.where(id: member_ids - admin_ids)
-    @isAdmin = admin_ids.include?(current_user.id)
+    @isAdmin = @group.members.where(uid:current_user.id, mem_type: 'admin').exists?
+  end
+
+  def add_admin
+    @group = Group.find(params[:group_id])
+    
+    admin_ids = @group.members.where(mem_type: 'admin').pluck(:uid)
+    member_ids = @group.members.where(mem_type: 'member').pluck(:uid)
+    @non_admins = User.where(id: member_ids - admin_ids).order(:id).paginate(page: params[:page], per_page: 10)
+  end
+
+  def add_member
+    @group = Group.find(params[:group_id])
+
+    @non_members = User.where(school_id: current_user.school_id).where.not(id: @group.members.pluck(:uid)).order(:id).paginate(page: params[:page], per_page: 10)
   end
 
   def join
@@ -114,7 +126,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:group_id])
     authorize @group
 
-    admin_requests = params[:user_ids]
+    admin_requests = params[:user_ids].split(",")
 
     records = []
 
@@ -125,7 +137,25 @@ class GroupsController < ApplicationController
     @group.members.insert_all!(records)
 
     flash[:info] = "Successfully added new admins"
-    redirect_to @group, status: 303
+    redirect_to group_members_path(group_id: @group.id, membership: "admin"), status: 303
+  end
+
+  def giveMember
+    @group = Group.find(params[:group_id])
+    authorize @group
+
+    member_requests = params[:user_ids].split(",")
+
+    records = []
+
+    member_requests.each do |uid|
+      records << {uid: uid, memable_id: @group.id, memable_type: 'Group', mem_type: 'member'}
+    end
+    
+    @group.members.insert_all!(records)
+
+    flash[:info] = "Successfully added new members"
+    redirect_to group_members_path(group_id: @group.id, membership: "member"), status: 303
   end
 
   def leave
@@ -148,11 +178,11 @@ class GroupsController < ApplicationController
     @type = params[:type]
     @type ||= "member"
 
-    Member.destroy(@group.members.where(uid: params[:user_ids], mem_type: @type).pluck(:id))
+    Member.destroy(@group.members.where(uid: params[:user_ids]).pluck(:id))
 
-    flash[:info] = "Successfully kicked out members"
+    flash[:info] = "Successfully removed selected"
 
-    redirect_to @group, status: 303
+    redirect_to group_members_path(group_id: @group.id, membership: "member"), status: 303
   end
 
   def reset_code
