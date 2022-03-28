@@ -1,0 +1,61 @@
+<div class="bg-white dark:bg-gray-800 rounded shadow w-full dark:text-white">
+  <div class="flex justify-between border px-4 py-2">
+    <%= link_to calendar_path(start_date: start_date - 1.month), class:"text-lg" do %>
+      <i class="fas fa-arrow-left"></i>
+    <% end %>
+    <span class="text-xl font-semibold space-x-2"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
+    <%= link_to calendar_path(start_date: start_date + 1.month), class:"text-lg" do %>
+      <i class="fas fa-arrow-right"></i>
+    <% end %>
+  </div>
+
+  <table class="w-full">
+    <thead>
+      <tr>
+        <% date_range.slice(0, 7).each do |day| %>
+          <th class="border p-1 h-10 xl:w-36 lg:w-32 md:w-32 sm:w-20 w-10 xl:text-sm text-xs">
+            <%= t('date.abbr_day_names')[day.wday] %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% date_range.each_slice(7) do |week| %>
+        <tr class="text-center h-20">
+          <% week.each do |day| %>
+            <td class="border p-1 h-36 xl:w-36 lg:w-32 md:w-32 sm:w-20 w-10 overflow-hidden <%= "bg-indigo-50 dark:bg-indigo-900" if day.month != start_date.month %>">
+              <div class="flex flex-col items-center h-full w-full overflow-hidden">
+                <div class="top mb-2 font-medium <%= "bg-red-200 dark:bg-red-700 rounded-full" if day == Date.today %>">
+                  <%= link_to day.mday, calendar_day_path(start_date: day), class:"px-2 py-1" %>
+                </div>
+
+                <div class="events">
+                  <% events.each do |event| %>
+                    <% if isEventOnDay(event, day) %>
+                      <%= render event, day: day %>
+                    <% end %>
+                  <% end %>
+                </div>
+                
+                <div class="assignments">
+                  <% assignments.each do |assignment| %>
+                    <% if assignment.deadline.mday == day.mday %>
+                      <%= link_to assignment, class:"flex flex-row items-center cursor-pointer" do %>
+                        <i class="fas fa-circle h-2 text-red-500"></i>
+                        <span class="ml-2"><%= assignment.name %></span>
+                      <% end %>
+                      
+                    <% end %>
+                  <% end %>
+                </div>
+
+                
+              </div>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

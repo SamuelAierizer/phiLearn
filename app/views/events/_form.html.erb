@@ -1,0 +1,78 @@
+<%= form_with(model: event) do |form| %>
+  <div data-controller="form">
+    <%= form.text_field :title, class:"form-field w-full", placeholder:"Title" %>
+
+    <%= form.rich_text_area :description, class:"form-field w-full bg-white", placeholder:"Description" %>
+
+    <div class="flex flex-row items-center justify-between">
+      <%= form.text_field :start,
+          data: {
+          controller: "flatpickr",
+          flatpickr_enable_time: true,
+          flatpickr_alt_format: t("date.formats.long"),
+          flatpickr_date_format: "%B %d, %Y H:i",
+          flatpickr_min_date: Time.current - 2.week
+          }, class:"form-field w-2/5", placeholder:'Start date' %>
+
+      <span class="mb-6 dark:text-white">to</span>
+
+      <%= form.text_field :finish,
+          data: {
+          controller: "flatpickr",
+          flatpickr_enable_time: true,
+          flatpickr_alt_format: t("date.formats.long"),
+          flatpickr_date_format: "%B %d, %Y H:i",
+          flatpickr_min_date: Time.current - 2.week
+          }, class:"form-field w-2/5", placeholder:'Finish date' %>
+    </div>
+
+    <div class="relative w-40" data-controller="dropdown"
+          data-dropdown-invisible-class="opacity-0 scale-95"
+          data-dropdown-visible-class="opacity-100 scale-100"
+          data-dropdown-entering-class="ease-out duration-100"
+          data-dropdown-enter-timeout="100"
+          data-dropdown-leaving-class="ease-in duration-100"
+          data-dropdown-leave-timeout="100">
+      <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="w-40 inline-block select-none">
+        <div class="flex flex-row items-center form-field bg-white w-full">
+          <span>Event Color:</span><div class="ml-2" data-form-target="display"><%= content_tag(:div, "", class:"h-4 w-4 rounded-full bg-#{event.color}") unless event.color.nil? %></div>
+        </div>
+      </div>
+      <div data-dropdown-target="menu" class="absolute -mt-40 ml-16 md:ml-40 hidden w-28 transform transition opacity-0, scale-95">
+        <div class="bg-white shadow rounded border">
+          <div class="flex flex-row items-center px-4 py-2 cursor-pointer" data-action="click->form#selectColor" data-form-color-param="blue-500">
+            <div class="h-4 w-4 rounded-full bg-blue-500 mr-2"></div> Blue
+          </div>
+          <div class="flex flex-row items-center px-4 py-2 cursor-pointer" data-action="click->form#selectColor" data-form-color-param="red-500">
+            <div class="h-4 w-4 rounded-full bg-red-500 mr-2"></div> Red
+          </div>
+          <div class="flex flex-row items-center px-4 py-2 cursor-pointer" data-action="click->form#selectColor" data-form-color-param="green-500">
+            <div class="h-4 w-4 rounded-full bg-green-500 mr-2"></div> Green
+          </div>
+          <div class="flex flex-row items-center px-4 py-2 cursor-pointer" data-action="click->form#selectColor" data-form-color-param="yellow-500">
+            <div class="h-4 w-4 rounded-full bg-yellow-500 mr-2"></div> Yellow
+          </div>
+          <div class="flex flex-row items-center px-4 py-2 cursor-pointer" data-action="click->form#selectColor" data-form-color-param="indigo-500">
+            <div class="h-4 w-4 rounded-full bg-indigo-500 mr-2"></div> Indigo
+          </div>
+          <div class="flex flex-row items-center px-4 py-2 cursor-pointer" data-action="click->form#selectColor" data-form-color-param="gray-500">
+            <div class="h-4 w-4 rounded-full bg-gray-500 mr-2"></div> Gray
+          </div>
+          <div class="flex flex-row items-center px-4 py-2 cursor-pointer" data-action="click->form#selectColor" data-form-color-param="black">
+            <div class="h-4 w-4 rounded-full bg-black mr-2"></div> Black
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= form.hidden_field :color, data: {form_target: "select"}, value: event.color %>
+    
+  </div>
+
+  <%= form.submit "Submit", class:"btn-submit mt-16 mb-8" %>
+
+<% end %>
+
+<% content_for :head do %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+<% end %>

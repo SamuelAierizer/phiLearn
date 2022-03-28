@@ -3,7 +3,7 @@
     <%= notifBanner notification %>
 
     <div class="flex flex-col">
-      <%= notification.message.truncate(28) %>
+      <div class="flex flex-row space-x-2"><%= notification.message.html_safe %></div>
       <span class="ml-4 text-xs text-gray-700"> - <%= createdFrom notification %></span>
     </div>
 

@@ -45,7 +45,7 @@
                       <% @notifications.each do |notification| %>
                       <tr class="text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-black">
                         <td class="px-4 py-3 flex items-center"><%= notifBanner notification %> <%= notification.notif_type %></td>
-                        <td class="px-4 py-3"><%= notification.message %></td>
+                        <td class="px-4 py-3"><%= notification.message.html_safe %></td>
                         <td class="px-4 py-3"><%= displayStatus(notification) %></td>
                         <td class="px-4 py-3"><%= notification.created_at.to_formatted_s(:short) %></td>
                         <td class="px-4 py-3"><%= check_box_tag 'notif_ids[]', notification.id, false, data: { checkbox_select_all_target: 'checkbox' } %></td>

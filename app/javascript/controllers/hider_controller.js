@@ -4,18 +4,20 @@ export default class extends Controller {
   static targets = ["hideable", "list"];
 
   connect() {
-    this.mutateHideable();
-
-    const observer = new MutationObserver(mutation => {
+    if (this.hasListTarget) {
       this.mutateHideable();
-    });
-
-    observer.observe(this.listTarget, {
-      childList: true,
-      attributes: true,
-      subtree: true,
-      characterData: true
-    });
+      
+      const observer = new MutationObserver(mutation => {
+        this.mutateHideable();
+      });
+      
+      observer.observe(this.listTarget, {
+        childList: true,
+        attributes: true,
+        subtree: true,
+        characterData: true
+      });
+    }
   }
 
   mutateHideable() {
@@ -32,6 +34,14 @@ export default class extends Controller {
       } else if (this.listTarget.children.length > 1) {
         document.getElementById("noNotif").remove();
       }
+    }
+  }
+
+  hideGroup({ params: {group} }) {
+    let elements = document.getElementsByClassName(group);
+
+    for(let i = 0; i < elements.length; i++) {
+      elements[i].classList.toggle("hidden");
     }
   }
 }

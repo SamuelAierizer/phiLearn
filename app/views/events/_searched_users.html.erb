@@ -1,0 +1,13 @@
+<%= turbo_frame_tag 'searched_users' do %>
+  <div class="flex flex-col bg-white shadow max-h-64 w-80 overflow-y-auto" data-toggle-target='toggleable'>
+    <% users.each do |user| %>
+      <div class="px-4 py-2 border hover:bg-gray-300 cursor-pointer" 
+          id=<%= user.username %>
+          data-populate-id-param=<%= user.id %> 
+          data-populate-username-param=<%= user.username %> 
+          data-action="click->populate#addUser">
+        <%= user.username %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,4 +1,19 @@
 module NotificationsHelper
+
+  def notifBanner(notification)
+    case notification.notif_type
+    when "notify"
+      content_tag(:i, "", class:"fas fa-circle h-2 text-blue-500")
+    when "alert"
+      content_tag(:i, "", class:"fas fa-circle h-2 text-red-500")
+    when "warn"
+      content_tag(:i, "", class:"fas fa-circle h-2 text-yellow-500")
+    else
+      content_tag(:i, "", class:"fas fa-circle h-2 text-green-500")
+    end
+  end
+
+
   def notifyGroupMembersOnPost(group_post)
     notifications = []
     

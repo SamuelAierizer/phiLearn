@@ -21,6 +21,8 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :school, allow_destroy: true
 
+  scope :search_username, -> (school, username) { where(school_id: school).where("username LIKE ?", "%#{username}%").order(:id) }
+
   def with_school
     build_school if school.nil?
     self

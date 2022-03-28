@@ -12,6 +12,11 @@
       <div class="mx-4 text-base">Notifications</div>
     <% end %>
 
+    <%= link_to calendar_path, class:"w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100", :action => 'go' do %>
+      <i class="fas fa-calendar text-left"></i>
+      <div class="mx-4 text-base">Calendar</div>
+    <% end %>
+
     <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="main"
@@ -26,24 +31,54 @@
       <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
     </a>
 
-    <% @courses.each do |course| %>
-      <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+    <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
         data-action="animation#apply"
         data-animation-old-param="main"
         data-animation-oldfrom-param="translate-x-0"
         data-animation-oldto-param="-translate-x-full"
-        data-animation-next-param=<%= course.name %>
+        data-animation-next-param="course"
         data-animation-nextfrom-param="translate-x-full"
         data-animation-nextto-param="translate-x-0"
-      >
-        <div class="mx-8 text-base"><%= course.name %></div>
-        <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
-      </a>
-
-    <% end %>
+    >
+      <i class="fas fa-atlas text-left"></i>
+      <div class="mx-4">Courses</div>
+      <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
+    </a>
 
   </div>
 </nav>
+
+<nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id="course">
+  <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+        data-action="animation#apply"
+        data-animation-old-param="course"
+        data-animation-oldfrom-param="translate-x-0"
+        data-animation-oldto-param="translate-x-full"
+        data-animation-next-param="main"
+        data-animation-nextfrom-param="-translate-x-full"
+        data-animation-nextto-param="translate-x-0"
+  >
+    <i class="fas fa-chevron-left text-left"></i>
+    <div class="mx-4">Main Menu</div>
+  </a>
+
+  <% @courses.each do |course| %>
+    <a  class="text-base w-full flex items-center px-4 py-2 my-3 justify-start text-white hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+      data-action="animation#apply"
+      data-animation-old-param="course"
+      data-animation-oldfrom-param="translate-x-0"
+      data-animation-oldto-param="-translate-x-full"
+      data-animation-next-param=<%= course.name %>
+      data-animation-nextfrom-param="translate-x-full"
+      data-animation-nextto-param="translate-x-0"
+    >
+      <div class="mx-8 "><%= course.name %></div>
+      <i class="fas fa-chevron-right absolute mr-4 right-0"></i>
+    </a>
+  <% end %>
+  
+</nav>
+
 
 <% @courses.each do |course| %>
   <nav class="w-full transform duration-300 ease-in-out translate-x-full absolute top-0 z-0" id=<%= course.name %>>

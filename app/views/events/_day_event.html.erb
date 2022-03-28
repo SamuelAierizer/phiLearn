@@ -1,0 +1,26 @@
+<div class="flex flex-grow items-center popover" data-controller='popover' data-popover-translate-x="-10%" data-popover-translate-y="-70%" data-action="mouseover->popover#mouseOver mouseout->popover#mouseOut">
+  <%= content_tag(:div, event.title, class:"flex flex-grow px-2 py-1 bg-#{event.color} text-white") %>
+  
+  <div class="hidden absolute w-64 bg-white dark:bg-gray-900 border shadow-xl px-4 py-2 flex flex-col"
+              data-popover-target="content">
+    <div class="flex flex-row-reverse mb-1 z-10">
+      <%= link_to event, class:'text-sm ml-2 text-red-600 hover:text-red-800', data: { turbo_method:"delete", turbo_confirm: 'Are you sure?' } do %>
+        <i class="fas fa-trash-alt"></i>
+      <% end %>
+      <%= link_to edit_event_path(event), class:'text-sm text-blue-600' do %>
+        <i class="fas fa-pen"></i>
+      <% end %>
+    </div>
+
+    <div class="flex flex-row items-center -mt-4 z-0">
+      <%= content_tag(:div, "", class:"top h-4 w-4 rounded-full bg-#{event.color} mr-4") %>
+      <div class="flex flex-col">
+        <%= link_to event.title, event, class:"text-xl font-medium text-left dark:text-white" %>
+        <span class="text-sm text-gray-700 dark:text-gray-200">
+          <%= "#{event.start.to_formatted_s(:short)} - #{event.getFinish.to_formatted_s(:short)}" %>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+

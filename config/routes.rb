@@ -113,6 +113,7 @@ Rails.application.routes.draw do
 
   get 'public/profiles/:username', to: 'profiles#public'
   put 'public/profiles/:username', to: 'profiles#cover_update'
+  post 'user/search', to: 'profiles#search'
   resources :profiles
 
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
@@ -121,6 +122,19 @@ Rails.application.routes.draw do
     delete 'users/clear', to: 'users/registrations#clear'
     post 'users/import', to: 'users/registrations#import'
     delete 'users/mass_delete', to: 'users/registrations#mass_delete'
+  end
+
+  resources :events do
+    post 'shares', to:'events#shares'
+  end
+
+  get 'calendar', to: 'calendar#month'
+  get 'calendar/week', to: 'calendar#week'
+  get 'calendar/day', to: 'calendar#day'
+  get 'calendar/widget', to: 'calendar#widget'
+
+  resources :invites, only: [:show, :destroy] do
+    post 'accept', to: 'invites#accept'
   end
 
   get 'home/about'

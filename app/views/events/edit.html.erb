@@ -1,0 +1,78 @@
+<div class="flex min-h-screen">
+  <!-- Sidenav --> 
+  <%= render 'shared/sidenav' %>
+
+  <main class="flex-shrink w-full bg-gray-100 dark:bg-gray-900 relative">
+    <!-- Header -->
+    <%= render 'shared/navbar' %>
+
+    <div class="px-4 md:px-6">
+    
+      <!-- Page Head -->
+      <div class="mt-4 flex flex-col md:flex-row dark:text-white">
+        <div class="flex-col flex-grow">
+          <div class="flex flex-row space-x-2">
+            <%= link_to calendar_path do %><i class="fas fa-chevron-left text-4xl"></i><% end %>
+            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">Editing Event</h1>
+            <%= link_to '(show)', @event, class:"my-auto underline" %> 
+          </div>
+          <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
+        </div>
+        <div class="mx-4">
+        </div>
+      </div>
+
+      <!-- Page Conent -->
+      <div class="w-full overflow-hidden shadow-xs my-8">
+        
+        <div class="flex flex-col md:flex-row w-full justify-between">
+          <div class="w-full md:w-1/2">
+            <h2 class="font-semibold text-xl mb-4 dark:text-white">Edit</h2>
+            <%= render 'events/form', event: @event %>    
+          </div>
+
+          <div class="w-full md:w-2/5 mt-16 md:mt-0" data-controller="toggle">
+            <h2 class="font-semibold text-xl mb-4 dark:text-white">Share with</h2>
+            
+            <div data-controller="populate">
+              <div class="hidden" data-populate-target="inputIds"><%= @users.pluck(:id) %></div>
+              <div class="hidden" data-populate-target="inputUsernames"><%= @users.pluck(:username) %></div>
+              <%= form_with url: user_search_path, method: :post do |form| %>
+                <%= form.hidden_field :not_searched, data: { populate_target: 'field' }, value: @users.pluck(:id) %>
+                <div class="flex flex-row">
+                  <%= form.text_field :search, value: params[:search], class:"form-field" %>
+                  <button type="submit">
+                    <i class="fas fa-search text-gray-700 dark:text-gray-200 text-xl mb-4 ml-4"></i>
+                  </button>
+                  <button type="submit" data-action='click->toggle#toggle touch->toggle#toggle'>
+                    <i class="far fa-eye text-gray-700 dark:text-gray-200 text-xl mb-4 ml-4"></i>
+                  </button>
+                </div>
+              <% end %>
+              
+              <div id="search_results" class="">
+                <span class="dark:text-white">No search results...</span>
+              </div>
+
+              <div class="mt-8 dark:text-white">
+                <h3 class="font-normal text-lg">Shares list</h3>
+
+                <div class="my-4 w-80 max-h-96 overflow-y-auto" data-populate-target="display">
+                  
+                </div>
+
+                <%= form_with url: event_shares_path(@event), method: :post do |form| %>
+                  <%= form.hidden_field :user_ids, data: { populate_target: 'field' }, value: @users.pluck(:id) %>
+                  <%= form.submit 'Save Shared', class:"btn-sm btn-blue" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+</div>

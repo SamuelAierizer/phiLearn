@@ -10,6 +10,16 @@ class ProfilesController < ApplicationController
     @profile = User.where(username: params[:username]).first
   end
 
+  def search
+    @users = User.search_username(current_user.school_id, params[:search]).where.not(id: params[:not_searched].split(',').map(&:to_i))
+
+    render turbo_stream: [
+      turbo_stream.update("search_results",
+      partial: "events/searched_users",
+      locals: { users: @users })
+    ]
+  end
+
   def edit
     @profile = User.find(params[:id])
   end

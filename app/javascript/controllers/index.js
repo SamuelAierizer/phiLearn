@@ -16,6 +16,7 @@ import UserController from "./user_controller"
 import AnimationController from "./animation_controller"
 import ModalController from "./modal_controller"
 import HiderController from "./hider_controller"
+import FormController from "./form_controller"
 
 
 application.register("bird", BirdController)
@@ -31,3 +32,4 @@ application.register("user", UserController)
 application.register("animation", AnimationController)
 application.register("modal", ModalController)
 application.register("hider", HiderController)
+application.register("form", FormController)

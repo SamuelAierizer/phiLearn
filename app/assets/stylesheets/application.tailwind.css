@@ -40,7 +40,7 @@ h1, h2, h3, h4 {
 }
 
 .btn-sm {
-  @apply px-2 py-1 text-base font-medium leading-6 shadow-md focus:outline-none inline-flex items-center justify-center rounded-sm;
+  @apply px-2 py-1 text-base font-medium leading-6 shadow-md focus:outline-none inline-flex items-center justify-center rounded-sm cursor-pointer;
 }
 
 .btn-blue {
