@@ -4,8 +4,9 @@ class ExtendUser < ActiveRecord::Migration[6.1]
     add_column :users, :last_name, :string
     add_column :users, :username, :string
     add_column :users, :role, :integer
-    add_column :users, :profile_picture, :string
     add_column :users, :school_id, :integer
+
+    add_column :users, :deleted_at, :datetime
 
     remove_index :users, name:"index_users_on_email"
 

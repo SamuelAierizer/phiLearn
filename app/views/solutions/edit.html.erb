@@ -21,7 +21,7 @@
 
       <!-- Page Conent -->
       <div class="mt-8 mb-16">
-        <% unless @solution.assignment.quizz? %>
+        <% unless @solution.assignment.quiz? %>
           <%= render 'solutions/form', solution: @solution %>
         <% else %>
           <%= render 'solutions/quizz_show' %>

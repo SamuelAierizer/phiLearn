@@ -74,4 +74,5 @@ h1, h2, h3, h4 {
 .btn-black {
   @apply bg-black hover:bg-gray-900 focus:ring-0 text-white hover:text-white;
 }
+
 @import 'actiontext.css';

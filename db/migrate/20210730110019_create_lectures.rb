@@ -4,6 +4,7 @@ class CreateLectures < ActiveRecord::Migration[6.1]
       t.string :name
       t.text :description
       t.integer :course_id
+      t.datetime :deleted_at
 
       t.timestamps
     end

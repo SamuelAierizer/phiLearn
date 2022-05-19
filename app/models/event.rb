@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  attr_accessor :google_id
+
   has_rich_text :description
 
   belongs_to :user
@@ -17,6 +19,10 @@ class Event < ApplicationRecord
     else 
       self.finish
     end
+  end
+
+  def getId 
+    self.id.nil? ? self.google_id : self.id
   end
 
 end

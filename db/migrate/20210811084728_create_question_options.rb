@@ -3,6 +3,7 @@ class CreateQuestionOptions < ActiveRecord::Migration[6.1]
     create_table :question_options do |t|
       t.string :value
       t.integer :question_id
+      t.boolean :correct
 
       t.timestamps
     end

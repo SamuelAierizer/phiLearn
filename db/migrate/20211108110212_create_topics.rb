@@ -7,6 +7,7 @@ class CreateTopics < ActiveRecord::Migration[6.1]
       t.datetime :last_post_at
       t.integer :forum_id
       t.integer :owner_id
+      t.datetime :deleted_at
 
       t.timestamps
     end

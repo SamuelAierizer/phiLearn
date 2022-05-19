@@ -5,6 +5,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.integer :topic_id
       t.integer :user_id
       t.integer :parent_id
+      t.datetime :deleted_at
 
       t.timestamps
     end

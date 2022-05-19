@@ -42,7 +42,7 @@ module AssignmentsHelper
       if assignment.handIn?
         render 'student/solutions/handIn_form', solution: Solution.new
       else
-        link_to "Solve Quizz", new_student_solution_path(id: assignment.id), class:"btn btn-blue"
+        link_to "Solve Quiz", new_student_solution_path(id: assignment.id), class:"btn btn-blue"
       end
     end
   end

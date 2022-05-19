@@ -1,51 +1,55 @@
-<div class="bg-white dark:bg-gray-800 rounded shadow w-full dark:text-white">
-  <div class="flex justify-between border-r border-l border-t px-4 py-2">
-    <%= link_to calendar_day_path(start_date: start_date - 1.day), class:"text-lg" do %>
-      <i class="fas fa-arrow-left"></i>
-    <% end %>
-    <span class="text-xl font-semibold space-x-2"><%= t('date.month_names')[start_date.month] %> - <%= start_date.mday %></span>
-    <%= link_to calendar_day_path(start_date: start_date + 1.day), class:"text-lg" do %>
-      <i class="fas fa-arrow-right"></i>
-    <% end %>
+<%= turbo_frame_tag 'day_calendar' do %>
+
+  <div class="bg-white dark:bg-gray-800 rounded shadow w-full dark:text-white">
+    <div class="flex justify-between border-r border-l border-t px-4 py-2">
+      <%= link_to calendar_day_path(start_date: start_date - 1.day), class:"text-lg" do %>
+        <i class="fas fa-arrow-left"></i>
+      <% end %>
+      <span class="text-xl font-semibold space-x-2"><%= t('date.month_names')[start_date.month] %> - <%= start_date.mday %></span>
+      <%= link_to calendar_day_path(start_date: start_date + 1.day), class:"text-lg" do %>
+        <i class="fas fa-arrow-right"></i>
+      <% end %>
+    </div>
+
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th class="border p-1 h-10 w-10 xl:text-sm text-xs">
+            Hours
+          </th>
+          <th class="border p-1 h-10 w-full"></th>
+        </tr>
+      </thead>
+
+      <tbody class="border">
+        <% (0..23).each do |hour| %>
+          <tr class="text-center h-4">
+            <td class="p-1 h-12 w-10"><div class="-mt-8"></div> <%= "#{hour}:00" unless hour == 0 %> </td>
+
+            <td class="border p-1 w-full overflow-hidden">
+
+              <div class="events flex flex-row space-x-2" data-controller="hideable" data-handler="events">
+                <% events.each do |event| %>
+                  <% if isEventOnHour(event, @start_date, hour) %>
+                    <%= render 'events/day_event', event: event %>
+                  <% end %>
+                <% end %>
+              </div>
+
+              <div class="assignments flex flex-row space-x-2 mt-2" data-controller="hideable" data-handler="assignments">
+                <% assignments.each do |assignment| %>
+                  <% if isAssignmentNow(assignment, @start_date, hour) %>
+                    <%= link_to assignment.name, assignment, class:"flex flex-grow px-2 py-1 bg-red-500 text-sm rounded text-white hover:text-white", target: :_top %>
+                  <% end %>
+                <% end %>
+              </div>
+
+            </td>
+          </tr>
+        <% end %>
+
+      </tbody>
+    </table>
   </div>
 
-  <table class="w-full">
-    <thead>
-      <tr>
-        <th class="border p-1 h-10 w-10 xl:text-sm text-xs">
-          Hours
-        </th>
-        <th class="border p-1 h-10 w-full"></th>
-      </tr>
-    </thead>
-
-    <tbody class="border">
-      <% (0..23).each do |hour| %>
-        <tr class="text-center h-4">
-          <td class="p-1 h-12 w-10"><div class="-mt-8"></div> <%= "#{hour}:00" unless hour == 0 %> </td>
-
-          <td class="border p-1 w-full overflow-hidden">
-
-            <div class="events flex flex-row space-x-2">
-              <% events.each do |event| %>
-                <% if isEventOnHour(event, @start_date, hour) %>
-                  <%= render 'events/day_event', event: event %>
-                <% end %>
-              <% end %>
-            </div>
-
-            <div class="assignments flex flex-row space-x-2">
-              <% assignments.each do |assignment| %>
-                <% if isAssignmentNow(assignment, @start_date, hour) %>
-                  <%= link_to assignment.name, assignment, class:"flex flex-grow px-2 py-1 bg-red-500 text-white hover:text-white" %>
-                <% end %>
-              <% end %>
-            </div>
-
-          </td>
-        </tr>
-      <% end %>
-
-    </tbody>
-  </table>
-</div>
+<% end %>

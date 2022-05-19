@@ -133,6 +133,9 @@ Rails.application.routes.draw do
   get 'calendar/day', to: 'calendar#day'
   get 'calendar/widget', to: 'calendar#widget'
 
+  get '/redirect', to: 'google_calendar#redirect', as: 'redirect'
+  get '/callback', to: 'google_calendar#callback', as: 'callback'
+
   resources :invites, only: [:show, :destroy] do
     post 'accept', to: 'invites#accept'
   end

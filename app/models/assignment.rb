@@ -14,7 +14,7 @@ class Assignment < ApplicationRecord
   validates :name, :description, presence: true
   validates :description, length: {maximum: 1000}
 
-  enum assignment_type: {handIn: 0, quizz: 1}
+  enum assignment_type: {handIn: 0, quiz: 1}
 
   def hasUser(user)
     self.course.hasUser(user)

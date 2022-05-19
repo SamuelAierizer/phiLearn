@@ -22,7 +22,7 @@
 
     <%= form.rich_text_area :description, size:"10x10", autocomplete: "description", class:"form-field w-full bg-white", placeholder:"Description" %>
 
-    <%= select_tag(:assignment_type, options_for_select([['Hand in', 'handIn'], ['Quizz', 'quizz']], 'handIn'), {:class => 'form-field w-full'}) %>
+    <%= select_tag(:assignment_type, options_for_select([['Hand in', 'handIn'], ['Quiz', 'quiz']], 'handIn'), {:class => 'form-field w-full'}) %>
 
     <%= form.text_field :deadline,
       data: {

@@ -18,23 +18,98 @@
           <h2 class="ml-8 text-gray-400"><%= @school.name %></h2>
         </div>
         <div class="flex flex-row items-center mx-4 mt-4 md:mt-0 space-x-4">
-          <div class="">
-            <span>personal</span>
-            <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-              <input type="checkbox" checked data-hider-group-param="events" data-action="click->hider#hideGroup"
-                      class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2
-                      border-gray-300 dark:border-gray-800 appearance-none cursor-pointer"/>
-              <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-900 cursor-pointer"></label>
+        
+          <div class="relative" data-controller="dropdown"
+            data-dropdown-invisible-class="opacity-0 scale-95"
+            data-dropdown-visible-class="opacity-100 scale-100"
+            data-dropdown-entering-class="ease-out duration-100"
+            data-dropdown-enter-timeout="100"
+            data-dropdown-leaving-class="ease-in duration-100"
+            data-dropdown-leave-timeout="100">
+            <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="inline-block select-none">
+              <span class="p-2 focus:border-blue-700 rounded border-2 outline-none bg-white text-black">
+                Events <i class="fas fa-angle-down"></i>
+              </span>
+            </div>
+            <div data-dropdown-target="menu" class="absolute right-0 mt-4 hidden w-32 transform transition opacity-0 scale-95">
+              <div class="bg-white shadow rounded border overflow-hidden" data-controller="checkbox-select-all">
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="checkbox-select-all" class="h-4 w-4 mr-1" data-checkbox-select-all-target="checkboxAll"> All
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="events toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="events" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> Personal
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="assignments toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="assignments" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> General
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div class="">
-            <span>general</span>
-            <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-              <input type="checkbox" checked data-hider-group-param="assignments" data-action="click->hider#hideGroup"
-                      class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2
-                      border-gray-300 dark:border-gray-800 appearance-none cursor-pointer"/>
-              <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-900 cursor-pointer"></label>
+
+          <div class="relative" data-controller="dropdown"
+            data-dropdown-invisible-class="opacity-0 scale-95"
+            data-dropdown-visible-class="opacity-100 scale-100"
+            data-dropdown-entering-class="ease-out duration-100"
+            data-dropdown-enter-timeout="100"
+            data-dropdown-leaving-class="ease-in duration-100"
+            data-dropdown-leave-timeout="100">
+            <div data-action="click->dropdown#toggle click@window->dropdown#hide" role="button" data-dropdown-target="button" tabindex="0" class="inline-block select-none">
+              <span class="p-2 focus:border-blue-700 rounded border-2 outline-none bg-white text-black">
+                Colors <i class="fas fa-angle-down"></i>
+              </span>
+            </div>
+            <div data-dropdown-target="menu" class="absolute right-0 mt-4 hidden w-32 transform transition opacity-0 scale-95">
+              <div class="bg-white shadow rounded border overflow-hidden" data-controller="checkbox-select-all">
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="checkbox-select-all" class="h-4 w-4 mr-1" data-checkbox-select-all-target="checkboxAll"> All
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="bg-blue-500 text-white toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="bg-blue-500 text-white" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> Blue 
+                  <div class="h-4 w-4 rounded-full bg-blue-500 ml-1"></div> 
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="bg-red-500 text-white toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="bg-red-500 text-white" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> Red 
+                  <div class="h-4 w-4 rounded-full bg-red-500 ml-1"></div> 
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="bg-green-500 text-white toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="bg-green-500 text-white" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> Green 
+                  <div class="h-4 w-4 rounded-full bg-green-500 ml-1"></div> 
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="bg-yellow-500 text-white toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="bg-yellow-500 text-white" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> Yellow 
+                  <div class="h-4 w-4 rounded-full bg-yellow-500 ml-1"></div> 
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="bg-indigo-500 text-white toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="bg-indigo-500 text-white" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> Indigo 
+                  <div class="h-4 w-4 rounded-full bg-indigo-500 ml-1"></div> 
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="bg-gray-500 text-white toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="bg-gray-500 text-white" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> Gray 
+                  <div class="h-4 w-4 rounded-full bg-gray-500 ml-1"></div> 
+                </div>
+                <div class="flex items-center px-4 py-2">
+                  <input type="checkbox" name="" id="bg-black text-white toggle" class="h-4 w-4 mr-1" checked
+                      data-hider-group-param="bg-black text-white" data-action="input->hider#hideGroup"
+                      data-checkbox-select-all-target="checkbox"> Black 
+                  <div class="h-4 w-4 rounded-full bg-black ml-1"></div> 
+                </div>
+              </div>
             </div>
           </div>
 

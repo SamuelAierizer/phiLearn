@@ -25,7 +25,7 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     flash[:error] = "Wrong credentials"
-    redirect_to root_path and return
+    redirect_to request.referer and return
   end
 
   # DELETE /resource/sign_out

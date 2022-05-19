@@ -20,7 +20,7 @@
         </div>
         <div class="mx-4">
           <% unless current_user.student? %>
-            <% if @assignment.quizz? %>
+            <% if @assignment.quiz? %>
               <%= link_to "Add Question", new_question_path(assignment_id: @assignment.id), class:'btn-sm btn-yellow mx-3' %>
             <% end %>
             <a href="#" data-action="click->modal#open" class="btn-sm btn-lime">
@@ -58,7 +58,7 @@
       </div>
 
       <div class="my-5 dark:text-white">
-        <% if @assignment.quizz? %>
+        <% if @assignment.quiz? %>
           <h2 class="text-2xl font-bold mt-16">Questions</h2>
 
           <% @questions.each do |question| %>

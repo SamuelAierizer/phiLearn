@@ -24,7 +24,7 @@ class Student::SolutionsController < ApplicationController
 
     respond_to do |format|
       if @solution.save
-        if @solution.assignment.quizz?
+        if @solution.assignment.quiz?
           @solution.calculate_grade
         end
         format.html { redirect_to student_assignment_path(@solution.assignment), notice: "Solution was successfully created." }

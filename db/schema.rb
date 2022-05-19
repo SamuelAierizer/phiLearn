@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
     t.integer "assignment_type"
     t.datetime "deadline", precision: nil
     t.integer "course_id"
+    t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_assignments_on_course_id"
@@ -81,14 +82,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "like_count"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "image_path"
     t.integer "owner_id"
+    t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_courses_on_name", unique: true
@@ -110,9 +112,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
   create_table "forums", force: :cascade do |t|
     t.integer "forumable_id"
     t.integer "forumable_type"
+    t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
   end
 
   create_table "group_posts", force: :cascade do |t|
@@ -151,6 +153,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
     t.string "name"
     t.text "description"
     t.integer "course_id"
+    t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_lectures_on_course_id"
@@ -189,31 +192,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
     t.integer "topic_id"
     t.integer "user_id"
     t.integer "parent_id"
+    t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "like_count", default: 0
-    t.datetime "deleted_at"
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.text "about", default: "about me text"
-    t.string "address", default: "address"
-    t.string "phone", default: "phone no."
+    t.text "about"
+    t.string "address"
+    t.string "phone"
     t.integer "status"
     t.string "public_src"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "cover_photo"
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
   create_table "question_options", force: :cascade do |t|
     t.string "value"
     t.integer "question_id"
+    t.boolean "correct"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "correct"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -227,20 +229,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
     t.index ["assignment_id"], name: "index_questions_on_assignment_id"
   end
 
-  create_table "resources", force: :cascade do |t|
-    t.string "name"
-    t.string "path"
-    t.integer "material_type"
-    t.integer "material_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "schools", force: :cascade do |t|
     t.string "name"
     t.string "subdomain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "school_forum", default: false
+    t.boolean "course_forum", default: false
     t.index ["name"], name: "index_schools_on_name", unique: true
   end
 
@@ -255,16 +250,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
 
   create_table "solutions", force: :cascade do |t|
     t.decimal "grade"
-    t.string "file"
     t.integer "user_id"
     t.integer "assignment_id"
+    t.integer "course_id"
+    t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "course_id"
-    t.index ["assignment_id"], name: "index_solutions_on_assignment_id"
-    t.index ["course_id"], name: "index_solutions_on_course_id"
     t.index ["user_id", "assignment_id"], name: "index_solutions_on_user_id_and_assignment_id", unique: true
-    t.index ["user_id"], name: "index_solutions_on_user_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -283,10 +275,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
     t.datetime "last_post_at", precision: nil
     t.integer "forum_id"
     t.integer "owner_id"
+    t.datetime "deleted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_blocked", default: false
-    t.datetime "deleted_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -301,8 +293,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_085411) do
     t.string "last_name"
     t.string "username"
     t.integer "role"
-    t.string "profile_picture"
     t.integer "school_id"
+    t.datetime "deleted_at", precision: nil
     t.index ["email", "school_id"], name: "index_users_on_email_and_school_id", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["school_id"], name: "index_users_on_school_id"

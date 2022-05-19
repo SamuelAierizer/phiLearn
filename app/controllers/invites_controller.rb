@@ -17,7 +17,7 @@ class InvitesController < ApplicationController
 
   def accept
     @invite = Invite.find(params[:invite_id])
-    event = Event.find(invite.inviteable_id)
+    event = Event.find(@invite.inviteable_id)
 
     helpers.processInvite(@invite)
 

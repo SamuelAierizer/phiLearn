@@ -1,5 +1,5 @@
 <div class="flex flex-grow items-center popover" data-controller='popover' data-popover-translate-x="-10%" data-popover-translate-y="-70%" data-action="mouseover->popover#mouseOver mouseout->popover#mouseOut">
-  <%= content_tag(:div, event.title, class:"flex flex-grow px-2 py-1 bg-#{event.color} text-white") %>
+  <%= content_tag(:div, event.title, class:"flex flex-grow px-2 py-1 #{eventColor(event)} text-sm rounded", data: { controller:"hideable", handler:eventColor(event) }) %>
   
   <div class="hidden absolute w-64 bg-white dark:bg-gray-900 border shadow-xl px-4 py-2 flex flex-col"
               data-popover-target="content">
